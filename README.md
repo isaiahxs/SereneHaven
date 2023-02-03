@@ -8,7 +8,7 @@
 
 https://dbdiagram.io/d/63db0521296d97641d7dd0ec
 
-![image](https://user-images.githubusercontent.com/107521578/216490376-0db1c7d7-01f4-4da8-b643-452af8a5b33a.png)
+![image](https://user-images.githubusercontent.com/107521578/216491228-fc442394-b21d-4d68-9ead-0e0dd81ac96c.png)
 
 ## API Documentation
 
