@@ -1,5 +1,8 @@
 This is the beginning of the AirBnB project.
 
+API Docs and KB Cards:
+https://github.com/appacademy/assessment-for-sprint-13-api-documentation-airbnb
+
 ROADMAP BELOW:
 https://open.appacademy.io/learn/js-py---pt-aug-2022-online/week-23---project-planning--security--authentication/roadmap
 
