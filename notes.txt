@@ -1,9 +1,111 @@
 This is the beginning of the AirBnB project.
 
-Push for 2/2/23
-Added assets folder and diagram inside of it
+ROADMAP BELOW:
+https://open.appacademy.io/learn/js-py---pt-aug-2022-online/week-23---project-planning--security--authentication/roadmap
 
-Push for 2/2/24
-Applied changes to API Documentation from Project Advisor's review of the README.md file, commit, then push to GitHub
+----------------------------------------------------------------------
 
-Applied changes to the database schema from Project Advisor's review of the README.md file, commit, then push to GitHub
+IN PROGRESS:
+
+WK24D4
+    -Implement backend authentication endpoints
+    -API Documentation should be approved by your Project Advisor
+    -Database Schema should be approved by your Project Advisor
+    -GitHub KanBan board should be approved by your Project Advisor
+
+WK24D6
+    -Do standup with your Project Advisor
+    -Implement backend authentication endpoints
+
+----------------------------------------------------------------------
+
+TO DO:
+
+WK25D1
+    -Do standup with your Project Advisor
+    -Deploy backend authentication endpoints
+    -Implement backend endpoints for first CRUD feature
+
+WK25D2
+    -Do standup with your Project Advisor
+    -Implement backend endpoints for first CRUD feature
+
+WK25D3
+    -Do standup with your Project Advisor
+    -Deploy backend endpoints for first CRUD feature
+    -Implement backend endpoints for second CRUD feature
+    -Authentication feature should be reviewed and approved by your Project Advisor
+
+WK25D4
+    -Do standup with your Project Advisor
+    -Implement backend endpoints for second CRUD feature
+
+WK25D6
+    -Do standup with your Project Advisor
+    -Deploy backend endpoints for second CRUD feature
+    -Implement backend endpoints for third CRUD feature
+    -First feature should be reviewed and approved by your Project Advisor
+
+WK26D1
+    -Do standup with your Project Advisor
+    -Deploy backend endpoints for third CRUD feature
+    -Implement backend endpoints for fourth CRUD feature
+
+WK26D2
+    -Do standup with your Project Advisor
+    -Implement backend endpoints for fourth CRUD feature
+    -Second feature should be reviewed and approved by your Project Advisor
+
+WK26D3
+    -Do standup with your Project Advisor
+    -Deploy backend endpoints for fourth CRUD feature
+    -Check that all the implemented endpoints align with API documentation specs
+
+WK26D4
+    -Do standup with your Project Advisor
+    -Third feature should be reviewed and approved by your Project Advisor (optional)
+
+WK26D6
+    -Do standup with your Project Advisor
+    -Clean up code
+    -Write notes that help you remember code in application
+    -Fix bugs
+    -Remove console.logs and debuggers
+    -Prepare your presentation
+    -Practice your presentation
+    -Deploy backend endpoints one last time before presentations
+    -Fourth feature should be reviewed and approved by your Project Advisor
+
+WK27D1
+    -Don't deploy to the application!!!
+    -Present your project to a group of students and your Project Advisor
+
+----------------------------------------------------------------------
+
+DONE:
+
+WK23D1
+    -Learn about Agile methodology and the SCRUM development process
+    -Understand the goals of the project
+    -Understand the how to execute the required planning documentation
+    -Review each project in the given list of available projects
+
+WK23D2
+    -Choose a project from the given list of available projects
+    -Project Advisor will approve the chosen project
+    -Create a GitHub repository for your project
+    -Create a GitHub KanBan project board on the GitHub repository for the backend
+    -Add your Project Advisor as an admin to the backend repository
+    -Create a folder called backend at the root directory of the -GitHub repository
+    -Copy API Documentation for chosen project in the README.md file in the backend folder, commit, then push to GitHub
+
+WK23D4
+    -Fill out API Documentation for chosen project in the README.md file, commit, then push to GitHub
+    -Add image of your proposed database schema in the README.md file, commit, then push to GitHub
+    -Add all tasks to your GitHub KanBan project board
+    -API Documentation should be reviewed by your Project Advisor
+    -Database Schema should be reviewed by your Project Advisor
+
+WK23D6
+    -Apply changes to API Documentation from Project Advisor's review of the README.md file, commit, then push to GitHub
+    -Apply changes to the database schema from Project Advisor's review of the README.md file, commit, then push to GitHub
