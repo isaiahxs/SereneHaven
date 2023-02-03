@@ -4,7 +4,7 @@
 
 https://dbdiagram.io/d/63db0521296d97641d7dd0ec
 
-![image](https://user-images.githubusercontent.com/107521578/216491228-fc442394-b21d-4d68-9ead-0e0dd81ac96c.png)
+![image](https://user-images.githubusercontent.com/107521578/216623685-793b2609-8a5c-4f57-92a2-4fabd999ce38.png)
 
 ## API Documentation
 
