@@ -1,3 +1,5 @@
+![image](https://user-images.githubusercontent.com/107521578/216490376-0db1c7d7-01f4-4da8-b643-452af8a5b33a.png)
+
 # AirBnB Clone
 
 ## Database Schema Design
