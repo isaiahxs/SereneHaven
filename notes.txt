@@ -2,3 +2,8 @@ This is the beginning of the AirBnB project.
 
 Push for 2/2/23
 Added assets folder and diagram inside of it
+
+Push for 2/2/24
+Applied changes to API Documentation from Project Advisor's review of the README.md file, commit, then push to GitHub
+
+Applied changes to the database schema from Project Advisor's review of the README.md file, commit, then push to GitHub
