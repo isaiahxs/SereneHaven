@@ -4,6 +4,10 @@
 const express = require('express');
 const router = express.Router();
 
+//Following two lines are from Phase 1: API Routes
+const apiRouter = require('./api');
+router.use('/api', apiRouter);
+
 //This is the first test we used to see if our set up was functioning properly:
 // router.get('/hello/world', function(req, res) {
 //   res.cookie('XSRF-TOKEN', req.csrfToken());
