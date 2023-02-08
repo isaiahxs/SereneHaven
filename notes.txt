@@ -117,3 +117,23 @@ WK23D6
 Push for 2/4/23
 Push for 2/5/23
 Push for 2/7/23
+
+
+Backend Login Flow
+-The API login route will be hit with a request body holding a valid credential (either username or email) and password combination.
+-The API login handler will look for a User with the input credential in either the username or email columns.
+-Then the hashedPassword for that found User will be compared with the input password for a match.
+-If there is a match, the API login route should send back a JWT in an HTTP-only cookie and a response body. The JWT and the body will hold the user's id, username, and email.
+
+
+Backend Sign-up Flow
+-The API signup route will be hit with a request body holding a username, email, and password.
+-The API signup handler will create a User with the username, an email, and a hashedPassword created from the input password.
+-If the creation is successful, the API signup route should send back a JWT in an HTTP-only cookie and a response body. The JWT and the body will hold the user's id, username, and email.
+
+
+Backend Logout Flow
+-The API logout route will be hit with a request.
+-The API logout handler will remove the JWT cookie set by the login or signup API routes and return a JSON success message.
+
+Completed Phase 3
