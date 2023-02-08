@@ -1,9 +1,24 @@
 // backend/routes/api/index.js
 const router = require('express').Router();
+const sessionRouter = require('./session.js');
+const usersRouter = require('./users.js');
 const {restoreUser} = require('../../utils/auth')
 
 // GET /api/restore-user
 router.use(restoreUser);
+
+router.use('/session', sessionRouter);
+
+router.use('/users', usersRouter);
+
+router.post('/test', (req, res) => {
+  res.json({ requestBody: req.body });
+});
+
+
+
+
+module.exports = router;
 
 //The tests below are no longer needed as they all work
 // router.get(
@@ -40,5 +55,3 @@ router.use(restoreUser);
 //   setTokenCookie(res, user);
 //   return res.json({ user });
 // });
-
-module.exports = router;
