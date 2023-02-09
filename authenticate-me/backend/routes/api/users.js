@@ -33,8 +33,8 @@ router.post(
     '/',
     validateSignup,
     async (req, res) => {
-        const { email, password, username } = req.body;
-        const user = await User.signup({ email, username, password });
+        const { email, password, username, firstName, lastName } = req.body;
+        const user = await User.signup({ email, username, password, firstName, lastName });
 
         await setTokenCookie(res, user);
 
@@ -43,5 +43,11 @@ router.post(
         });
     }
 );
+
+//NEED TO DO THIS STEP:
+// Refactor to add firstName and lastName attributes
+// Now, try to refactor your code to add this simple change.
+
+// Update your server files to add firstName and lastName attributes to a User in your database. Make sure to update your migration and model files and your route handlers to reflect this change!
 
 module.exports = router;

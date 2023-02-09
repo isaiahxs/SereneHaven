@@ -15,3 +15,10 @@ npx dotenv sequelize db:seed:undo
 
 @REM undo all seeds
 npx dotenv sequelize db:seed:undo:all
+
+
+@REM create migration for adding column to Users table
+npx sequelize-cli migration:generate --name users-add-remove-columns
+
+@REM undo last migration
+npx sequelize-cli db:migrate:undo
