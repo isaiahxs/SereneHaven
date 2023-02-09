@@ -137,3 +137,5 @@ Backend Logout Flow
 -The API logout handler will remove the JWT cookie set by the login or signup API routes and return a JSON success message.
 
 Completed Phase 3
+
+Completed Phase 4
