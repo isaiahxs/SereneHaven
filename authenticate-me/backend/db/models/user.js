@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     //Define an instance method toSafeObject in the user.js model file. This method will return an object with only the User instance information that is safe to save to a JWT, like id, username, and email.
     toSafeObject() {
-      const {id, username, email} = this; //context will be the User instance
-      return {id, username, email};
+      const {id, username, email, firstName, lastName} = this; //context will be the User instance
+      return {id, username, email, firstName, lastName};
     }
 
     //Define an instance method validatePassword in the user.js model file. It should accept a password string and return true if there is a match with the User instance's hashedPassword. If there is no match, it should return false.
@@ -35,12 +35,14 @@ module.exports = (sequelize, DataTypes) => {
     }
 
     //Defining static method signup
-    static async signup({ username, email, password }) {
+    static async signup({ username, email, password, firstName, lastName }) {
       const hashedPassword = bcrypt.hashSync(password);
       const user = await User.create({
         username,
         email,
-        hashedPassword
+        hashedPassword,
+        firstName,
+        lastName
       });
       return await User.scope('currentUser').findByPk(user.id);
     }
@@ -84,6 +86,12 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [60, 60]
       }
+    },
+    firstName: {
+      type: DataTypes.STRING
+    },
+    lastName: {
+      type: DataTypes.STRING
     }
   }, {
     sequelize,
