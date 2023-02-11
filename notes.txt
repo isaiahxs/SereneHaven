@@ -141,3 +141,19 @@ Completed Phase 4
 Completed Phase 5. Need to run a few more checks on firstName and lastName section though.
 
 Push for 2/9/23
+
+
+
+
+
+
+Deployment failed. These are the changes I'm making:
+
+- added production key including internal database url for Postgres in backend/config/index.js
+- removed 'test' line from scripts section in /package.json
+- checked psql-setup-script.js file and it looks good
+    - checked backend/package.json file and build command looks good
+- looks like I still have the test thing in backend/package.json, is that a problem?
+
+
+//the random @type import things like in seeder file, should those be commented out or not?
