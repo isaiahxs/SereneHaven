@@ -7,6 +7,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+
 //validateSignup middleware
 const validateSignup = [
     check('email')
@@ -44,10 +45,9 @@ router.post(
     }
 );
 
-//NEED TO DO THIS STEP:
-// Refactor to add firstName and lastName attributes
-// Now, try to refactor your code to add this simple change.
-
-// Update your server files to add firstName and lastName attributes to a User in your database. Make sure to update your migration and model files and your route handlers to reflect this change!
+// router.get('/', (req, res) => {
+//     console.log('hello, world');
+//     res.send('hello, world');
+// });
 
 module.exports = router;
