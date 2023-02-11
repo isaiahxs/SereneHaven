@@ -1,5 +1,24 @@
 {
   "dependencies": {
     "bcryptjs": "^2.4.3"
-  }
+  },
+  "name": "airbnb-project",
+  "description": "## Database Schema Design",
+  "version": "1.0.0",
+  "main": "index.js",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/isaiahxs/AirBnB.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/isaiahxs/AirBnB/issues"
+  },
+  "homepage": "https://github.com/isaiahxs/AirBnB#readme"
 }
