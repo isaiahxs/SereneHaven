@@ -39,7 +39,7 @@ router.post('/:id/wishlist', requireAuth, aync (req, res, next) => {
 //make db, merge to main, deploy and see if there are errors
     //then work on API
 
-//make parents first, thn child
+//make parents first, then child
     //if you see "belongsTo", it will likely come after "hasOne"
 
 //Start with Users, Spots, Bookings, Reviews in that order
