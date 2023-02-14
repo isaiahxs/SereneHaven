@@ -22,3 +22,11 @@ npx sequelize-cli migration:generate --name users-add-remove-columns
 
 @REM undo last migration
 npx sequelize-cli db:migrate:undo
+
+
+//-----------------------------------------------------
+@REM testing from How to use API Docs to Code Endpoints video
+npx sequelize-cli model:generate --name wishlist --attributes gameId:integer,userId:integer
+
+@REM generating new seed file
+npx sequelize-cli seed:generate --name wishlists
