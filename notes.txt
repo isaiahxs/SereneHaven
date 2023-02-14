@@ -159,3 +159,6 @@ Deployment failed. These are the changes I'm making:
     - reorganized second migration with Bill's advice
 
 //the random @type import things like in seeder file, should those be commented out or not?
+
+
+Successfully completed deployment
