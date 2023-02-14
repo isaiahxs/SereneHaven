@@ -11,6 +11,11 @@ router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 
+//this line is from First Steps after authme (get all spots)
+// router.use('/spots', spotsRouter);
+  //for our spot related route handlers and we would have a spots.js in our api
+
+
 router.post('/test', (req, res) => {
   res.json({ requestBody: req.body });
 });

@@ -1,0 +1,51 @@
+// now that Alec is working on the post part in routes/api/boardgames.js
+
+
+//----------- start javascript
+const router = require("./backend/routes/api");
+
+router.post('/:id/wishlist', requireAuth, aync (req, res, next) => {
+  //only want a logged in user to access this wishlist
+    //requireAuth middleware handles this
+
+    //USE THIS TO TESTTTTTTT
+    // res.send('success');
+
+    //After testing that, we will create a new wishlist record
+        //will need id of boardgame and id of user MINUTE 19:59
+        //
+})
+//----------- end javascript
+
+//start server, bring in postman
+
+//to log out, in postman, click DELETE method and /api/session
+    //if you get an error of invalid csrf, open a csrf url path like
+        //localhost:8000/api/csrf/restore and retry the DELETE
+        //help at 17:50 in the video
+    //basically, XSRF-Token must be in the headers of the POST attempt in Postman
+        //this is done by PAYING ATTENTION TO THE ENVIRONMENT YOU'RE IN
+            //MAKE SURE YOU'RE IN LOCAL OR LIVE DEPENDING ON WHAT YOU'RE TRYING
+
+// After this, we will see "unauthorized", this is because we are not logged in and have requireAuth middlewaree in place
+
+//so now, log in, go to the POST Log In test on postman
+    //then go back to POST Add a Boardgame to Current Wishlist
+        //we will see it return a message of "success"
+
+
+//------------------------End of day notes from Blake's QnA------------------------
+
+//make db, merge to main, deploy and see if there are errors
+    //then work on API
+
+//make parents first, thn child
+    //if you see "belongsTo", it will likely come after "hasOne"
+
+//Start with Users, Spots, Bookings, Reviews in that order
+    //order for migrations matters!
+
+//if you want to edit a migration, undo it first, then tweak, then run migrations again
+
+//you can generate model and migrations at once, then fix associations before running migrations
+    //what is important is that you have the order of the migrations correctly
