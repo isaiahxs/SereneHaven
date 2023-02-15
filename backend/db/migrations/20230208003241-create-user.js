@@ -1,58 +1,3 @@
-//My original WIP
-// 'use strict';
-// // /** @type {import('sequelize-cli').Migration} */
-
-// let options = {};
-// if (process.env.NODE_ENV === 'production') {
-//   options.schema = process.env.SCHEMA;  // define your schema in options object
-// }
-
-// module.exports = {
-//   async up(queryInterface, Sequelize) {
-//     await queryInterface.createTable('Users', {
-//       id: {
-//         //not null, primary key
-//         allowNull: false,
-//         autoIncrement: true,
-//         primaryKey: true,
-//         type: Sequelize.INTEGER
-//       },
-//       username: {
-//         //not null, indexed, unique, max 30 chars
-//         type: Sequelize.STRING(30),
-//         allowNull: false,
-//         unique: true,
-//       },
-//       email: {
-//         //not null, indexed, unique, max 256 chars
-//         type: Sequelize.STRING(256),
-//         allowNull: false,
-//         unique: true,
-//       },
-//       hashedPassword: {
-//         //not null
-//         type: Sequelize.STRING,
-//         allowNull: false,
-//       },
-//       createdAt: {
-//         //not null, default value of now()
-//         allowNull: false,
-//         type: Sequelize.DATE,
-//         defaultValue: Sequelize.NOW
-//       },
-//       updatedAt: {
-//         //not null, default value of now()
-//         allowNull: false,
-//         type: Sequelize.DATE,
-//         defaultValue: Sequelize.NOW
-//       }
-//     }, options);
-//   },
-//   async down(queryInterface, Sequelize) {
-//     await queryInterface.dropTable('Users', options);
-//   }
-// };
-
 //ReadMe code
 "use strict";
 /** @type {import('sequelize-cli').Migration} */
@@ -71,6 +16,12 @@ module.exports = {
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
+      },
+      firstName: {
+        type: Sequelize.STRING
+      },
+      lastName: {
+        type: Sequelize.STRING
       },
       username: {
         type: Sequelize.STRING(30),
