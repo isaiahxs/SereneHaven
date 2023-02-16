@@ -29,7 +29,7 @@ module.exports = {
         review: 'Aside from the traffic and air pollution, this place is not that bad.',
         stars: 5
       }
-    ], {})
+    ], {}) //DON'T FORGET TO PASS IN THE OPTIONS OBJECT
   },
 
   async down (queryInterface, Sequelize) {
@@ -37,6 +37,6 @@ module.exports = {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       spotId: { [Op.in]: [1, 2, 3]}
-    }, {})
+    }, {}) //DON'T FORGET TO PASS IN THE OPTIONS OBJECT
   }
 };
