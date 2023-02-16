@@ -56,21 +56,33 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       User.hasMany(models.Spot, {
         foreignKey: 'ownerId',
-        onDelete: 'cascade'
+        //could this have been the error?
+        // onDelete: 'cascade'
       })
 
       User.hasMany(models.Booking, {
         foreignKey: 'userId',
-        onDelete: 'cascade'
+        //could this have been the error?
+        // onDelete: 'cascade'
       })
 
       User.hasMany(models.Reviews, {
         foreignKey: 'userId',
-        onDelete: 'cascade'
+        //could this have been the error?
+        // onDelete: 'cascade'
       })
     }
   }
   User.init({
+
+    firstName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    lastName: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
     //not null, unique, min 4 chars, max 30 chars, isNotEmail
     username: {
       type: DataTypes.STRING,
@@ -100,12 +112,6 @@ module.exports = (sequelize, DataTypes) => {
       validate: {
         len: [60, 60]
       }
-    },
-    firstName: {
-      type: DataTypes.STRING
-    },
-    lastName: {
-      type: DataTypes.STRING
     }
   }, {
     sequelize,
