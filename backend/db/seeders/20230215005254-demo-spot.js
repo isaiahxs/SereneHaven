@@ -48,7 +48,7 @@ module.exports = {
       description: 'smog',
       price: 3000000.00
     }
-   ], {})
+   ], {}) //REMEMBER TO PASS IN OPTION OBJECT
   },
 
   async down (queryInterface, Sequelize) {
@@ -56,6 +56,6 @@ module.exports = {
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
       state: { [Op.in]: ['florida', 'new york', 'california']}
-    }, {})
+    }, {}) //REMEMBER TO PASS IN OPTION OBJECT
   }
 };

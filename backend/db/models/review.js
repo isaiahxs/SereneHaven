@@ -17,20 +17,22 @@ module.exports = (sequelize, DataTypes) => {
 
       Review.belongsTo(models.User, {
         foreignKey: 'userId',
-        onDelete: 'cascade'
+        //this part may or may not be necessary
+        // onDelete: 'cascade'
       })
 
       Review.belongsTo(models.Spot, {
         foreignKey: 'spotId',
-        onDelete: 'cascade'
+        //this part may or may not be necessary
+        // onDelete: 'cascade'
       })
     }
   }
   Review.init({
-    userId: DataTypes.INTEGER,
-    spotId: DataTypes.INTEGER,
-    review: DataTypes.STRING,
-    stars: DataTypes.INTEGER
+    userId: {type: DataTypes.INTEGER},
+    spotId: {type: DataTypes.INTEGER},
+    review: {type: DataTypes.STRING},
+    stars: {type: DataTypes.INTEGER}
   }, {
     sequelize,
     modelName: 'Review',
