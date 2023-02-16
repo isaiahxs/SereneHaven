@@ -13,20 +13,30 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       Booking.belongsTo(models.User, {
         foreignKey: 'userId',
-        onDelete: 'cascade'
+        // this part may or may not be necessary, i think it is just better practice to have constraints/validations on both the migrations and models
+        // onDelete: 'cascade'
       })
 
       Booking.belongsTo(models.Spot, {
         foreignKey: 'spotId',
-        onDelete: 'cascade'
+        // same reasoning as above
+        // onDelete: 'cascade'
       })
     }
   }
   Booking.init({
-    spotId: DataTypes.INTEGER,
-    userId: DataTypes.INTEGER,
-    startDate: DataTypes.DATE,
-    endDate: DataTypes.DATE
+    spotId: {
+      type: DataTypes.INTEGER,
+    },
+    userId: {
+      type: DataTypes.INTEGER,
+    },
+    startDate: {
+      type: DataTypes.DATE,
+    },
+    endDate: {
+      type: DataTypes.DATE
+    },
   }, {
     sequelize,
     modelName: 'Booking',
