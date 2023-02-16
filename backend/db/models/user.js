@@ -18,6 +18,10 @@ module.exports = (sequelize, DataTypes) => {
       return bcrypt.compareSync(password, this.hashedPassword.toString());
     }
 
+    static getCurrentUserById(id) {
+      return User.scope("currentUser").findByPk(id);
+    }
+
     //Defining static method login
     static async login({ credential, password }) {
       const { Op } = require('sequelize');

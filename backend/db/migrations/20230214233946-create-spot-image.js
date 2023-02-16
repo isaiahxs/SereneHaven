@@ -19,6 +19,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         onDelete: 'cascade',
         references: {model: 'Spots'}
+        //should i have allowNull false here?
       },
       url: {
         type: Sequelize.TEXT,

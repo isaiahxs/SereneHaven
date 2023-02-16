@@ -23,6 +23,7 @@ module.exports = {
         type: Sequelize.INTEGER,
         onDelete: 'cascade',
         references: {model: 'Reviews'}
+        //should i have allowNull false here?
       },
       createdAt: {
         allowNull: false,
