@@ -24,6 +24,33 @@ npx sequelize-cli migration:generate --name users-add-remove-columns
 npx sequelize-cli db:migrate:undo
 
 
+@REM order of migrations should be: Spots Bookings Reviews ReviewImages SpotImages
+npx sequelize-cli model:generate --name Spot --attributes ownerId:integer,address:string,city:string,state:string,country:string,lat:integer,lng:integer,name:string,description:string,price:integer
+
+npx sequelize-cli model:generate --name Booking --attributes spotId:integer,userId:integer,startDate:DATE,endDate:DATE
+
+npx sequelize-cli model:generate --name Review --attributes userId:integer,spotId:integer,review:string,stars:integer
+
+npx sequelize-cli model:generate --name SpotImage --attributes spotId:integer,url:text,preview:boolean
+
+npx sequelize-cli model:generate --name ReviewImage --attributes url:text,reviewId:integer
+
+
+@REM generating seeder files for demo:spot/spot-image/booking/review/reviewimage
+npx sequelize seed:generate --name demo-user
+
+npx sequelize seed:generate --name demo-spot
+
+npx sequelize seed:generate --name demo-spot-image
+
+npx sequelize seed:generate --name demo-booking
+
+npx sequelize seed:generate --name demo-review
+
+npx sequelize seed:generate --name demo-review-image
+
+
+
 //-----------------------------------------------------
 @REM testing from How to use API Docs to Code Endpoints video
 npx sequelize-cli model:generate --name wishlist --attributes gameId:integer,userId:integer

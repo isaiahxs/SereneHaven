@@ -162,3 +162,13 @@ Deployment failed. These are the changes I'm making:
 
 
 Successfully completed deployment
+
+
+-----------------------------------------------------------------------------------------------------------------------
+Now working on models and migrations
+
+-created tables with their names and attributes
+-created assocations in the models
+-edited the migration files to have the options things
+
+think i need to add columns to Users of 'credential, password'
