@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
         // onDelete: 'cascade'
       })
 
-      User.hasMany(models.Reviews, {
+      User.hasMany(models.Review, {
         foreignKey: 'userId',
         //could this have been the error?
         // onDelete: 'cascade'
