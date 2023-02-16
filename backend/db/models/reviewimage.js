@@ -13,13 +13,14 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
       ReviewImage.belongsTo(models.Review, {
         foreignKey: 'reviewId',
-        onDelete: 'cascade'
+        //may or may not be necessary
+        // onDelete: 'cascade'
       })
     }
   }
   ReviewImage.init({
-    url: DataTypes.TEXT,
-    reviewId: DataTypes.INTEGER
+    url: {type: DataTypes.TEXT},
+    reviewId: {type: DataTypes.INTEGER}
   }, {
     sequelize,
     modelName: 'ReviewImage',
