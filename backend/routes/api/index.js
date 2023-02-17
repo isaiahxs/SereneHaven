@@ -2,6 +2,8 @@
 const router = require('express').Router();
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
+//NEED TO ADD THIS TOO
+const spotsRouter = require('./spots.js')
 const {restoreUser} = require('../../utils/auth')
 
 // GET /api/restore-user
@@ -10,6 +12,9 @@ router.use(restoreUser);
 router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
+
+//now working on kanban objectives
+router.use('/spots', spotsRouter);
 
 //this line is from First Steps after authme (get all spots)
 // router.use('/spots', spotsRouter);
