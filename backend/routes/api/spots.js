@@ -3,11 +3,18 @@ const express = require('express')
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
 //IMPORTANT DO I NEED TO IMPORT SPOT MODEL HERE INSTEAD OF USER
 const { Spot } = require('../../db/models');
+
+
 //following two lines are from phase 5
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
+//in case we need these models
+const {Model, Sequelize} = require('sequelize');
+const { User } = require('../../db/models');
+const { SpotImage } = require('../../db/models');
+const { Review } = require('../../db/models');
 
 router.get('/', async (req, res) => {
     //response will be res.json
