@@ -82,17 +82,7 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Spot',
-    defaultScope: {
-      include: [
-        {
-          model: sequelize.models.Review,
-          attributes: [
-            [Sequelize.fn('AVG', Sequelize.col('stars')), 'avgRating']
-          ]
-        }
-      ]
-    }
+    modelName: 'Spot'
   });
   return Spot;
 };
