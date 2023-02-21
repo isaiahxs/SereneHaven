@@ -26,6 +26,12 @@ const validateSignup = [
         .exists({ checkFalsy: true })
         .isLength({ min: 6 })
         .withMessage('Password must be 6 characters or more.'),
+    check('firstName')
+        .exists({checkFalsy: true})
+        .withMessage('Please provide a first name.'),
+    check('lastName')
+        .exists({checkFalsy: true})
+        .withMessage('Please provie a last name.'),
     handleValidationErrors
 ];
 
@@ -35,15 +41,52 @@ router.post(
     validateSignup,
     async (req, res) => {
         const { email, password, username, firstName, lastName } = req.body;
-        const user = await User.signup({ email, username, password, firstName, lastName });
+        try {
+            const existingEmail = await User.findOne({where: {email}});
+            if (existingEmail) {
+                return res.status(403).json({message: "That email is already taken."});
+            }
 
-        await setTokenCookie(res, user);
+            const existingUsername = await User.findOne({where: {username}});
+            if (existingUsername) {
+                return res.status(403).json({message: "That username is already taken."});
+            }
+            const user = await User.signup({ email, username, password, firstName, lastName });
+            const token = await setTokenCookie(res, user);
 
-        return res.json({
-        user
-        });
+
+            return res.json({
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                email: user.email,
+                username: user.username,
+                token
+            });
+        } catch (error) {
+            next(error);
+        }
     }
 );
+
+//--------------------
+//ORIGINAL SIGN UP
+// Sign up
+// router.post(
+//     '/',
+//     validateSignup,
+//     async (req, res) => {
+//         const { email, password, username, firstName, lastName } = req.body;
+//         const user = await User.signup({ email, username, password, firstName, lastName });
+
+//         await setTokenCookie(res, user);
+
+//         return res.json({
+//         user
+//         });
+//     }
+// );
+//--------------------
 
 // router.get('/', (req, res) => {
 //     console.log('hello, world');

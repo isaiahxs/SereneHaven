@@ -20,6 +20,10 @@ const validateLogin = [
     handleValidationErrors
 ];
 
+
+// Get current user
+
+
 // Log in
 router.post(
     '/',
