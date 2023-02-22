@@ -39,10 +39,15 @@ const handleValidationErrors = (req, _res, next) => {
       .array()
       .forEach(error => errors[error.param] = error.msg);
 
-    const err = Error("Invalid request.");
+    //Need to edit this to say Validation error instead of 'Bad request.'
+    // const err = Error("Bad request.");
+      //Above is ORIGINAL
+    const err = Error('Validation error');
     err.errors = errors;
     err.status = 400;
-    err.title = "Invalid request.";
+    // err.title = "Bad request.";
+      //Above is ORIGINAL
+    err.title = 'Bad request.';
     next(err);
   }
   next();
