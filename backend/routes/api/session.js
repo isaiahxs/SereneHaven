@@ -20,10 +20,6 @@ const validateLogin = [
     handleValidationErrors
 ];
 
-
-// Get current user
-
-
 // Log in ORIGINAL
 // router.post(
 //     '/',
@@ -90,7 +86,7 @@ router.delete(
     }
 );
 
-// Restore session user
+// Restore session user (Get current user)
 router.get(
     '/',
     restoreUser,

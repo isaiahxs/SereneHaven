@@ -1,8 +1,7 @@
 //this file will hold the resources for the route paths beginning with /api/users
 const express = require('express')
-const { setTokenCookie, requireAuth } = require('../../utils/auth');
-//IMPORTANT DO I NEED TO IMPORT SPOT MODEL HERE INSTEAD OF USER
-const { Spot } = require('../../db/models');
+const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
+const { Spot, User, SpotImage, Review } = require('../../db/models');
 
 
 //following two lines are from phase 5
@@ -12,30 +11,20 @@ const router = express.Router();
 
 //in case we need these models
 const {Model, Sequelize} = require('sequelize');
-const { User } = require('../../db/models');
-const { SpotImage } = require('../../db/models');
-const { Review } = require('../../db/models');
 
-//First WIP - only returns one spot though
-// router.get('/', async (req, res) => {
-//     //response will be res.json
+const validateSpot = [
+    check('address').exists({checkFalsy: true}).withMessage('Street address is required'),
+    check('city').exists({checkFalsy: true}).withMessage('City is required'),
+    check('state').exists({checkFalsy: true}).withMessage('State is required'),
+    check('country').exists({checkFalsy: true}).withMessage('Country is required'),
+    check('lat').exists({checkFalsy: true}).toFloat().isDecimal().withMessage('Latitude is not valid'),
+    check('lng').exists({checkFalsy: true}).toFloat().isDecimal().withMessage('Longitude is not valid'),
+    check('name').exists({checkFalsy: true}).isLength({max: 50}),
+    check('description').exists({checkFalsy: true}).withMessage('Description is required'),
+    check('price').exists({checkFalsy: true}).withMessage('Price per day is required')
+]
 
-//     //expected structure of response body has: id, ownerId, address, city, state, country, lat, lng, name, description, price, createdAt, updatedAt, avgRating, previewImage
-
-//     //need to return an object of name Spots that has an array of objects with those sets of properties in the objects
-
-//     //might require object manipulation of our code
-//         //when dealing with aggregate data or preview images
-//         //might have to do some looping
-//     try {
-//         const spots = await Spot.findAll();
-//         res.status(200).json({Spots: spots});
-//     } catch (err) {
-//         console.error(err);
-//         res.status(500).send('Server error');
-//     }
-// })
-
+//Get all spots
 router.get('/', async (req, res, next) => {
     const Spots = await Spot.findAll({
         attributes: [
@@ -61,6 +50,40 @@ router.get('/', async (req, res, next) => {
         return res.status(200).json({Spots})
     } else {
         res.status(400).json({message: "There are no spots available."})
+    }
+})
+
+//Create a spot
+router.post('/', validateSpot, requireAuth, async (req, res, next) => {
+    if (req.user) {
+        const {
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price,
+        } = req.body
+
+        const ownerId = req.user.id;
+
+        const spot = await Spot.create({
+            ownerId,
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+            name,
+            description,
+            price
+        })
+
+        if (spot) return res.status(201).json(spot);
     }
 })
 
