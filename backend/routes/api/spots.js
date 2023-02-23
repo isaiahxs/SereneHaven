@@ -11,6 +11,7 @@ const router = express.Router();
 
 //in case we need these models
 const {Model, Sequelize} = require('sequelize');
+const spot = require('../../db/models/spot');
 
 const validateSpot = [
     check('address').exists({checkFalsy: true}).withMessage('Street address is required'),
@@ -26,6 +27,8 @@ const validateSpot = [
 ]
 
 //will have to create validation down the line for reviews
+
+//will have to create validation down the line for bookings
 
 //Get all spots
     //DOES NOT ASK FOR SPECIFIC ERROR RETURNS
@@ -76,9 +79,109 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-//Create a spot
-//I NEED TO FIND OUT WHY WHEN I PUT IN AN EMPTY STRING FOR ADDRESS AND NAME IT SAYS Invalid value INSTEAD OF "Street address is required"
-    //NEED TO FIX PRICE AS WELL, it accepts strings at the moment
+//Get all spots owned by the current user
+    //REQUIRE AUTH: TRUE
+    //NEED TO GET 'Spots' ARRAY TO SHOW
+router.get('/current', requireAuth, async (req, res, next) => {
+    //if user is authenticated, findAll spots that belong to user from Spot model
+    const usersSpots = await Spot.findAll({
+        //filter spots by authenticated user's id
+        where: {ownerId: req.user.id},
+        attributes: [
+            //specify which columns to include in the result set
+            'id',
+            'ownerId',
+            'address',
+            'city',
+            'state',
+            'country',
+            'lat',
+            'lng',
+            'name',
+            'description',
+            'price',
+            'createdAt',
+            'updatedAt',
+            [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+            [Sequelize.fn('MAX', Sequelize.col('SpotImages.url')), 'previewImage']
+        ],
+        //specify models to eager load, only including respective foreign keys
+            //this way we can use the JOIN to fetch reviews and images for each spot without having to include full details
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                attributes: []
+            }
+        ],
+        group: ['Spot.id', 'SpotImages.id', 'Reviews.spotId']
+    })
+    //if there were spots, return usersSpots with 200 code
+    if (usersSpots) {
+        //easy way to get array of spots as part of JSON response is to wrap usersSpots array in an object with the key of Spots
+        return res.status(200).json({Spots: usersSpots});
+    }
+    //NO SPECIFICS ON WHAT ERROR THEY WANT RETURNED
+    res.status(404).json({'message': 'This user did not have any spots'})
+})
+
+
+//Get details of a spot by spotId //ON POSTMAN, THIS WORKS IF I SPECIFY SPOT MYSELF BUT NOT IF I LEAVE THE SQUIGGLY SPOTID REQUEST
+    //REQUIRE AUTH: FALSE
+    //error message suggests to me that the spotId is not an integer
+router.get('/:spotId', async (req, res, next) => {
+    //use findByPk() on Spot model to find spot with Id from URL parameter
+    const specificSpot = await Spot.findByPk(req.params.spotId, {
+        attributes: [
+            'id',
+            'ownerId',
+            'address',
+            'city',
+            'state',
+            'country',
+            'lat',
+            'lng',
+            'name',
+            'description',
+            'price',
+            'createdAt',
+            'updatedAt',
+            //THIS TIME THEY WANT THE TOTAL NUMBER OF REVIEWS, THEN AVG
+            [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'numReviews'],
+            [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']
+        ],
+        //specify which models to eager load
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                attributes: ['id', 'url', 'preview']
+            },
+            {
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        ],
+        group: ['Spot.id', 'SpotImages.id', 'Owner.id', 'Reviews.spotId']
+    })
+    //if the specified spot was found, respond with status code 200 and JSON body
+    if (specificSpot) {
+        return res.status(200).json(specificSpot)
+    }
+    //if not, return 404 with specific message and statusCode
+    return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
+})
+
+
+//Create a spot //NEED TO SEND USER TO FORBIDDEN IF THEY ARE NOT AUTHORIZED
+    //Price accepts a string at the moment
     //REQUIRE AUTH MUST BE TRUE
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
     //if user is authenticated,
@@ -127,7 +230,143 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
     }
 })
 
-//Get details of a spot by spotId
 
+//Add image to a spot based on Spot's id
+router.post('/:spotId/images', requireAuth, async (req, res, next) => {
+    //extract url and preview from request body
+    const {url, preview} = req.body
+
+    //find spot with given id using findOne()
+    const spot = await Spot.findOne({
+        where: {id: req.params.spotId}
+    });
+
+    //if there is no spot, return a 404
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    //check for user authorization
+    const authorized = await Spot.findOne({
+        where: {ownerId: req.user.id, id: req.params.spotId}
+    })
+
+    //if the user is not authorized, return a 403 with 'Forbidden' message
+    if (!authorized) {
+        return res.status(403).json({
+            message: 'Forbidden',
+            statusCode: 403
+        })
+    }
+
+    //if the user is authorized and there is a spot, create a record in SpotImage
+    const image = await SpotImage.create({
+        spotId: parseInt(req.params.spotId),
+        url,
+        preview
+    })
+
+    //if image was successfully added as a record in SpotImage, return status 200 with JSON of the image
+    if (image) return res.status(200).json({
+        id: image.id,
+        url: image.url,
+        preview: image.preview
+    });
+
+
+})
+
+//Edit a spot
+    //REQUIRE AUTH: TRUE
+router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
+    //find spot by parameter passed in
+    const specificSpot = await Spot.findByPk(req.params.spotId);
+
+    //extract everything needed from the request body
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+
+    const ownerId = req.user.id;
+
+    //if there is no specific spot, immediately return 404 saying it couldn't be found
+    if (!specificSpot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    //if user is authorized, they can update, if not, send them a 403 with message of 'Forbidden'
+    const authorized = await Spot.findOne({
+        where: {id: req.params.spotId, ownerId}
+    })
+
+    if (!authorized) {
+        return res.status(403).json({
+            message: "Forbidden",
+            statusCode: 403
+        })
+    }
+
+    //if there is a specific spot, then update it
+    const updatedSpot = await specificSpot.update({
+        ownerId,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+
+    if (updatedSpot) return res.status(200).json(updatedSpot);
+})
+
+//Delete a spot
+    //REQUIRE AUTH: TRUE
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    //spot must belong to current user in order for them to be able to destroy it
+    const spotId = req.params.spotId;
+    const ownerId = req.user.id;
+
+    //check if there is a spot
+    const spot = await Spot.findOne({where: {
+        id: spotId,
+    }})
+
+    //if there is no spot, immediately return a 404 saying it couldn't be found
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    //check if current user is authorized to delete this spot or not
+    const authorized = await Spot.findOne({
+        where: {id: spotId, ownerId}
+    })
+
+    //if they are not, give them a 403 and a forbidden
+    if (!authorized) {
+        return res.status(403).json({
+            message: "Forbidden",
+            statusCode: 403
+        })
+    }
+
+    //if the currentUser is in fact, the owner of this spot, then they are authorized to destroy it
+    await spot.destroy();
+
+    return res.status(200).json({
+        message: "Successfully deleted",
+        statusCode: 200
+    })
+})
 
 module.exports = router;
