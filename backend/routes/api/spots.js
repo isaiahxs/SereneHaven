@@ -1,4 +1,4 @@
-//this file will hold the resources for the route paths beginning with /api/users
+//this file will hold the resources for the route paths beginning with /api/spots
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const { Spot, User, SpotImage, Review } = require('../../db/models');
@@ -11,7 +11,7 @@ const router = express.Router();
 
 //in case we need these models
 const {Model, Sequelize} = require('sequelize');
-const spot = require('../../db/models/spot');
+// const spot = require('../../db/models/spot');
 
 const validateSpot = [
     check('address').exists({checkFalsy: true}).withMessage('Street address is required'),
@@ -26,7 +26,12 @@ const validateSpot = [
     handleValidationErrors
 ]
 
-//will have to create validation down the line for reviews
+//review validations
+const validateReview = [
+    check('review').exists({checkFalsy: true}).withMessage('Review text is required'),
+    check('stars').exists({checkFalsy: true}).isInt({min: 1, max: 5}).withMessage('Stars must be an integer from 1 to 5'),
+    handleValidationErrors
+]
 
 //will have to create validation down the line for bookings
 
@@ -367,6 +372,53 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
         message: "Successfully deleted",
         statusCode: 200
     })
+})
+
+
+//NEED TO CREATE A REVIEW FOR THIS USER FIRST BEFORE I CAN ACCESS IT WITH GET
+//This has to be in spots.js because of the url that Postman is trying to access
+//Create a review for a spot based on the spot's id
+    //REQUIRE AUTH: TRUE
+router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, next) => {
+    //extract review's text/string and stars from req body
+    const {review, stars} = req.body;
+
+    //extract spotId from params
+    const spotId = req.params.spotId;
+
+    //query to find spot with the passed in Id, if the spot does not exist, return a 404
+    const spot = await Spot.findOne({where: {id: spotId}});
+
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    //check if this user already has a review for this spot
+    const userReview = await Review.findOne({
+        where: {userId: req.user.id, spotId}
+    })
+
+    //if so, return a 403
+    if (userReview) {
+        return res.status(403).json({
+            message: "User already has a review for this spot",
+            statusCode: 403
+        })
+    }
+
+    //if this user has not yet created a review for this spot, create review
+    const newUserReview = await Review.create({
+        userId: req.user.id,
+        spotId,
+        review,
+        stars
+    })
+
+    //return success with status of 201
+    return res.status(201).json(newUserReview);
 })
 
 module.exports = router;
