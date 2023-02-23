@@ -5,6 +5,7 @@ const usersRouter = require('./users.js');
 //NEED TO ADD THIS TOO
 const spotsRouter = require('./spots.js')
 const reviewsRouter = require ('./reviews.js')
+const bookingsRouter = require ('./bookings.js')
 const {restoreUser} = require('../../utils/auth')
 
 // GET /api/restore-user
@@ -18,6 +19,8 @@ router.use('/users', usersRouter);
 router.use('/spots', spotsRouter);
 
 router.use('/reviews', reviewsRouter);
+
+router.use('/bookings', bookingsRouter);
 
 //this line is from First Steps after authme (get all spots)
 // router.use('/spots', spotsRouter);
