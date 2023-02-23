@@ -27,6 +27,8 @@ const validateSpot = [
 
 //will have to create validation down the line for reviews
 
+//will have to create validation down the line for bookings
+
 //Get all spots
     //DOES NOT ASK FOR SPECIFIC ERROR RETURNS
     //Require Auth: false
@@ -176,10 +178,58 @@ router.get('/current', requireAuth, async (req, res, next) => {
 })
 
 
-
-
-
 //Get details of a spot by spotId
+    //REQUIRE AUTH: FALSE
+    //error message suggests to me that the spotId is not an integer
+router.get('/:spotId', async (req, res, next) => {
+    //use findByPk() on Spot model to find spot with Id from URL parameter
+    const specificSpot = await Spot.findByPk(req.params.spotId, {
+        attributes: [
+            'id',
+            'ownerId',
+            'address',
+            'city',
+            'state',
+            'country',
+            'lat',
+            'lng',
+            'name',
+            'description',
+            'price',
+            'createdAt',
+            'updatedAt',
+            //THIS TIME THEY WANT THE TOTAL NUMBER OF REVIEWS, THEN AVG
+            [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'numReviews'],
+            [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']
+        ],
+        //specify which models to eager load
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                attributes: ['id', 'url', 'preview']
+            },
+            {
+                model: User,
+                as: 'Owner',
+                attributes: ['id', 'firstName', 'lastName']
+            }
+        ],
+        group: ['Spot.id', 'SpotImages.id', 'Owner.id', 'Reviews.spotId']
+    })
+    //if the specified spot was found, respond with status code 200 and JSON body
+    if (specificSpot) {
+        return res.status(200).json(specificSpot)
+    }
+    //if not, return 404 with specific message and statusCode
+    return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
+})
+
+
+
 
 //Add image to a spot based on Spot's id
 
