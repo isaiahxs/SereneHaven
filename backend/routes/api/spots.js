@@ -11,6 +11,7 @@ const router = express.Router();
 
 //in case we need these models
 const {Model, Sequelize} = require('sequelize');
+const spot = require('../../db/models/spot');
 
 const validateSpot = [
     check('address').exists({checkFalsy: true}).withMessage('Street address is required'),
@@ -248,18 +249,18 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
         })
     }
 
-    // //check for user authorization
-    // const authorized = await Spot.findOne({
-    //     where: {ownerId: req.user.id, id: req.params.spotId}
-    // })
+    //check for user authorization
+    const authorized = await Spot.findOne({
+        where: {ownerId: req.user.id, id: req.params.spotId}
+    })
 
-    // //if the user is not authorized, return a 403 with 'Forbidden' message
-    // if (!authorized) {
-    //     return res.status(403).json({
-    //         message: 'Forbidden',
-    //         statusCode: 403
-    //     })
-    // }
+    //if the user is not authorized, return a 403 with 'Forbidden' message
+    if (!authorized) {
+        return res.status(403).json({
+            message: 'Forbidden',
+            statusCode: 403
+        })
+    }
 
     //if the user is authorized and there is a spot, create a record in SpotImage
     const image = await SpotImage.create({
@@ -279,6 +280,52 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 })
 
 //Edit a spot
+    //REQUIRE AUTH: TRUE
+router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
+    //find spot by parameter passed in
+    const specificSpot = await Spot.findByPk(req.params.spotId);
+
+    //extract everything needed from the request body
+    const {address, city, state, country, lat, lng, name, description, price} = req.body;
+
+    const ownerId = req.user.id;
+
+    //if there is no specific spot, immediately return 404 saying it couldn't be found
+    if (!specificSpot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    //if user is authorized, they can update, if not, send them a 403 with message of 'Forbidden'
+    const authorized = await Spot.findOne({
+        where: {id: req.params.spotId, ownerId}
+    })
+
+    if (!authorized) {
+        return res.status(403).json({
+            message: "Forbidden",
+            statusCode: 403
+        })
+    }
+
+    //if there is a specific spot, then update it
+    const updatedSpot = await specificSpot.update({
+        ownerId,
+        address,
+        city,
+        state,
+        country,
+        lat,
+        lng,
+        name,
+        description,
+        price
+    })
+
+    if (updatedSpot) return res.status(200).json(updatedSpot);
+})
 
 //Delete a spot
 
