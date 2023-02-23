@@ -24,9 +24,14 @@ const validateSpot = [
     check('price').exists({checkFalsy: true}).withMessage('Price per day is required')
 ]
 
+//will have to create validation down the line for reviews
+
 //Get all spots
+    //DOES NOT ASK FOR SPECIFIC ERROR RETURNS
+    //Require Auth: false
 router.get('/', async (req, res, next) => {
     const Spots = await Spot.findAll({
+        //need to include Reviews table and SpotImages table
         attributes: [
             'id',
             'ownerId',
@@ -41,9 +46,24 @@ router.get('/', async (req, res, next) => {
             'price',
             'createdAt',
             'updatedAt',
-            [Sequelize.literal('(SELECT AVG(stars) FROM Reviews WHERE Reviews.spotId = Spot.id)'), 'avgRating'],
-            [Sequelize.literal('(SELECT url FROM SpotImages WHERE SpotImages.spotId = Spot.id ORDER BY createdAt DESC LIMIT 1)'), 'previewImage']
-        ]
+            //Old literal way
+                // [Sequelize.literal('(SELECT AVG(stars) FROM Reviews WHERE Reviews.spotId = Spot.id)'), 'avgRating'],
+                // [Sequelize.literal('(SELECT url FROM SpotImages WHERE SpotImages.spotId = Spot.id ORDER BY createdAt DESC LIMIT 1)'), 'previewImage']
+            [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+            //Since the SpotImages table has a createdAt column, MAX is applied there to get the image with the greatest createdAt value for each spot
+            [Sequelize.fn('MAX', Sequelize.col('SpotImages.url')), 'previewImage']
+        ],
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                attributes: []
+            }
+        ],
+        group: ['Spot.id', 'SpotImages.id', 'Reviews.spotId']
     })
 
     if (Spots) {
@@ -86,5 +106,8 @@ router.post('/', validateSpot, requireAuth, async (req, res, next) => {
         if (spot) return res.status(201).json(spot);
     }
 })
+
+//Get details of a spot by spotId
+
 
 module.exports = router;
