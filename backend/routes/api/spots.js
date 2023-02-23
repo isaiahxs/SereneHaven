@@ -19,9 +19,10 @@ const validateSpot = [
     check('country').exists({checkFalsy: true}).withMessage('Country is required'),
     check('lat').exists({checkFalsy: true}).toFloat().isDecimal().withMessage('Latitude is not valid'),
     check('lng').exists({checkFalsy: true}).toFloat().isDecimal().withMessage('Longitude is not valid'),
-    check('name').exists({checkFalsy: true}).isLength({max: 50}),
+    check('name').exists({checkFalsy: true}).isLength({ min: 1, max: 49}).withMessage('Name must be less than 50 characters'),
     check('description').exists({checkFalsy: true}).withMessage('Description is required'),
-    check('price').exists({checkFalsy: true}).withMessage('Price per day is required')
+    check('price').exists({checkFalsy: true}).withMessage('Price per day is required'),
+    handleValidationErrors
 ]
 
 //will have to create validation down the line for reviews
@@ -53,6 +54,7 @@ router.get('/', async (req, res, next) => {
             //Since the SpotImages table has a createdAt column, MAX is applied there to get the image with the greatest createdAt value for each spot
             [Sequelize.fn('MAX', Sequelize.col('SpotImages.url')), 'previewImage']
         ],
+        //must join Review and SpotImage tables so that I can use AVG and MAX functions
         include: [
             {
                 model: Review,
@@ -63,6 +65,7 @@ router.get('/', async (req, res, next) => {
                 attributes: []
             }
         ],
+        //group by Spot.id, SpotImages.id, Reviews.spotId
         group: ['Spot.id', 'SpotImages.id', 'Reviews.spotId']
     })
 
@@ -74,8 +77,16 @@ router.get('/', async (req, res, next) => {
 })
 
 //Create a spot
-router.post('/', validateSpot, requireAuth, async (req, res, next) => {
+//I NEED TO FIND OUT WHY WHEN I PUT IN AN EMPTY STRING FOR ADDRESS AND NAME IT SAYS Invalid value INSTEAD OF "Street address is required"
+    //NEED TO FIX PRICE AS WELL, it accepts strings at the moment
+    //REQUIRE AUTH MUST BE TRUE
+router.post('/', requireAuth, validateSpot, async (req, res, next) => {
+    //if user is authenticated,
     if (req.user) {
+        //check if there is an existing Spot in the database using findAll
+        const Locations = await Spot.findAll();
+
+        //extract required fields for creating new Spot from req.body
         const {
             address,
             city,
@@ -85,25 +96,34 @@ router.post('/', validateSpot, requireAuth, async (req, res, next) => {
             lng,
             name,
             description,
-            price,
-        } = req.body
-
-        const ownerId = req.user.id;
-
-        const spot = await Spot.create({
-            ownerId,
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            description,
             price
-        })
+        } = req.body;
 
-        if (spot) return res.status(201).json(spot);
+        //if there was an existing location, we can check who owns that location
+        if (Locations) {
+            //retrieve current location owner from req.user object
+            //must be ownerId because it could be used to associate a spot with its owner
+                //if a user is the owner of a spot, they may have certain permissions that non-owners do not have
+                    //such as the abilty to edit or delete a spot
+            const ownerId = req.user.id
+
+            //call Spot.create with extracted fields and ownerId
+            const newLocation = await Spot.create({
+                ownerId,
+                address,
+                city,
+                state,
+                country,
+                lat,
+                lng,
+                name,
+                description,
+                price
+            })
+
+            //if the newLocation was successfully created, return a 201 status code with JSON of new location
+            if (newLocation) return res.status(201).json(newLocation);
+        }
     }
 })
 
