@@ -20,30 +20,61 @@ const validateLogin = [
     handleValidationErrors
 ];
 
-// Log in
+// Log in ORIGINAL
+// router.post(
+//     '/',
+//     validateLogin,
+//     async (req, res, next) => {
+//       const { credential, password } = req.body;
+
+//       const user = await User.login({ credential, password });
+
+//       if (!user) {
+//         const err = new Error('Login failed');
+//         err.status = 401;
+//         err.title = 'Login failed';
+//         err.errors = ['The provided credentials were invalid.'];
+//         return next(err);
+//       }
+
+//       await setTokenCookie(res, user);
+
+//       return res.json({
+//         user
+//       });
+//     }
+//   );
+
+// Log in POST-EDITS
 router.post(
-    '/',
-    validateLogin,
-    async (req, res, next) => {
-      const { credential, password } = req.body;
+  '/',
+  validateLogin,
+  async (req, res, next) => {
+    const { credential, password } = req.body;
 
-      const user = await User.login({ credential, password });
+    const user = await User.login({ credential, password });
 
-      if (!user) {
-        const err = new Error('Login failed');
-        err.status = 401;
-        err.title = 'Login failed';
-        err.errors = ['The provided credentials were invalid.'];
-        return next(err);
-      }
-
-      await setTokenCookie(res, user);
-
-      return res.json({
-        user
-      });
+    if (!user) {
+      const err = new Error('Invalid credentials');
+      err.status = 401;
+      // err.title = 'Login failed';
+      // err.errors = ['The provided credentials were invalid.'];
+      return res.status(401).json({
+        message: err.message,
+        statusCode: err.status
+      })
     }
-  );
+
+    await setTokenCookie(res, user);
+    const {id, username, email, firstName, lastName } = user;
+
+    return res.json({
+      user: {id, firstName, lastName, email, username}
+    });
+    next();
+  }
+);
+  //completed log in
 
 
 // Log out
@@ -55,7 +86,7 @@ router.delete(
     }
 );
 
-// Restore session user
+// Restore session user (Get current user)
 router.get(
     '/',
     restoreUser,
