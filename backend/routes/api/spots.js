@@ -403,7 +403,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
 
     //if so, return a 403
     if (userReview) {
-        res.status(403).json({
+        return res.status(403).json({
             message: "User already has a review for this spot",
             statusCode: 403
         })
@@ -418,7 +418,7 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
     })
 
     //return success with status of 201
-    res.status(201).json(newUserReview);
+    return res.status(201).json(newUserReview);
 })
 
 module.exports = router;
