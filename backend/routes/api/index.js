@@ -4,6 +4,7 @@ const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 //NEED TO ADD THIS TOO
 const spotsRouter = require('./spots.js')
+const reviewsRouter = require ('./reviews.js')
 const {restoreUser} = require('../../utils/auth')
 
 // GET /api/restore-user
@@ -15,6 +16,8 @@ router.use('/users', usersRouter);
 
 //now working on kanban objectives
 router.use('/spots', spotsRouter);
+
+router.use('/reviews', reviewsRouter);
 
 //this line is from First Steps after authme (get all spots)
 // router.use('/spots', spotsRouter);
