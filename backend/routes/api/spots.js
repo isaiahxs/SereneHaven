@@ -1,4 +1,4 @@
-//this file will hold the resources for the route paths beginning with /api/users
+//this file will hold the resources for the route paths beginning with /api/spots
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const { Spot, User, SpotImage, Review } = require('../../db/models');
