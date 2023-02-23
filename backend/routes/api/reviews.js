@@ -204,6 +204,52 @@ router.put('/:reviewId', requireAuth, validateReview, async (req, res, next) => 
 })
 
 //Delete a review
+    //REQUIRE AUTH: TRUE
+router.delete('/:reviewId', requireAuth, async (req, res, next) => {
+    //extract reviewId
+    const reviewId = req.params.reviewId;
+
+    //extract user
+    const userId = req.user.id;
+
+    //see if review with passed in id exists already
+    const rev = await Review.findOne({
+        where: {
+            id: reviewId,
+        }
+    })
+
+    //if this spot does not exist, return a 404
+    if (!rev) return res.status(404).json({
+        message: "Review couldn't be found",
+        statusCode: 404
+    })
+
+    //check for authorization
+    const authorized = await Review.findOne({
+        where: {
+            id: reviewId,
+            userId
+        }
+    })
+
+    //if user is not authorized, return 403 and Forbidden
+    if (!authorized) {
+        return res.status(403).json({
+            message: "Forbidden",
+            statusCode: 403
+        })
+    }
+
+    //if user is authorized and there is a spot at this location, destroy it
+    await rev.destroy();
+
+    //return 200 and successful message
+    return res.status(200).json({
+        message: "Successfully deleted",
+        statusCode: 200
+    })
+})
 
 
 module.exports = router;
