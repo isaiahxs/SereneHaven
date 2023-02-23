@@ -106,6 +106,57 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 })
 
+//Add an image to a review based on the review's id
+    //REQUIRE AUTH: TRUE
+router.post('/:reviewId/images', requireAuth, async (req, res, next) => {
+    //extract review from params
+    const reviewId = req.params.reviewId;
+    //extract url from req body
+    const {url} = req.body;
+
+    //see if there is a review at this Id already
+    const rev = await Review.findOne(
+        {
+            where: {id: reviewId}
+        }
+    )
+
+    //if there is not, return a 404 saying Review couldn't be found
+    if (!rev) return res.status(404).json({message: "Review couldn't be found", statusCode: 404});
+
+    //since only authorized users can post here, check for auth
+    const authorized = await Review.findOne({
+        where: {
+            id: reviewId,
+            userId: req.user.id
+        }
+    })
+
+    //if user is not authorized, return a 403 and Forbidden
+    if (!authorized) return res.status(403).json({message: 'Forbidden', statusCode: 403})
+
+    //we only want 10 images per spot so first, find all reviewImages
+    const revImages = await ReviewImage.findAll({where: {reviewId}})
+
+    //if we have more than 10 images in this array returned, return a 403 saying max has been reached
+        //for some reason, if i just have > 10 here, it allows 10 additional ones to be created even though there was already an existing review here
+    if (revImages.length >= 10) {
+        return res.status(403).json({
+            message: "Maximum number of images for this resource was reached",
+            statusCode: 403
+        })
+    }
+
+    //if user is authorized, and there are no more than 10 images for this resource, continue and create the new image
+    const newImage = await ReviewImage.create({reviewId, url})
+
+    //return 200 with id and url from newImage
+    return res.status(200).json({
+        id: newImage.id,
+        url: newImage.url
+    })
+})
+
 
 
 module.exports = router;
