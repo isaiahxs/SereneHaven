@@ -180,7 +180,7 @@ router.get('/:spotId', async (req, res, next) => {
 })
 
 
-//Create a spot
+//Create a spot //NEED TO SEND USER TO FORBIDDEN IF THEY ARE NOT AUTHORIZED
     //Price accepts a string at the moment
     //REQUIRE AUTH MUST BE TRUE
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
@@ -328,5 +328,45 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
 })
 
 //Delete a spot
+    //REQUIRE AUTH: TRUE
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    //spot must belong to current user in order for them to be able to destroy it
+    const spotId = req.params.spotId;
+    const ownerId = req.user.id;
+
+    //check if there is a spot
+    const spot = await Spot.findOne({where: {
+        id: spotId,
+    }})
+
+    //if there is no spot, immediately return a 404 saying it couldn't be found
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    //check if current user is authorized to delete this spot or not
+    const authorized = await Spot.findOne({
+        where: {id: spotId, ownerId}
+    })
+
+    //if they are not, give them a 403 and a forbidden
+    if (!authorized) {
+        return res.status(403).json({
+            message: "Forbidden",
+            statusCode: 403
+        })
+    }
+
+    //if the currentUser is in fact, the owner of this spot, then they are authorized to destroy it
+    await spot.destroy();
+
+    return res.status(200).json({
+        message: "Successfully deleted",
+        statusCode: 200
+    })
+})
 
 module.exports = router;
