@@ -1,7 +1,7 @@
 //this file will hold the resources for the route paths beginning with /api/spots
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { Spot, User, SpotImage, Review } = require('../../db/models');
+const { Spot, User, SpotImage, Review, Booking } = require('../../db/models');
 
 
 //following two lines are from phase 5
@@ -10,7 +10,9 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 //in case we need these models
-const {Model, Sequelize} = require('sequelize');
+    //ADDED OP IN REQUIRE
+const {Model, Sequelize, Op} = require('sequelize');
+const booking = require('../../db/models/booking');
 // const spot = require('../../db/models/spot');
 
 const validateSpot = [
@@ -34,6 +36,18 @@ const validateReview = [
 ]
 
 //will have to create validation down the line for bookings
+const validateBookings = [
+    check('startDate').exists({checkFalsy: true}),
+    check('endDate').exists({checkFalsy: true})
+    .custom((value, {req}) => {
+        if (value <= req.body.startDate) {
+            throw new Error('endDate cannot be on or before startDate');
+        }
+        return true
+    }),
+    handleValidationErrors
+]
+
 
 //Get all spots
     //DOES NOT ASK FOR SPECIFIC ERROR RETURNS
@@ -419,6 +433,93 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
 
     //return success with status of 201
     return res.status(201).json(newUserReview);
+})
+
+//Create a booking from a spot based on the spot's id
+    //REQUIRE AUTH: TRUE
+router.post('/:spotId/bookings', requireAuth, validateBookings, async (req, res, next) => {
+    //extract spotId from params
+    const spotId = req.params.spotId;
+
+    //look for spot with specified Id
+    const spot = await Spot.findByPk(spotId);
+
+    //extract user
+    const userId = req.user.id;
+
+    //extract startDate and endDate from req body
+    const {startDate, endDate} = req.body;
+
+    //if there is no spot with this spotId, return a 404
+    if (!spot) return res.status(404).json({
+        message: "Spot couldn't be found",
+        statusCode: 404
+    })
+
+    //a user is only authorized to create a booking if they do NOT OWN THE SPOT
+    if (spot.ownerId === userId) return res.status(400).json({
+        message: "Sorry, since you own the spot, you cannot create bookings for it",
+        statusCode: 400
+    })
+
+    //i think our endDate before startDate should be getting taken care of by the validateBookings
+
+    //if the dates selected by the user are already taken, return a 403
+        //need to query the Bookings table and see if startDate and endDate of the new booking fall between the existing bookings
+            //or if new booking overlaps old bookings
+
+        //if there are conflicting times/dates, return a 403 saying the dates are already taken
+    const conflictingDate = await Booking.findOne({
+        where: {
+            spotId,
+            [Op.and]: [
+                {
+                    //first, check if start and end dates fall between existing booking's start and end date
+                    [Op.or]: [
+                        {startDate: {[Op.between]: [startDate, endDate]}},
+                        {endDate: {[Op.between]: [startDate, endDate]}},
+                    ]
+                },
+                {
+                    //then, check if an existing booking's start and end dates fall between the start and end dates provided
+                    [Op.or]: [
+                        {startDate: {[Op.gte]: startDate}},
+                        {endDate: {[Op.lte]: endDate}}
+                    ]
+                }
+            ]
+        }
+    })
+
+    //if there is a conflictingDate, return necessary errors
+    if (conflictingDate) {
+        //USE NEWDATE() TO CONVERT DATE STRINGS TO JS DATE OBJECTS
+            //if there is a conflict, add appropriate error message to error object
+            //at last, return 403 with desired messages and code
+        const errors = {};
+
+        //check if start date conflicts with existing booking
+        if (new Date(startDate) >= new Date(conflictingDate.startDate) && new Date(startDate) <= new Date(conflictingDate.endDate)) {
+            errors.startDate = 'Start date conflicts with an existing booking';
+        }
+
+        //check if end date conflicts with existing booking
+        if (new Date(endDate) >= new Date(conflictingDate.startDate) && new Date(endDate) <= new Date(conflictingDate.endDate)) {
+            errors.endDate = 'End date conflicts with an existing booking';
+        }
+
+        return res.status(403).json({
+            message: 'Sorry, this spot is already booked for the specified dates',
+            statusCode: 403,
+            errors: errors
+        })
+    }
+
+    //if there is not a conflictingDate, create the new booking
+    const newBooking = await Booking.create({spotId, userId, startDate, endDate})
+
+    //return the new booking
+    return res.status(200).json(newBooking);
 })
 
 module.exports = router;
