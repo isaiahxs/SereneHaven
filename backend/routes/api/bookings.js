@@ -9,6 +9,29 @@ const { handleValidationErrors } = require('../../utils/validation');
 const {Sequelize} = require('sequelize');
 const router = express.Router();
 
+//likely going to need validateBookings
+    //onl requirement here is that endDate cannot be before startDate
+const validateBookings = [
+    check('startDate').exists({checkFalsy: true}),
+    check('endDate').exists({checkFalsy: true})
+    .custom((value, {req}) => {
+        if (value < req.body.startDate) {
+            throw new Error('endDate cannot come before startDate');
+        }
+        return true
+    }),
+    handleValidationErrors
+]
+
+//Get all of the current user's bookings FIRST NEED TO CREATE BOOKING (IN SPOTS.JS) OR ELSE I'LL GET SOMETHING EMPTY HERE
+//     //REQUIRE AUTH: TRUE
+// router.get('/current', requireAuth, async (req, res, next) => {
+
+
+//     //if current user is authorized, return status 200 with json of bookings
+// })
+
+
 
 
 module.exports = router;
