@@ -1,7 +1,7 @@
 //this file will hold the resources for the route paths beginning with /api/spots
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { Spot, User, SpotImage, Review, Booking } = require('../../db/models');
+const { Spot, User, SpotImage, Review, Booking, ReviewImage } = require('../../db/models');
 
 
 //following two lines are from phase 5
@@ -433,6 +433,53 @@ router.post('/:spotId/reviews', requireAuth, validateReview, async (req, res, ne
 
     //return success with status of 201
     return res.status(201).json(newUserReview);
+})
+
+//Get all reviews by a spot's id
+    //REQUIRE AUTH: FALSE
+router.get('/:spotId/reviews', async (req, res) => {
+    //extract spotId from params
+    const spotId = req.params.spotId;
+
+    //obtain reviews for this spotId and include Users and ReviewImages
+    const reviews = await Review.findAll({
+        where: {
+            spotId
+        },
+        include: [
+            {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+            },
+            {
+                model: ReviewImage,
+                attributes: ['id', 'url']
+            }
+        ],
+        group: ['Review.id', 'User.id', 'ReviewImages.id']
+    })
+
+    //put these reviews in an array
+    const spotReviews = reviews.map((rev) => ({
+        id: rev.id,
+        userId: rev.userId,
+        spotId: rev.spotId,
+        review: rev.review,
+        stars: rev.stars,
+        createdAt: rev.createdAt,
+        updatedAt: rev.updatedAt,
+        User: rev.User,
+        ReviewImages: rev.ReviewImages
+    }))
+
+    //if there have been reviews retreived for this spot, return status 200 with json
+    if (spotReviews.length > 0) return res.status(200).json({Reviews: spotReviews})
+
+    //if no reviews were found for this spot, return a 404 with specific message
+    return res.status(404).json({
+        message: "Spot couldn't be found",
+        statusCode: 404
+    })
 })
 
 //Create a booking from a spot based on the spot's id
