@@ -7,6 +7,7 @@ const { Spot, User, SpotImage, Review, ReviewImage, Booking } = require('../../d
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const {Sequelize, Op} = require('sequelize');
+const { response } = require('express');
 const router = express.Router();
 
 //likely going to need validateBookings
@@ -145,6 +146,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 //Edit a booking
   //REQUIRE AUTH: TRUE
+  //BOOKING MUST BELONG TO CURRENT USER
+    //NEEDS AUTHORIZATION
 router.put('/:bookingId', requireAuth, validateBookings, async (req, res) => {
 
     //NEED TO COME BACK HERE AND ADD AUTHORIZATION CHECK
@@ -166,6 +169,13 @@ router.put('/:bookingId', requireAuth, validateBookings, async (req, res) => {
     if (!oldBooking) return res.status(404).json({
       message: "Booking couldn't be found",
       statusCode: 404
+    })
+
+    //check for authorization
+      //booking must belong to current user
+    if (oldBooking.userId !== req.user.id) return res.status(403).json({
+      message: "Forbidden",
+      statusCode: 403
     })
 
     //see if user is trying to edit a booking that has ended already (before the current date)
@@ -227,7 +237,7 @@ router.put('/:bookingId', requireAuth, validateBookings, async (req, res) => {
 
           return res.status(403).json({
               message: 'Sorry, this spot is already booked for the specified dates',
-              statusCode: 403,
+              statusCode: 400,
               errors: errors
           })
       }
@@ -237,6 +247,48 @@ router.put('/:bookingId', requireAuth, validateBookings, async (req, res) => {
       return res.status(200).json(oldBooking);
 })
 
+
+//Delete a booking
+  //REQUIRE AUTH: TRUE
+  //WILL HAVE TO RETURN TO DO AUTHORIZATION CHECK
+    //booking must belong to current user or the spot must belong to the current user
+
+router.delete('/:bookingId', requireAuth, async (req, res) => {
+  //extract bookingId from params
+  const bookingId = req.params.bookingId;
+
+  //find booking at this id
+  const booking = await Booking.findByPk(bookingId)
+
+  //if no booking was found at this id, return 404 with specific message
+  if (!booking) return res.status(404).json({
+    message: "Booking couldn't be found",
+    statusCode: 404
+  })
+
+  //check for authorization WIP
+    //booking must belong to current user or spot must belong to current user
+
+
+  //bookings that have been started cannot be deleted
+  //find out when booking's startDate was and if it is before today's date, return 403 with specific message
+  const bookingStart = booking.startDate;
+  const today = new Date()
+
+  if (new Date(bookingStart) <= today) return res.status(403).json({
+    message: "Bookings that have been started can't be deleted",
+    statusCode: 403
+  })
+
+  //if booking was found at this id, and its startDate has not started yet, destroy it
+  await booking.destroy()
+  return res.status(200).json({
+    message: 'Successfully deleted',
+    statusCode: 200
+  })
+
+
+})
 
 
 module.exports = router;
