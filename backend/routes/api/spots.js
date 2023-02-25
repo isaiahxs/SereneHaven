@@ -389,7 +389,7 @@ router.delete('/:spotId', requireAuth, async (req, res, next) => {
 })
 
 
-//NEED TO CREATE A REVIEW FOR THIS USER FIRST BEFORE I CAN ACCESS IT WITH GET
+//NEED TO CREATE A REVIEW FOR THIS SPOT FIRST BEFORE I CAN ACCESS IT WITH GET
 //This has to be in spots.js because of the url that Postman is trying to access
 //Create a review for a spot based on the spot's id
     //REQUIRE AUTH: TRUE
@@ -520,6 +520,70 @@ router.post('/:spotId/bookings', requireAuth, validateBookings, async (req, res,
 
     //return the new booking
     return res.status(200).json(newBooking);
+})
+
+//Get all bookings for a spot based on spot's id
+    //REQUIRE AUTH: TRUE
+router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
+    //extract specific spotId from params
+    const spotId = req.params.spotId;
+
+    //retrieve spot by its Id
+    const spot = await Spot.findByPk(spotId);
+
+    //if spot could not be found, return a 404 with message
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
+    //find out who the owner is, if there is a spot
+    const owner = spot.ownerId;
+
+    //get current user (will likely need this for authorization check)
+    const userId = req.user.id;
+        //could add a where clause here to make sure user isn't the owner
+
+    //THERE WILL BE TWO SUCCESSFUL OUTCOMES, ONE IF YOU'RE THE OWNER
+        //AND ONE IF YOU'RE NOT
+    //First, if USER IS NOT THE OWNER OF THIS SPOT
+    if (owner !== userId) {
+        const bookings = await Booking.findAll({
+            where: {
+                spotId: spotId
+            },
+            attributes: [
+                'spotId',
+                'startDate',
+                'endDate'
+            ]
+        })
+        // console.log('bookings', bookings);
+
+        return res.status(200).json({Bookings: bookings})
+    } else {
+    //Second, if USER IS THE OWNER OF THE SPOT
+        const bookings = await Booking.findAll({
+            where: {
+                spotId: spotId
+            },
+            include: [
+                {
+                model: User,
+                attributes: ['id', 'firstName', 'lastName']
+                }
+            ]
+        })
+        // console.log('bookings', bookings);
+        // bookings.forEach((booking) => {
+        //     console.log(`Booking Start Date: ${booking.startDate.toISOString()}`);
+        //     console.log(`Booking End Date: ${booking.endDate.toISOString()}`);
+        //   });
+
+        return res.status(200).json({Bookings: bookings})
+    }
 })
 
 module.exports = router;
