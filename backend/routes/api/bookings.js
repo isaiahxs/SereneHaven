@@ -268,7 +268,13 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 
   //check for authorization WIP
     //booking must belong to current user or spot must belong to current user
-
+  //if current user's id does not match the owner id of this booking AND current user's id does not match the id of the person who made the booking, return error
+  if (req.user.id !== booking.ownerId && req.user.id !== booking.userId) {
+    return res.status(403).json({
+      message: 'Forbidden',
+      statusCode: 403
+    })
+  }
 
   //bookings that have been started cannot be deleted
   //find out when booking's startDate was and if it is before today's date, return 403 with specific message
