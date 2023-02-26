@@ -147,7 +147,6 @@ router.get('/current', requireAuth, async (req, res, next) => {
 //Edit a booking
   //REQUIRE AUTH: TRUE
   //BOOKING MUST BELONG TO CURRENT USER
-    //NEEDS AUTHORIZATION
 router.put('/:bookingId', requireAuth, validateBookings, async (req, res) => {
 
     //NEED TO COME BACK HERE AND ADD AUTHORIZATION CHECK
@@ -250,7 +249,6 @@ router.put('/:bookingId', requireAuth, validateBookings, async (req, res) => {
 
 //Delete a booking
   //REQUIRE AUTH: TRUE
-  //WILL HAVE TO RETURN TO DO AUTHORIZATION CHECK
     //booking must belong to current user or the spot must belong to the current user
 
 router.delete('/:bookingId', requireAuth, async (req, res) => {
