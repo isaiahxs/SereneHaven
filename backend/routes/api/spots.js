@@ -48,6 +48,48 @@ const validateBookings = [
     handleValidationErrors
 ]
 
+const validateQueryParams = [
+    check('page')
+        .isInt({min: 1, max: 10})
+        .withMessage("Page must be greater than or equal to 1"),
+
+    check('size')
+        .isInt({min: 1, max: 20})
+        .withMessage("Size must be greater than or equal to 1"),
+
+    check('minLat')
+        .isDecimal()
+        .optional()
+        .withMessage("Minimum latitude is invalid"),
+
+    check('maxLat')
+        .isDecimal()
+        .optional()
+        .withMessage("Maximum latitude is invalid"),
+
+    check('minLng')
+        .isDecimal()
+        .optional()
+        .withMessage("Minimum longitude is invalid"),
+
+    check('maxLng')
+        .isDecimal()
+        .optional()
+        .withMessage("Maximum longitude is invalid"),
+
+    check('minPrice')
+        .isDecimal()
+        .optional()
+        .withMessage("Minimum price must be greater than or equal to 0"),
+
+    check('maxPrice')
+        .isDecimal()
+        .optional()
+        .withMessage("Maximum price must be greater than or equal to 0"),
+
+    handleValidationErrors
+]
+
 
 //Get all spots
     //DOES NOT ASK FOR SPECIFIC ERROR RETURNS
