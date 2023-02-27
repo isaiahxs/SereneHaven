@@ -282,7 +282,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             'city',
             'state',
             'country',
-            'lat'.toJSON(),
+            'lat',
             'lng',
             'name',
             'description',
@@ -311,6 +311,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         //easy way to get array of spots as part of JSON response is to wrap usersSpots array in an object with the key of Spots
         return res.status(200).json({Spots: usersSpots});
     }
+
     //NO SPECIFICS ON WHAT ERROR THEY WANT RETURNED
     res.status(404).json({'message': 'This user did not have any spots'})
 })
