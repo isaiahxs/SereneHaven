@@ -908,10 +908,6 @@ router.get('/:spotId', async (req, res, next) => {
 //SECOND WIP Create a spot
     //REQUIRE AUTH: TRUE
     router.post('/', requireAuth, validateSpot, async (req, res, next) => {
-        //if user is authenticated,
-        if (req.user) {
-            //check if there is an existing Spot in the database using findAll
-            const Locations = await Spot.findAll();
 
             //extract required fields for creating new Spot from req.body
             const {
@@ -926,37 +922,39 @@ router.get('/:spotId', async (req, res, next) => {
                 price
             } = req.body;
 
-            //convert lat, lng, and price to floats using parseFloat
-            const parsedLat = parseFloat(lat);
-            const parsedLng = parseFloat(lng);
-            const parsedPrice = parseFloat(price);
-
-            //if there was an existing location, we can check who owns that location
-            if (Locations) {
-                //retrieve current location owner from req.user object
+            //retrieve current location owner from req.user object
                 //must be ownerId because it could be used to associate a spot with its owner
                     //if a user is the owner of a spot, they may have certain permissions that non-owners do not have
                         //such as the abilty to edit or delete a spot
-                const ownerId = req.user.id
+            const ownerId = req.user.id
 
-                //call Spot.create with extracted fields and ownerId
-                const newLocation = await Spot.create({
-                    ownerId,
-                    address,
-                    city,
-                    state,
-                    country,
-                    lat: parsedLat,
-                    lng: parsedLng,
-                    name,
-                    description,
-                    price: parsedPrice
+            //create new location
+            const Location = await Spot.create({ownerId, address, city, state, country, lat, lng, name, description, price})
+
+            if (Location) {
+                //convert lat, lng, and price to floats using parseFloat (this is so we get numbers in responses from live postman requests)
+                let loc = Location.toJSON();
+                const lat = parseFloat(loc.lat);
+                const lng = parseFloat(loc.lng);
+                const price = parseFloat(loc.price);
+
+                //return 201 with JSON of new location
+                return res.status(200).json({
+                    id: loc.id,
+                    ownerId: loc.ownerId,
+                    address: loc.address,
+                    city: loc.city,
+                    state: loc.state,
+                    country: loc.country,
+                    lat,
+                    lng,
+                    name: loc.name,
+                    description: loc.description,
+                    price,
+                    createdAt: loc.createdAt,
+                    updatedAt: loc.updatedAt
                 })
-
-                //if the newLocation was successfully created, return a 201 status code with JSON of new location
-                if (newLocation) return res.status(201).json(newLocation);
             }
-        }
     })
 
 //-------------------------------------------------------------------------------------------------
