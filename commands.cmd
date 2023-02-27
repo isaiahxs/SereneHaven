@@ -4,6 +4,9 @@ npx dotenv sequelize-cli db:migrate
 @REM undo last migration
 npx dotenv sequelize-cli db:migrate:undo
 
+@REM undo all migrations
+npx dotenv sequelize-cli db:migrate:undo:all
+
 @REM generating a user seeder file for the demo user
 npx sequelize seed:generate --name demo-user
 
