@@ -221,6 +221,12 @@ router.get("/", validateQueryParamaters, async (req, res, next) => {
         avgRating = null;
       }
 
+      //NEW ADDITIONS
+      loc = loc.toJSON();
+      const lat = parseFloat(loc.lat);
+      const lng = parseFloat(loc.lng);
+      const price = parseFloat(loc.price);
+
       return {
         id: loc.id,
         ownerId: loc.ownerId,
@@ -228,11 +234,16 @@ router.get("/", validateQueryParamaters, async (req, res, next) => {
         city: loc.city,
         state: loc.state,
         country: loc.country,
-        lat: loc.lat,
-        lng: loc.lng,
+        lat,
+        lng,
+        //old lat and lng systems that were returning strings on live
+        // lat: loc.lat,
+        // lng: loc.lng,
         name: loc.name,
         description: loc.description,
-        price: loc.price,
+        price,
+        //old price system that was returning string on live
+        // price: loc.price,
         createdAt: loc.createdAt,
         updatedAt: loc.updatedAt,
         avgRating,
