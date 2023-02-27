@@ -855,39 +855,66 @@ router.get('/:spotId', async (req, res, next) => {
 
 //------------------------------------------------------------------------------------------
 
-//Create a spot
-    //Price accepts a string at the moment
+// //Create a spot ORIGINAL
+//     //REQUIRE AUTH: TRUE
+// router.post('/', requireAuth, validateSpot, async (req, res, next) => {
+//     //if user is authenticated,
+//     if (req.user) {
+//         //check if there is an existing Spot in the database using findAll
+//         const Locations = await Spot.findAll();
+
+//         //extract required fields for creating new Spot from req.body
+//         const {
+//             address,
+//             city,
+//             state,
+//             country,
+//             lat,
+//             lng,
+//             name,
+//             description,
+//             price
+//         } = req.body;
+
+//         //if there was an existing location, we can check who owns that location
+//         if (Locations) {
+//             //retrieve current location owner from req.user object
+//             //must be ownerId because it could be used to associate a spot with its owner
+//                 //if a user is the owner of a spot, they may have certain permissions that non-owners do not have
+//                     //such as the abilty to edit or delete a spot
+//             const ownerId = req.user.id
+
+//             //call Spot.create with extracted fields and ownerId
+//             const newLocation = await Spot.create({
+//                 ownerId,
+//                 address,
+//                 city,
+//                 state,
+//                 country,
+//                 lat,
+//                 lng,
+//                 name,
+//                 description,
+//                 price
+//             })
+
+//             //if the newLocation was successfully created, return a 201 status code with JSON of new location
+//             if (newLocation) return res.status(201).json(newLocation);
+//         }
+//     }
+// })
+
+//-----------------------------------------------------------------------------------------
+//SECOND WIP Create a spot
     //REQUIRE AUTH: TRUE
-router.post('/', requireAuth, validateSpot, async (req, res, next) => {
-    //if user is authenticated,
-    if (req.user) {
-        //check if there is an existing Spot in the database using findAll
-        const Locations = await Spot.findAll();
+    router.post('/', requireAuth, validateSpot, async (req, res, next) => {
+        //if user is authenticated,
+        if (req.user) {
+            //check if there is an existing Spot in the database using findAll
+            const Locations = await Spot.findAll();
 
-        //extract required fields for creating new Spot from req.body
-        const {
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-            name,
-            description,
-            price
-        } = req.body;
-
-        //if there was an existing location, we can check who owns that location
-        if (Locations) {
-            //retrieve current location owner from req.user object
-            //must be ownerId because it could be used to associate a spot with its owner
-                //if a user is the owner of a spot, they may have certain permissions that non-owners do not have
-                    //such as the abilty to edit or delete a spot
-            const ownerId = req.user.id
-
-            //call Spot.create with extracted fields and ownerId
-            const newLocation = await Spot.create({
-                ownerId,
+            //extract required fields for creating new Spot from req.body
+            const {
                 address,
                 city,
                 state,
@@ -897,14 +924,42 @@ router.post('/', requireAuth, validateSpot, async (req, res, next) => {
                 name,
                 description,
                 price
-            })
+            } = req.body;
 
-            //if the newLocation was successfully created, return a 201 status code with JSON of new location
-            if (newLocation) return res.status(201).json(newLocation);
+            //convert lat, lng, and price to floats using parseFloat
+            const parsedLat = parseFloat(lat);
+            const parsedLng = parseFloat(lng);
+            const parsedPrice = parseFloat(price);
+
+            //if there was an existing location, we can check who owns that location
+            if (Locations) {
+                //retrieve current location owner from req.user object
+                //must be ownerId because it could be used to associate a spot with its owner
+                    //if a user is the owner of a spot, they may have certain permissions that non-owners do not have
+                        //such as the abilty to edit or delete a spot
+                const ownerId = req.user.id
+
+                //call Spot.create with extracted fields and ownerId
+                const newLocation = await Spot.create({
+                    ownerId,
+                    address,
+                    city,
+                    state,
+                    country,
+                    lat: parsedLat,
+                    lng: parsedLng,
+                    name,
+                    description,
+                    price: parsedPrice
+                })
+
+                //if the newLocation was successfully created, return a 201 status code with JSON of new location
+                if (newLocation) return res.status(201).json(newLocation);
+            }
         }
-    }
-})
+    })
 
+//-------------------------------------------------------------------------------------------------
 
 //Add image to a spot based on Spot's id
 router.post('/:spotId/images', requireAuth, async (req, res, next) => {
