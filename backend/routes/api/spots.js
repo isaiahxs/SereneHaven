@@ -282,7 +282,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             'city',
             'state',
             'country',
-            'lat',
+            'lat'.toJSON(),
             'lng',
             'name',
             'description',
