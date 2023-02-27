@@ -267,59 +267,59 @@ router.get("/", validateQueryParamaters, async (req, res, next) => {
   });
 
 
-//ORIGINAL GET ALL SPOTS OWNED BY CURRENT USER
-//Get all spots owned by the current user
-    //REQUIRE AUTH: TRUE
-router.get('/current', requireAuth, async (req, res, next) => {
-    //if user is authenticated, findAll spots that belong to user from Spot model
-    const usersSpots = await Spot.findAll({
-        //filter spots by authenticated user's id
-        where: {ownerId: req.user.id},
-        attributes: [
-            //specify which columns to include in the result set
-            'id',
-            'ownerId',
-            'address',
-            'city',
-            'state',
-            'country',
-            'lat',
-            'lng',
-            'name',
-            'description',
-            'price',
-            'createdAt',
-            'updatedAt',
-            [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
-            [Sequelize.fn('MAX', Sequelize.col('SpotImages.url')), 'previewImage']
-        ],
-        //specify models to eager load, only including respective foreign keys
-            //this way we can use the JOIN to fetch reviews and images for each spot without having to include full details
-        include: [
-            {
-                model: Review,
-                attributes: []
-            },
-            {
-                model: SpotImage,
-                attributes: []
-            }
-        ],
-        group: ['Spot.id', 'SpotImages.id', 'Reviews.spotId']
-    })
-    //if there were spots, return usersSpots with 200 code
-    if (usersSpots) {
-        //easy way to get array of spots as part of JSON response is to wrap usersSpots array in an object with the key of Spots
-        return res.status(200).json({Spots: usersSpots});
-    }
+// //ORIGINAL GET ALL SPOTS OWNED BY CURRENT USER
+// //Get all spots owned by the current user
+//     //REQUIRE AUTH: TRUE
+// router.get('/current', requireAuth, async (req, res, next) => {
+//     //if user is authenticated, findAll spots that belong to user from Spot model
+//     const usersSpots = await Spot.findAll({
+//         //filter spots by authenticated user's id
+//         where: {ownerId: req.user.id},
+//         attributes: [
+//             //specify which columns to include in the result set
+//             'id',
+//             'ownerId',
+//             'address',
+//             'city',
+//             'state',
+//             'country',
+//             'lat',
+//             'lng',
+//             'name',
+//             'description',
+//             'price',
+//             'createdAt',
+//             'updatedAt',
+//             [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+//             [Sequelize.fn('MAX', Sequelize.col('SpotImages.url')), 'previewImage']
+//         ],
+//         //specify models to eager load, only including respective foreign keys
+//             //this way we can use the JOIN to fetch reviews and images for each spot without having to include full details
+//         include: [
+//             {
+//                 model: Review,
+//                 attributes: []
+//             },
+//             {
+//                 model: SpotImage,
+//                 attributes: []
+//             }
+//         ],
+//         group: ['Spot.id', 'SpotImages.id', 'Reviews.spotId']
+//     })
+//     //if there were spots, return usersSpots with 200 code
+//     if (usersSpots) {
+//         //easy way to get array of spots as part of JSON response is to wrap usersSpots array in an object with the key of Spots
+//         return res.status(200).json({Spots: usersSpots});
+//     }
 
-    //NO SPECIFICS ON WHAT ERROR THEY WANT RETURNED
-    res.status(404).json({'message': 'This user did not have any spots'})
-})
+//     //NO SPECIFICS ON WHAT ERROR THEY WANT RETURNED
+//     res.status(404).json({'message': 'This user did not have any spots'})
+// })
 
 
 //-----------------------------------------------------------------------------------------------------------------------
-// //ALTERNATE WIP GET SPOTS OF CURRENT USER
+// //SECOND WIP GET SPOTS OF CURRENT USER
 // //Get all spots owned by the current user
 //     //REQUIRE AUTH: TRUE
 //     router.get('/current', requireAuth, async (req, res, next) => {
@@ -384,6 +384,113 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 
 //-----------------------------------------------------------------------------------------------------------------------
+
+// //THIRD WIP OF GET ALL SPOTS OWNED BY CURRENT USER
+//Get all spots owned by the current user
+    //REQUIRE AUTH: TRUE
+router.get('/current', requireAuth, async (req, res, next) => {
+    //if user is authenticated, findAll spots that belong to user from Spot model
+    const usersSpots = await Spot.findAll({
+        //filter spots by authenticated user's id
+        where: {ownerId: req.user.id},
+        attributes: [
+            //specify which columns to include in the result set
+            'id',
+            'ownerId',
+            'address',
+            'city',
+            'state',
+            'country',
+            'lat',
+            'lng',
+            'name',
+            'description',
+            'price',
+            'createdAt',
+            'updatedAt',
+            [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+            [Sequelize.fn('MAX', Sequelize.col('SpotImages.url')), 'previewImage']
+        ],
+        //specify models to eager load, only including respective foreign keys
+            //this way we can use the JOIN to fetch reviews and images for each spot without having to include full details
+        include: [
+            {
+                model: Review,
+                attributes: []
+            },
+            {
+                model: SpotImage,
+                attributes: []
+            }
+        ],
+        // group: ['Spot.id', 'SpotImages.id', 'Reviews.spotId']
+        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'updatedAt', 'createdAt']
+    })
+
+    if (usersSpots) {
+        const spots = usersSpots.map((spot) => {
+            // const {Spot} = spot.toJSON();
+            spot = spot.toJSON();
+
+            const reviews = spot.Reviews || [];
+
+            const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
+
+            let avgRating;
+
+            if (reviews.length > 0) {
+                avgRating = sumRatings / reviews.length
+              } else {
+                avgRating = null;
+              }
+
+            //NEW ADDITIONS:
+            const lat = parseFloat(spot.lat);
+            const lng = parseFloat(spot.lng);
+            const price = parseFloat(spot.price);
+
+            //return the order you want the response body in
+            return {
+                id: spot.id,
+                ownerId: spot.ownerId,
+                address: spot.address,
+                city: spot.city,
+                state: spot.state,
+                country: spot.country,
+                lat,
+                lng,
+                name: spot.name,
+                price,
+                avgRating,
+                previewImage: spot.SpotImages && spot.SpotImages[0]?.url || null
+            }
+        })
+        return res.status(200).json({Spots: spots})
+    }
+
+    // //if there were spots, return usersSpots with 200 code
+    // if (usersSpots) {
+    //     //easy way to get array of spots as part of JSON response is to wrap usersSpots array in an object with the key of Spots
+    //     return res.status(200).json({Spots: usersSpots});
+    // }
+
+    //NO SPECIFICS ON WHAT ERROR THEY WANT RETURNED
+    res.status(404).json({'message': 'This user did not have any spots'})
+})
+
+
+//-----------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
 
 
 //Get details of a spot by spotId //ON POSTMAN, THIS WORKS IF I SPECIFY SPOT MYSELF BUT NOT IF I LEAVE THE SQUIGGLY SPOTID REQUEST
