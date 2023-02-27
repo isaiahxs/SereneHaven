@@ -258,7 +258,6 @@ router.get("/", validateQueryParamaters, async (req, res, next) => {
 
 //Get all spots owned by the current user
     //REQUIRE AUTH: TRUE
-    //NEED TO GET 'Spots' ARRAY TO SHOW
 router.get('/current', requireAuth, async (req, res, next) => {
     //if user is authenticated, findAll spots that belong to user from Spot model
     const usersSpots = await Spot.findAll({
@@ -357,9 +356,9 @@ router.get('/:spotId', async (req, res, next) => {
 })
 
 
-//Create a spot //NEED TO SEND USER TO FORBIDDEN IF THEY ARE NOT AUTHORIZED
+//Create a spot
     //Price accepts a string at the moment
-    //REQUIRE AUTH MUST BE TRUE
+    //REQUIRE AUTH: TRUE
 router.post('/', requireAuth, validateSpot, async (req, res, next) => {
     //if user is authenticated,
     if (req.user) {

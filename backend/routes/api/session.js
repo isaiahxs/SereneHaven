@@ -1,6 +1,6 @@
 //this file will hold the resources for the route paths beginning with /api/session
 const express = require('express')
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 //following two lines are phase 5
 const { check } = require('express-validator');
@@ -87,9 +87,10 @@ router.delete(
 );
 
 // Restore session user (Get current user)
+//authentication is asked for here, but this is one of the areas we were following along for and they didn't put 'requireAuth' in the params
 router.get(
     '/',
-    restoreUser,
+    restoreUser, requireAuth,
     (req, res) => {
       const { user } = req;
       if (user) {
