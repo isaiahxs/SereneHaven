@@ -31,16 +31,6 @@ module.exports = (sequelize, DataTypes) => {
         foreignKey: 'spotId'
       })
     }
-
-    //WIP for Preview Image
-    // async getPreviewImage() {
-    //   const image = await SpotImage.findOne({
-    //     where: {spotId: this.id, preview:true},
-    //     attributes: ['url']
-    //   })
-    //   return image ? image.url : null;
-    // }
-      //Then, in your route handler, you can call spot.getPreviewImage() to get the URL of the spot's preview image.
   }
   Spot.init({
     ownerId: {
@@ -84,16 +74,14 @@ module.exports = (sequelize, DataTypes) => {
     }
   }, {
     sequelize,
-    modelName: 'Spot'
+    modelName: 'Spot',
   });
   return Spot;
 };
 
 
-
-
 //--------------------------------------------------
-//this was my original Spot model before I started tweaking with it to add default scopes:
+//this was my original Spot model before I started tweaking with it to add try scopes:
 // 'use strict';
 // const {
 //   Model
