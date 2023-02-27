@@ -236,7 +236,7 @@ router.put('/:bookingId', requireAuth, validateBookings, async (req, res) => {
 
           return res.status(403).json({
               message: 'Sorry, this spot is already booked for the specified dates',
-              statusCode: 400,
+              statusCode: 403,
               errors: errors
           })
       }
@@ -256,7 +256,20 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
   const bookingId = req.params.bookingId;
 
   //find booking at this id
-  const booking = await Booking.findByPk(bookingId)
+//OLD WIP
+// const booking = await Booking.findByPk(bookingId)
+  //going to need ownerId value/column from Spot table
+  const booking = await Booking.findOne({
+    where: {id: bookingId},
+    include: [
+      {
+        model: Spot,
+        attributes: {
+          include: ["ownerId"]
+        }
+      }
+    ]
+  })
 
   //if no booking was found at this id, return 404 with specific message
   if (!booking) return res.status(404).json({
@@ -266,8 +279,8 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
 
   //check for authorization WIP
     //booking must belong to current user or spot must belong to current user
-  //if current user's id does not match the owner id of this booking AND current user's id does not match the id of the person who made the booking, return error
-  if (req.user.id !== booking.ownerId && req.user.id !== booking.userId) {
+  //if current user's id does not match the userId of this booking AND current user's id does not match the ownerId of the Spot, return 403 forbidden
+  if (req.user.id !== booking.userId && req.user.id !== booking.Spot.ownerId) {
     return res.status(403).json({
       message: 'Forbidden',
       statusCode: 403
@@ -290,8 +303,6 @@ router.delete('/:bookingId', requireAuth, async (req, res) => {
     message: 'Successfully deleted',
     statusCode: 200
   })
-
-
 })
 
 
