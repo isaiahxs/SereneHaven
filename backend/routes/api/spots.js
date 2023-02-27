@@ -1,7 +1,7 @@
 //this file will hold the resources for the route paths beginning with /api/spots
 const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
-const { Spot, User, SpotImage, Review, Booking, ReviewImage } = require('../../db/models');
+const { Spot, User, SpotImage, Review, Booking, ReviewImage, sequelize } = require('../../db/models');
 
 
 //following two lines are from phase 5
@@ -11,7 +11,7 @@ const router = express.Router();
 
 //in case we need these models
     //ADDED OP IN REQUIRE
-const {Model, Sequelize, Op} = require('sequelize');
+const {Model, Sequelize, Op, DataTypes} = require('sequelize');
 const booking = require('../../db/models/booking');
 // const spot = require('../../db/models/spot');
 
@@ -487,66 +487,259 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
 
 
+// //Get details of a spot by spotId ORIGINAL
+//     //REQUIRE AUTH: FALSE
+//     //error message suggests to me that the spotId is not an integer
+// router.get('/:spotId', async (req, res, next) => {
+//     //use findByPk() on Spot model to find spot with Id from URL parameter
+//     const specificSpot = await Spot.findByPk(req.params.spotId, {
+//         attributes: [
+//             'id',
+//             'ownerId',
+//             'address',
+//             'city',
+//             'state',
+//             'country',
+//             'lat',
+//             'lng',
+//             'name',
+//             'description',
+//             'price',
+//             'createdAt',
+//             'updatedAt',
+//             //THIS TIME THEY WANT THE TOTAL NUMBER OF REVIEWS, THEN AVG
+//             [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'numReviews'],
+//             [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']
+//         ],
+//         //specify which models to eager load
+//         include: [
+//             {
+//                 model: Review,
+//                 attributes: []
+//             },
+//             {
+//                 model: SpotImage,
+//                 attributes: ['id', 'url', 'preview']
+//             },
+//             {
+//                 model: User,
+//                 as: 'Owner',
+//                 attributes: ['id', 'firstName', 'lastName']
+//             }
+//         ],
+//         group: ['Spot.id', 'SpotImages.id', 'Owner.id', 'Reviews.spotId']
+//     })
+//     //if the specified spot was found, respond with status code 200 and JSON body
+//     if (specificSpot) {
+//         return res.status(200).json(specificSpot)
+//     }
+//     //if not, return 404 with specific message and statusCode
+//     return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
+// })
 
-
-
-
-
-
-
-
-
-
-//Get details of a spot by spotId //ON POSTMAN, THIS WORKS IF I SPECIFY SPOT MYSELF BUT NOT IF I LEAVE THE SQUIGGLY SPOTID REQUEST
+//---------------------------------------------------------------------------------------------
+//SECOND ORIGINAL Get details of a spot by spotId
     //REQUIRE AUTH: FALSE
     //error message suggests to me that the spotId is not an integer
-router.get('/:spotId', async (req, res, next) => {
-    //use findByPk() on Spot model to find spot with Id from URL parameter
-    const specificSpot = await Spot.findByPk(req.params.spotId, {
-        attributes: [
-            'id',
-            'ownerId',
-            'address',
-            'city',
-            'state',
-            'country',
-            'lat',
-            'lng',
-            'name',
-            'description',
-            'price',
-            'createdAt',
-            'updatedAt',
-            //THIS TIME THEY WANT THE TOTAL NUMBER OF REVIEWS, THEN AVG
-            [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'numReviews'],
-            [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']
-        ],
-        //specify which models to eager load
-        include: [
-            {
-                model: Review,
-                attributes: []
-            },
-            {
-                model: SpotImage,
-                attributes: ['id', 'url', 'preview']
-            },
-            {
-                model: User,
-                as: 'Owner',
-                attributes: ['id', 'firstName', 'lastName']
-            }
-        ],
-        group: ['Spot.id', 'SpotImages.id', 'Owner.id', 'Reviews.spotId']
-    })
-    //if the specified spot was found, respond with status code 200 and JSON body
-    if (specificSpot) {
-        return res.status(200).json(specificSpot)
-    }
-    //if not, return 404 with specific message and statusCode
-    return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
-})
+    // router.get('/:spotId', async (req, res, next) => {
+    //     //use findByPk() on Spot model to find spot with Id from URL parameter
+    //     const specificSpot = await Spot.findByPk(req.params.spotId, {
+    //         attributes: [
+    //             'id',
+    //             'ownerId',
+    //             'address',
+    //             'city',
+    //             'state',
+    //             'country',
+    //             'lat',
+    //             'lng',
+    //             'name',
+    //             'description',
+    //             'price',
+    //             'createdAt',
+    //             'updatedAt',
+    //             //THIS TIME THEY WANT THE TOTAL NUMBER OF REVIEWS, THEN AVG
+    //             [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'numReviews'],
+    //             [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']
+    //         ],
+    //         //specify which models to eager load
+    //         include: [
+    //             {
+    //                 model: Review,
+    //                 attributes: []
+    //             },
+    //             {
+    //                 model: SpotImage,
+    //                 attributes: ['id', 'url', 'preview']
+    //             },
+    //             {
+    //                 model: User,
+    //                 as: 'Owner',
+    //                 attributes: ['id', 'firstName', 'lastName']
+    //             }
+    //         ],
+    //         group: ['Spot.id', 'SpotImages.id', 'Owner.id', 'Reviews.spotId']
+    //     })
+    //     //if the specified spot was found, respond with status code 200 and JSON body
+    //     if (specificSpot) {
+    //         return res.status(200).json(specificSpot)
+    //     }
+    //     //if not, return 404 with specific message and statusCode
+    //     return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
+    // })
 
+
+
+//------------------------------------------------------------------------------------------
+// SECOND WIP Get details of a spot by spotId
+//     REQUIRE AUTH: FALSE
+    router.get('/:spotId', async (req, res, next) => {
+        //use findByPk() on Spot model to find spot with Id from URL parameter
+        const specificSpot = await Spot.findAll({
+            where: {id: req.params.spotId},
+            // attributes: [
+            //     'id',
+            //     'ownerId',
+            //     'address',
+            //     'city',
+            //     'state',
+            //     'country',
+            //     'lat',
+            //     'lng',
+            //     'name',
+            //     'description',
+            //     'price',
+            //     'createdAt',
+            //     'updatedAt',
+            //     //THIS TIME THEY WANT THE TOTAL NUMBER OF REVIEWS, THEN AVG
+            //     [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'numReviews'],
+            //     [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']
+            // ],
+            //specify which models to eager load
+            include: [
+                {
+                    model: Review,
+                    attributes: ["stars"]
+                },
+                {
+                    model: SpotImage,
+                    attributes: ['id', 'url', 'preview']
+                },
+                {
+                    model: User,
+                    as: 'Owner',
+                    attributes: ['id', 'firstName', 'lastName']
+                }
+            ],
+            // group: ['Spot.id', 'SpotImages.id', 'Owner.id', 'Reviews.spotId']
+        })
+
+        //original mini wip------------------------------
+        if (specificSpot) {
+            const spots = specificSpot.map((spot) => {
+                const reviews = spot.Reviews || [];
+
+                const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
+
+                let avgStarRating;
+
+                if (reviews.length > 0) {
+                    avgStarRating = sumRatings / reviews.length
+                } else {
+                    avgStarRating = null;
+                }
+
+                //NEW ADDITIONS:
+                spot = spot.toJSON();
+                const lat = parseFloat(spot.lat);
+                const lng = parseFloat(spot.lng);
+                const price = parseFloat(spot.price);
+
+                //IMPORTANT QUESTION, IS NUMREVIEWS JUST THE LENGTH OF REVIEWS ARRAY
+                let numReviews = reviews.length;
+
+                return {
+                    id: spot.id,
+                    ownerId: spot.ownerId,
+                    address: spot.address,
+                    city: spot.city,
+                    state: spot.state,
+                    country: spot.country,
+                    lat,
+                    lng,
+                    name: spot.name,
+                    description: spot.description,
+                    price,
+                    createdAt: spot.createdAt,
+                    updatedAt: spot.updatedAt,
+                    numReviews,
+                    avgStarRating,
+                    SpotImages: spot.SpotImages,
+                    Owner: spot.Owner
+                }
+            })
+            return res.status(200).json({Spots: spots})
+        }
+        //end of original mini wip----------------------------------
+
+        //second iteration---------------------------------------------------------
+        // if (specificSpot) {
+        //     const reviews = specificSpot.Reviews || [];
+
+        //     const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
+
+        //     let avgStarRating;
+
+        //     if (reviews.length > 0) {
+        //         avgStarRating = sumRatings / reviews.length
+        //     } else {
+        //         avgStarRating = null;
+        //     }
+
+        //     //NEW ADDITIONS:
+        //     const lat = parseFloat(specificSpot.lat);
+        //     const lng = parseFloat(specificSpot.lng);
+        //     const price = parseFloat(specificSpot.price);
+
+        //     //IMPORTANT QUESTION, IS NUMREVIEWS JUST THE LENGTH OF REVIEWS ARRAY
+        //     let numReviews = reviews.length;
+
+        //     const spot = {
+        //         id: specificSpot.id,
+        //         ownerId: specificSpot.ownerId,
+        //         address: specificSpot.address,
+        //         city: specificSpot.city,
+        //         state: specificSpot.state,
+        //         country: specificSpot.country,
+        //         lat,
+        //         lng,
+        //         name: specificSpot.name,
+        //         description: specificSpot.description,
+        //         price,
+        //         createdAt: specificSpot.createdAt,
+        //         updatedAt: specificSpot.updatedAt,
+        //         numReviews,
+        //         avgStarRating,
+        //         SpotImages: specificSpot.SpotImages,
+        //         User: specificSpot.User
+        //     };
+
+        //     return res.status(200).json({Spots: [spot]});
+        // }
+        //end of second iteration----------------------------------------------------
+
+
+        //if the specified spot was found, respond with status code 200 and JSON body
+        // if (specificSpot) {
+        //     return res.status(200).json(specificSpot)
+        // }
+
+        //if not, return 404 with specific message and statusCode
+        return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
+    })
+
+
+//------------------------------------------------------------------------------------------
 
 //Create a spot
     //Price accepts a string at the moment

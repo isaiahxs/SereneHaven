@@ -108,7 +108,7 @@ const validateReview = [
 
 
 //--------------------------------------------------------------------------------------
-// Get all reviews of a current user ORIGINAL
+//SECOND WIP Get all reviews of a current user
 //     REQUIRE AUTH: TRUE
 //this was not working previously because the currentUser had not posted a review yet
 router.get('/current', requireAuth, async (req, res, next) => {
