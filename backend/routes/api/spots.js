@@ -393,45 +393,43 @@ router.get('/current', requireAuth, async (req, res, next) => {
     const usersSpots = await Spot.findAll({
         //filter spots by authenticated user's id
         where: {ownerId: req.user.id},
-        attributes: [
-            //specify which columns to include in the result set
-            'id',
-            'ownerId',
-            'address',
-            'city',
-            'state',
-            'country',
-            'lat',
-            'lng',
-            'name',
-            'description',
-            'price',
-            'createdAt',
-            'updatedAt',
-            [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
-            [Sequelize.fn('MAX', Sequelize.col('SpotImages.url')), 'previewImage']
-        ],
+        // attributes: [
+        //     //specify which columns to include in the result set
+        //     'id',
+        //     'ownerId',
+        //     'address',
+        //     'city',
+        //     'state',
+        //     'country',
+        //     'lat',
+        //     'lng',
+        //     'name',
+        //     'description',
+        //     'price',
+        //     'createdAt',
+        //     'updatedAt',
+        //     [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
+        //     [Sequelize.fn('MAX', Sequelize.col('SpotImages.url')), 'previewImage']
+        // ],
         //specify models to eager load, only including respective foreign keys
             //this way we can use the JOIN to fetch reviews and images for each spot without having to include full details
         include: [
             {
                 model: Review,
-                attributes: []
+                attributes: ["stars"]
             },
             {
                 model: SpotImage,
-                attributes: []
+                attributes: ["url"]
             }
         ],
         // group: ['Spot.id', 'SpotImages.id', 'Reviews.spotId']
-        attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'updatedAt', 'createdAt']
+        // attributes: ['id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'description', 'price', 'updatedAt', 'createdAt']
     })
 
     if (usersSpots) {
         const spots = usersSpots.map((spot) => {
             // const {Spot} = spot.toJSON();
-            spot = spot.toJSON();
-
             const reviews = spot.Reviews || [];
 
             const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
@@ -445,9 +443,12 @@ router.get('/current', requireAuth, async (req, res, next) => {
               }
 
             //NEW ADDITIONS:
+            spot = spot.toJSON();
             const lat = parseFloat(spot.lat);
             const lng = parseFloat(spot.lng);
             const price = parseFloat(spot.price);
+            //possible source of error or fix
+            // avgRating = parseFloat(spot.avgRating);
 
             //return the order you want the response body in
             return {
@@ -460,9 +461,12 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 lat,
                 lng,
                 name: spot.name,
+                description: spot.description,
                 price,
+                createdAt: spot.createdAt,
+                updatedAt: spot.updatedAt,
                 avgRating,
-                previewImage: spot.SpotImages && spot.SpotImages[0]?.url || null
+                previewImage: spot.SpotImages[0]?.url || null
             }
         })
         return res.status(200).json({Spots: spots})
