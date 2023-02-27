@@ -672,9 +672,9 @@ router.post('/:spotId/bookings', requireAuth, validateBookings, async (req, res,
     })
 
     //a user is only authorized to create a booking if they do NOT OWN THE SPOT
-    if (spot.ownerId === userId) return res.status(400).json({
-        message: "Sorry, since you own the spot, you cannot create bookings for it",
-        statusCode: 400
+    if (spot.ownerId === userId) return res.status(403).json({
+        message: "Forbidden: Sorry, since you own the spot, you cannot create bookings for it",
+        statusCode: 403
     })
 
     //i think our endDate before startDate should be getting taken care of by the validateBookings
