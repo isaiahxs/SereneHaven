@@ -593,29 +593,208 @@ router.get('/current', requireAuth, async (req, res, next) => {
 //------------------------------------------------------------------------------------------
 // SECOND WIP Get details of a spot by spotId
 //     REQUIRE AUTH: FALSE
-    router.get('/:spotId', async (req, res, next) => {
-        //use findByPk() on Spot model to find spot with Id from URL parameter
-        const specificSpot = await Spot.findAll({
-            where: {id: req.params.spotId},
-            // attributes: [
-            //     'id',
-            //     'ownerId',
-            //     'address',
-            //     'city',
-            //     'state',
-            //     'country',
-            //     'lat',
-            //     'lng',
-            //     'name',
-            //     'description',
-            //     'price',
-            //     'createdAt',
-            //     'updatedAt',
-            //     //THIS TIME THEY WANT THE TOTAL NUMBER OF REVIEWS, THEN AVG
-            //     [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'numReviews'],
-            //     [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']
-            // ],
-            //specify which models to eager load
+// router.get('/:spotId', async (req, res, next) => {
+//     //use findByPk() on Spot model to find spot with Id from URL parameter
+//     const specificSpot = await Spot.findAll({
+//         where: {id: req.params.spotId},
+//         // attributes: [
+//         //     'id',
+//         //     'ownerId',
+//         //     'address',
+//         //     'city',
+//         //     'state',
+//         //     'country',
+//         //     'lat',
+//         //     'lng',
+//         //     'name',
+//         //     'description',
+//         //     'price',
+//         //     'createdAt',
+//         //     'updatedAt',
+//         //     //THIS TIME THEY WANT THE TOTAL NUMBER OF REVIEWS, THEN AVG
+//         //     [Sequelize.fn('COUNT', Sequelize.col('Reviews.id')), 'numReviews'],
+//         //     [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgStarRating']
+//         // ],
+//         //specify which models to eager load
+//         include: [
+//             {
+//                 model: Review,
+//                 attributes: ["stars"]
+//             },
+//             {
+//                 model: SpotImage,
+//                 attributes: ['id', 'url', 'preview']
+//             },
+//             {
+//                 model: User,
+//                 as: 'Owner',
+//                 attributes: ['id', 'firstName', 'lastName']
+//             }
+//         ],
+//         // group: ['Spot.id', 'SpotImages.id', 'Owner.id', 'Reviews.spotId']
+//     })
+
+//     if (specificSpot.length === 0) return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
+
+//     //original mini wip------------------------------
+//     const spots = specificSpot.map((spot) => {
+//         const reviews = spot.Reviews || [];
+
+//         const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
+
+//         let avgStarRating;
+
+//         if (reviews.length > 0) {
+//             avgStarRating = sumRatings / reviews.length
+//         } else {
+//             avgStarRating = null;
+//         }
+
+//         //NEW ADDITIONS:
+//         spot = spot.toJSON();
+//         const lat = parseFloat(spot.lat);
+//         const lng = parseFloat(spot.lng);
+//         const price = parseFloat(spot.price);
+
+//         //IMPORTANT QUESTION, IS NUMREVIEWS JUST THE LENGTH OF REVIEWS ARRAY
+//         let numReviews = reviews.length;
+
+//         return {
+//             id: spot.id,
+//             ownerId: spot.ownerId,
+//             address: spot.address,
+//             city: spot.city,
+//             state: spot.state,
+//             country: spot.country,
+//             lat,
+//             lng,
+//             name: spot.name,
+//             description: spot.description,
+//             price,
+//             createdAt: spot.createdAt,
+//             updatedAt: spot.updatedAt,
+//             numReviews,
+//             avgStarRating,
+//             SpotImages: spot.SpotImages,
+//             Owner: spot.Owner
+//         }
+//     })
+//     return res.status(200).json(spots)
+
+
+//     //---------------------------------------------------------------
+//     //ITERATION OF FIRST MINI WIP TO SEE IF I CAN NOT USE MAP
+//     //     const reviews = specificSpot.Reviews || [];
+
+//     //     const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
+
+//     //     let avgStarRating;
+
+//     //     if (reviews.length > 0) {
+//     //         avgStarRating = sumRatings / reviews.length
+//     //     } else {
+//     //         avgStarRating = null;
+//     //     }
+
+//     //     //NEW ADDITIONS:
+//     //     // specificSpot = specificSpot.toJSON();
+//     //     const lat = parseFloat(specificSpot.lat);
+//     //     const lng = parseFloat(specificSpot.lng);
+//     //     const price = parseFloat(specificSpot.price);
+
+//     //     //IMPORTANT QUESTION, IS NUMREVIEWS JUST THE LENGTH OF REVIEWS ARRAY
+//     //     let numReviews = reviews.length;
+
+//     //     const spots = {
+//     //         id: specificSpot.id,
+//     //         ownerId: specificSpot.ownerId,
+//     //         address: specificSpot.address,
+//     //         city: specificSpot.city,
+//     //         state: specificSpot.state,
+//     //         country: specificSpot.country,
+//     //         lat,
+//     //         lng,
+//     //         name: specificSpot.name,
+//     //         description: specificSpot.description,
+//     //         price,
+//     //         createdAt: specificSpot.createdAt,
+//     //         updatedAt: specificSpot.updatedAt,
+//     //         numReviews,
+//     //         avgStarRating,
+//     //         SpotImages: specificSpot.SpotImages,
+//     //         Owner: specificSpot.Owner
+//     //     }
+//     //     return res.status(200).json(spots)
+
+//     // })
+
+//     //end of original mini wip----------------------------------
+
+//     //second iteration---------------------------------------------------------
+//     // if (specificSpot) {
+//     //     const reviews = specificSpot.Reviews || [];
+
+//     //     const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
+
+//     //     let avgStarRating;
+
+//     //     if (reviews.length > 0) {
+//     //         avgStarRating = sumRatings / reviews.length
+//     //     } else {
+//     //         avgStarRating = null;
+//     //     }
+
+//     //     //NEW ADDITIONS:
+//     //     const lat = parseFloat(specificSpot.lat);
+//     //     const lng = parseFloat(specificSpot.lng);
+//     //     const price = parseFloat(specificSpot.price);
+
+//     //     //IMPORTANT QUESTION, IS NUMREVIEWS JUST THE LENGTH OF REVIEWS ARRAY
+//     //     let numReviews = reviews.length;
+
+//     //     const spot = {
+//     //         id: specificSpot.id,
+//     //         ownerId: specificSpot.ownerId,
+//     //         address: specificSpot.address,
+//     //         city: specificSpot.city,
+//     //         state: specificSpot.state,
+//     //         country: specificSpot.country,
+//     //         lat,
+//     //         lng,
+//     //         name: specificSpot.name,
+//     //         description: specificSpot.description,
+//     //         price,
+//     //         createdAt: specificSpot.createdAt,
+//     //         updatedAt: specificSpot.updatedAt,
+//     //         numReviews,
+//     //         avgStarRating,
+//     //         SpotImages: specificSpot.SpotImages,
+//     //         User: specificSpot.User
+//     //     };
+
+//     //     return res.status(200).json({Spots: [spot]});
+//     // }
+//     //end of second iteration----------------------------------------------------
+
+
+//     //if the specified spot was found, respond with status code 200 and JSON body
+//     // if (specificSpot) {
+//     //     return res.status(200).json(specificSpot)
+//     // }
+
+//     //if not, return 404 with specific message and statusCode
+// })
+
+
+
+
+
+//----------------------------------------------------------------------------------
+//ONE MORE ITERATION FOR GET DETAILS OF SPOT BY ITS ID
+router.get('/:spotId', async (req, res, next) => {
+    try {
+        // Use findByPk() on Spot model to find spot with Id from URL parameter
+        const specificSpot = await Spot.findByPk(req.params.spotId, {
             include: [
                 {
                     model: Review,
@@ -630,114 +809,49 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     as: 'Owner',
                     attributes: ['id', 'firstName', 'lastName']
                 }
-            ],
-            // group: ['Spot.id', 'SpotImages.id', 'Owner.id', 'Reviews.spotId']
-        })
+            ]
+        });
 
-        //original mini wip------------------------------
-        if (specificSpot) {
-            const spots = specificSpot.map((spot) => {
-                const reviews = spot.Reviews || [];
-
-                const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
-
-                let avgStarRating;
-
-                if (reviews.length > 0) {
-                    avgStarRating = sumRatings / reviews.length
-                } else {
-                    avgStarRating = null;
-                }
-
-                //NEW ADDITIONS:
-                spot = spot.toJSON();
-                const lat = parseFloat(spot.lat);
-                const lng = parseFloat(spot.lng);
-                const price = parseFloat(spot.price);
-
-                //IMPORTANT QUESTION, IS NUMREVIEWS JUST THE LENGTH OF REVIEWS ARRAY
-                let numReviews = reviews.length;
-
-                return {
-                    id: spot.id,
-                    ownerId: spot.ownerId,
-                    address: spot.address,
-                    city: spot.city,
-                    state: spot.state,
-                    country: spot.country,
-                    lat,
-                    lng,
-                    name: spot.name,
-                    description: spot.description,
-                    price,
-                    createdAt: spot.createdAt,
-                    updatedAt: spot.updatedAt,
-                    numReviews,
-                    avgStarRating,
-                    SpotImages: spot.SpotImages,
-                    Owner: spot.Owner
-                }
-            })
-            return res.status(200).json({Spots: spots})
+        if (!specificSpot) {
+            return res.status(404).json({message: "Spot couldn't be found", statusCode: 404});
         }
-        //end of original mini wip----------------------------------
 
-        //second iteration---------------------------------------------------------
-        // if (specificSpot) {
-        //     const reviews = specificSpot.Reviews || [];
+        // Calculate the average star rating and the total number of reviews
+        const reviews = specificSpot.Reviews || [];
+        const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
+        const numReviews = reviews.length;
+        const avgStarRating = numReviews > 0 ? sumRatings / numReviews : null;
 
-        //     const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
+        // Convert the spot to JSON and parse numeric values
+        const spot = specificSpot.toJSON();
+        spot.lat = parseFloat(spot.lat);
+        spot.lng = parseFloat(spot.lng);
+        spot.price = parseFloat(spot.price);
 
-        //     let avgStarRating;
-
-        //     if (reviews.length > 0) {
-        //         avgStarRating = sumRatings / reviews.length
-        //     } else {
-        //         avgStarRating = null;
-        //     }
-
-        //     //NEW ADDITIONS:
-        //     const lat = parseFloat(specificSpot.lat);
-        //     const lng = parseFloat(specificSpot.lng);
-        //     const price = parseFloat(specificSpot.price);
-
-        //     //IMPORTANT QUESTION, IS NUMREVIEWS JUST THE LENGTH OF REVIEWS ARRAY
-        //     let numReviews = reviews.length;
-
-        //     const spot = {
-        //         id: specificSpot.id,
-        //         ownerId: specificSpot.ownerId,
-        //         address: specificSpot.address,
-        //         city: specificSpot.city,
-        //         state: specificSpot.state,
-        //         country: specificSpot.country,
-        //         lat,
-        //         lng,
-        //         name: specificSpot.name,
-        //         description: specificSpot.description,
-        //         price,
-        //         createdAt: specificSpot.createdAt,
-        //         updatedAt: specificSpot.updatedAt,
-        //         numReviews,
-        //         avgStarRating,
-        //         SpotImages: specificSpot.SpotImages,
-        //         User: specificSpot.User
-        //     };
-
-        //     return res.status(200).json({Spots: [spot]});
-        // }
-        //end of second iteration----------------------------------------------------
-
-
-        //if the specified spot was found, respond with status code 200 and JSON body
-        // if (specificSpot) {
-        //     return res.status(200).json(specificSpot)
-        // }
-
-        //if not, return 404 with specific message and statusCode
-        return res.status(404).json({message: "Spot couldn't be found", statusCode: 404})
-    })
-
+        // Return the formatted spot object
+        return res.status(200).json({
+            id: spot.id,
+            ownerId: spot.ownerId,
+            address: spot.address,
+            city: spot.city,
+            state: spot.state,
+            country: spot.country,
+            lat: spot.lat,
+            lng: spot.lng,
+            name: spot.name,
+            description: spot.description,
+            price: spot.price,
+            createdAt: spot.createdAt,
+            updatedAt: spot.updatedAt,
+            numReviews,
+            avgStarRating,
+            SpotImages: spot.SpotImages,
+            Owner: spot.Owner
+        });
+    } catch (error) {
+        next(error);
+    }
+});
 
 //------------------------------------------------------------------------------------------
 
