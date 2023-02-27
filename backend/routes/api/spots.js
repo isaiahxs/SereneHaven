@@ -15,6 +15,7 @@ const {Model, Sequelize, Op} = require('sequelize');
 const booking = require('../../db/models/booking');
 // const spot = require('../../db/models/spot');
 
+//spot validations
 const validateSpot = [
     check('address').exists({checkFalsy: true}).withMessage('Street address is required'),
     check('city').exists({checkFalsy: true}).withMessage('City is required'),
@@ -35,7 +36,7 @@ const validateReview = [
     handleValidationErrors
 ]
 
-//will have to create validation down the line for bookings
+//bookings validations
 const validateBookings = [
     check('startDate').exists({checkFalsy: true}),
     check('endDate').exists({checkFalsy: true})
@@ -48,97 +49,212 @@ const validateBookings = [
     handleValidationErrors
 ]
 
-const validateQueryParams = [
-    check('page')
-        .isInt({min: 1, max: 10})
-        .withMessage("Page must be greater than or equal to 1"),
+//query filter validations
+const validateQueryParamaters = [
+    check("page")
+      .default(1)
+      .notEmpty()
+      .withMessage("Page must be provided")
+      .isInt({min: 1, max: 10})
+      .withMessage("Page must be greater than or equal to 1 and less than or equal to 10"),
+    check("size")
+      .default(20)
+      .notEmpty()
+      .withMessage("Size must be provided")
+      .isInt({min: 1, max: 20})
+      .withMessage("Size must be greater than or equal to 1 and less than or equal to 20"),
+    check("minLat")
+      .optional()
+      .isDecimal()
+      .withMessage("Minimum latitude is invalid"),
+    check("maxLat")
+      .optional()
+      .isDecimal()
+      .withMessage("Maximum latitude is invalid"),
+    check("minLng")
+      .optional()
+      .isDecimal()
+      .withMessage("Minimum longitude is invalid"),
+    check("maxLng")
+      .optional()
+      .isDecimal()
+      .withMessage("Maximum longitude is invalid"),
+    check("minPrice")
+      .optional()
+      .isDecimal({ min: 0 })
+      .withMessage("Maximum price must be greater than or equal to 0"),
+    check("maxPrice")
+      .optional()
+      .isDecimal({ min: 0 })
+      .withMessage("Minimum price must be greater than or equal to 0"),
+      handleValidationErrors
+  ];
 
-    check('size')
-        .isInt({min: 1, max: 20})
-        .withMessage("Size must be greater than or equal to 1"),
 
-    check('minLat')
-        .isDecimal()
-        .optional()
-        .withMessage("Minimum latitude is invalid"),
+//Get all spots after filters have been applied
+router.get("/", validateQueryParamaters, async (req, res, next) => {
+    //extract the values from the query parameters and specify default values for page and size
+    const {
+      page = 1,
+      size = 20,
+      minLat,
+      maxLat,
+      minLng,
+      maxLng,
+      minPrice,
+      maxPrice,
+    } = req.query;
 
-    check('maxLat')
-        .isDecimal()
-        .optional()
-        .withMessage("Maximum latitude is invalid"),
+    //set limit and offset variables used in the query to retrieve the result
+        //IMPORTANT NOTES FROM PAGINATION READING
+        //LIMIT = (x results/page)
+        //OFFSET = (y pages) * (x results/page)
+    const limit = size;
+    const offset = (page - 1) * size;
 
-    check('minLng')
-        .isDecimal()
-        .optional()
-        .withMessage("Minimum longitude is invalid"),
+    //define empty object that will hold the conditions used to filter the query result
+    const filter = {};
+        //we will use this filter object as a condition when querying the database to retrieve only the spots that match the specified criteria
 
-    check('maxLng')
-        .isDecimal()
-        .optional()
-        .withMessage("Maximum longitude is invalid"),
+    //check for existence of the other query parameters, if they are around, add them to the filter object
+        //IMPORTANT: spread syntax will be used to spread properties of an object into a new object
+            //without the spread syntax, only the new operator would be added to the object, and any previous operators would be overwritten
+            //using the spread syntax ensures that all previous operators are preserved while adding the new operator
 
-    check('minPrice')
-        .isDecimal()
-        .optional()
-        .withMessage("Minimum price must be greater than or equal to 0"),
+    //set property of lat on filter object to an object containing the gte operator and value of req.query.minLat
+    //filter spots that have a latitude greater than or equal to the value of minLat
+    if (minLat) filter.lat = {[Sequelize.Op.gte]: minLat};
 
-    check('maxPrice')
-        .isDecimal()
-        .optional()
-        .withMessage("Maximum price must be greater than or equal to 0"),
+    //filter spots that have a latitude less than or equal to the max latitude
+    if (maxLat) filter.lat = {...filter.lat, [Sequelize.Op.lte]: maxLat};
 
-    handleValidationErrors
-]
+    //if both min and max have been given, filter spots with latitudes in between the two values
+    if (minLat && maxLat) {
+        filter.lat = {
+            ...filter.lat,
+            [Sequelize.Op.and]: [
+                {[Sequelize.Op.gte]: minLat},
+                {[Sequelize.Op.lte]: maxLat}
+            ]
+        }
+    }
 
+    //filter spots that have a longitude greater than or equal to the min longitude
+    if (minLng) filter.lng = {[Sequelize.Op.gte]: minLng};
 
-//Get all spots
-    //DOES NOT ASK FOR SPECIFIC ERROR RETURNS
-    //Require Auth: false
-router.get('/', async (req, res, next) => {
-    const Spots = await Spot.findAll({
-        //need to include Reviews table and SpotImages table
-        attributes: [
-            'id',
-            'ownerId',
-            'address',
-            'city',
-            'state',
-            'country',
-            'lat',
-            'lng',
-            'name',
-            'description',
-            'price',
-            'createdAt',
-            'updatedAt',
-            //Old literal way
-                // [Sequelize.literal('(SELECT AVG(stars) FROM Reviews WHERE Reviews.spotId = Spot.id)'), 'avgRating'],
-                // [Sequelize.literal('(SELECT url FROM SpotImages WHERE SpotImages.spotId = Spot.id ORDER BY createdAt DESC LIMIT 1)'), 'previewImage']
-            [Sequelize.fn('AVG', Sequelize.col('Reviews.stars')), 'avgRating'],
-            //Since the SpotImages table has a createdAt column, MAX is applied there to get the image with the greatest createdAt value for each spot
-            [Sequelize.fn('MAX', Sequelize.col('SpotImages.url')), 'previewImage']
-        ],
-        //must join Review and SpotImage tables so that I can use AVG and MAX functions
-        include: [
-            {
-                model: Review,
-                attributes: []
-            },
-            {
-                model: SpotImage,
-                attributes: []
-            }
-        ],
-        //group by Spot.id, SpotImages.id, Reviews.spotId
-        group: ['Spot.id', 'SpotImages.id', 'Reviews.spotId']
+    //filter spots that have a longitude less than or equal to the max longitude
+    if (maxLng) filter.lng = {...filter.lng, [Sequelize.Op.lte]: maxLng};
+
+    //if both min and max lng have been given, filter spots with longitudes in between the two values
+    if (minLng && maxLng) {
+        filter.lng = {
+            ...filter.lng,
+            [Sequelize.Op.and]: [
+                {[Sequelize.Op.gte]: minLng},
+                {[Sequelize.Op.lte]: minLng}
+            ]
+        }
+    }
+
+    //filter spots that have a price greater than or equal to the min price
+    if (minPrice) filter.price = {[Sequelize.Op.gte]: minPrice};
+
+    //filter spots that have a price less than or equal to the max price
+    if (maxPrice) filter.price = {...filter.price, [Sequelize.Op.lte]: maxPrice};
+
+    //if both min and max prices have been given, filter spots with prices in between the two values
+    if (minPrice && maxPrice) {
+        filter.price = {
+            ...filter.price,
+            [Sequelize.Op.and]: [
+                {[Sequelize.Op.gte]: minPrice},
+                {[Sequelize.Op.lte]: maxPrice}
+            ]
+        }
+    }
+
+  //find all locations that match the criteria
+  const locations = await Spot.findAll({
+    //specify associations within the query
+        //for each spot/location that matches the filtered criteria, the response will include the url of the first image associated with the spot
+      include: [
+        {
+          model: SpotImage,
+          attributes: ["url"]
+        },
+        //as well as the star rating of any reviews associated with the spot
+        {
+          model: Review,
+          attributes: ["stars"],
+          required: false
+        }
+      ],
+      //limit the number of spots returned and set the starting position for the results
+      limit,
+      offset,
+      //the where property specifies the filter conditions for the query
+        //i will pass in the filter object that was created earlier to filter the results baseed on the specified criteria for lat, lng, and price
+      where: filter,
+    });
+
+    //create new array on locations that were retrieved from the database
+        //for each spot/location (loc short for locations) in the locations array, a new object will be created with some same and new properties
+    const allLocations = locations.map((loc) => {
+      const reviews = loc.Reviews || [];
+      //remember reduce uses the accumulator and current values
+        //need to iterate through all reviews and apply a callback function to each element
+        //first parameter is the accum which starts at 0, second is the current value of the element being processed
+        //need to sum all of the 'stars' values in the reviews array
+            //acc is the running total of the sum of 'stars' values, and 'cur' is the current 'stars' value of the review being processed
+
+      //take the 'Reviews' property from the loc (short for locations) object (which contains an array of reviews for the spot) and reduce it to a single number
+        //representing the sum of all review ratings
+      const sumRatings = reviews.reduce((acc, cur) => acc + cur.stars, 0);
+
+      //if there are reviews, divide the sum by the number of reviews to get the average rating for the spot
+      //if there are no reviews for the spot, the avgRating will be set to null
+      let avgRating;
+
+      if (reviews.length > 0) {
+        avgRating = sumRatings / reviews.length
+      } else {
+        avgRating = null;
+      }
+
+      return {
+        id: loc.id,
+        ownerId: loc.ownerId,
+        address: loc.address,
+        city: loc.city,
+        state: loc.state,
+        country: loc.country,
+        lat: loc.lat,
+        lng: loc.lng,
+        name: loc.name,
+        description: loc.description,
+        price: loc.price,
+        createdAt: loc.createdAt,
+        updatedAt: loc.updatedAt,
+        avgRating,
+        //previewImage property will be set to the url of the first image for the spot, which is retrieved from the SpotImages property of the spot object
+            //if there are no images for the spot, set previewImage to null
+        previewImage: loc.SpotImages[0]?.url || null,
+      };
+    });
+
+  //if locations have been found, return 200 with Spots array + page + size
+    if (allLocations.length > 0) return res.status(200).json({
+        Spots: allLocations,
+        page: parseInt(page),
+        size: parseInt(size)
     })
 
-    if (Spots) {
-        return res.status(200).json({Spots})
-    } else {
-        res.status(400).json({message: "There are no spots available."})
-    }
-})
+    //if no locations were found, return 404 with message saying none were found
+    return res.status(404).json({
+        message: "Spots couldn't be found"
+    })
+  });
+
 
 //Get all spots owned by the current user
     //REQUIRE AUTH: TRUE
