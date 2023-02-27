@@ -120,6 +120,11 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 previewImage = null;
             }
 
+            //NEW ADDITIONS:
+            const lat = parseFloat(Spot.lat);
+            const lng = parseFloat(Spot.lng);
+            const price = parseFloat(Spot.price);
+
             //return the order you want the response body in
             return {
                 id, spotId, userId, startDate, endDate, createdAt, updatedAt, Spot: {
@@ -129,10 +134,13 @@ router.get('/current', requireAuth, async (req, res, next) => {
                     city: Spot.city,
                     state: Spot.state,
                     country: Spot.country,
-                    lat: Spot.lat,
-                    lng: Spot.lng,
+                    lat,
+                    lng,
+                    // lat: Spot.lat,
+                    // lng: Spot.lng,
                     name: Spot.name,
-                    price: Spot.price,
+                    price,
+                    // price: Spot.price,
                     previewImage
                 }
             }
