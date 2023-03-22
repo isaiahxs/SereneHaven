@@ -33,9 +33,10 @@ router.use('/review-images', reviewImagesRouter);
   //for our spot related route handlers and we would have a spots.js in our api
 
 
-router.post('/test', (req, res) => {
-  res.json({ requestBody: req.body });
-});
+//end of phase 0 tells us that we no longer need this
+// router.post('/test', (req, res) => {
+//   res.json({ requestBody: req.body });
+// });
 
 
 
