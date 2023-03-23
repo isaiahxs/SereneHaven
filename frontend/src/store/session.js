@@ -45,6 +45,14 @@ export const restoreUser = () => async (dispatch) => {
     return response;
 }
 
+export const logout = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session', {
+        method: 'DELETE',
+    })
+    dispatch(removeUser());
+    return response;
+}
+
 //if there is no session user, then the session slice of state should look like `{user: null}`
     //aka, the initial state
 const initialState = {user: null};
