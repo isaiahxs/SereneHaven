@@ -6,6 +6,8 @@ import './index.css';
 import App from './App';
 import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
+//import all the actions from session.js
+import * as sessionActions from './store/session';
 
 const store = configureStore();
 
@@ -14,6 +16,8 @@ if (process.env.NODE_ENV !== "production") {
 
   window.csrfFetch = csrfFetch;
   window.store = store;
+  //attach the actions to the window at the key of sessionActions
+  window.sessionActions = sessionActions;
 }
 
 function Root() {
