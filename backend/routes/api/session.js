@@ -66,10 +66,10 @@ router.post(
     }
 
     await setTokenCookie(res, user);
-    const {id, username, email, firstName, lastName} = user;
+    const {id, username, email, firstName, lastName, createdAt, updatedAt} = user;
 
     return res.json({
-      user: {id, firstName, lastName, email, username}
+      user: {id, firstName, lastName, email, username, createdAt, updatedAt}
     });
     next();
   }
