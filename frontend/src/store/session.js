@@ -14,6 +14,25 @@ const removeUser = () => ({
     type: REMOVE_USER,
 })
 
+
+export const signup = (user) => async (dispatch) => {
+    const {username, firstName, lastName, email, password} = user;
+
+    const response = await csrfFetch('/api/users', {
+        method: 'POST',
+        body: JSON.stringify({
+            username,
+            firstName,
+            lastName,
+            email,
+            password
+        })
+    })
+    const data = await response.json();
+    dispatch(setUser(data.user));
+    return response;
+}
+
 //will need to call the API to log in then set the session user from the response, so add a thunk action for the POST /api/session
     //make sure to use the custom csrfFetch function
     //the POST /api/session route expects the request body to have a key of credential with an existing username or email to have a key of credential with an existing username or email and a key of password
