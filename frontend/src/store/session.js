@@ -20,6 +20,7 @@ const removeUser = () => ({
 export const login = (user) => async (dispatch) => {
     const {credential, password} = user;
 
+    //if response does not give error but is not returning everything you want, check back end route
     const response = await csrfFetch('/api/session', {
         method: 'POST',
         body: JSON.stringify({
