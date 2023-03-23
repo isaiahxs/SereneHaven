@@ -35,6 +35,16 @@ export const login = (user) => async (dispatch) => {
     return response;
 }
 
+//add a thunk that will call the GET /api/session
+export const restoreUser = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session');
+    //parse the JSON body of the response
+    const data = await response.json();
+    //then dispatch the action for setting the session use to the user in the response's body
+    dispatch(setUser(data.user));
+    return response;
+}
+
 //if there is no session user, then the session slice of state should look like `{user: null}`
     //aka, the initial state
 const initialState = {user: null};
