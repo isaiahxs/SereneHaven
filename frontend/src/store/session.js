@@ -14,7 +14,7 @@ const removeUser = () => ({
     type: REMOVE_USER,
 })
 
-
+//add a signup thunk action that will hit the signup backend route with username, firstName, lastName, email and password inputs
 export const signup = (user) => async (dispatch) => {
     const {username, firstName, lastName, email, password} = user;
 
@@ -28,7 +28,9 @@ export const signup = (user) => async (dispatch) => {
             password
         })
     })
+    //after the response from the AJAX call comes back, parse the JSON body of the response
     const data = await response.json();
+    //dispatch the action for setting the session user to the user in the response's body
     dispatch(setUser(data.user));
     return response;
 }
