@@ -31,7 +31,7 @@ export const signup = (user) => async (dispatch) => {
     //after the response from the AJAX call comes back, parse the JSON body of the response
     const data = await response.json();
     //dispatch the action for setting the session user to the user in the response's body
-    dispatch(setUser(data.user));
+    dispatch(setUser(data));
     return response;
 }
 
