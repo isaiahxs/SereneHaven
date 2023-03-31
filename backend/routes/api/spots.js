@@ -1316,7 +1316,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 'endDate'
             ]
         })
-        // console.log('bookings', bookings);
 
         return res.status(200).json({Bookings: bookings})
     } else {
@@ -1332,12 +1331,6 @@ router.get('/:spotId/bookings', requireAuth, async (req, res, next) => {
                 }
             ]
         })
-        // console.log('bookings', bookings);
-        // bookings.forEach((booking) => {
-        //     console.log(`Booking Start Date: ${booking.startDate.toISOString()}`);
-        //     console.log(`Booking End Date: ${booking.endDate.toISOString()}`);
-        //   });
-
         return res.status(200).json({Bookings: bookings})
     }
 })

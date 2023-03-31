@@ -80,11 +80,11 @@ const validateSignup = [
 // );
 
 router.post('/', validateSignup, async(req, res) => {
-    const {email, password, username, firstName, lastName} = req.body;
+    const {email, password, username, firstName, lastName, createdAt, updatedAt} = req.body;
 
     try {
         //if all is successful, perform and return the following
-        const user = await User.signup({email, username, password, firstName, lastName});
+        const user = await User.signup({email, username, password, firstName, lastName, createdAt, updatedAt});
         const token = await setTokenCookie(res, user);
 
         return res.json({
@@ -93,6 +93,8 @@ router.post('/', validateSignup, async(req, res) => {
             lastName: user.lastName,
             email: user.email,
             username: user.username,
+            createdAt: user.createdAt,
+            updatedAt: user.updatedAt,
             token
         });
     } catch (error) {

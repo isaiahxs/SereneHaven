@@ -14,12 +14,34 @@ const removeUser = () => ({
     type: REMOVE_USER,
 })
 
+//add a signup thunk action that will hit the signup backend route with username, firstName, lastName, email and password inputs
+export const signup = (user) => async (dispatch) => {
+    const {username, firstName, lastName, email, password} = user;
+
+    const response = await csrfFetch('/api/users', {
+        method: 'POST',
+        body: JSON.stringify({
+            username,
+            firstName,
+            lastName,
+            email,
+            password
+        })
+    })
+    //after the response from the AJAX call comes back, parse the JSON body of the response
+    const data = await response.json();
+    //dispatch the action for setting the session user to the user in the response's body
+    dispatch(setUser(data));
+    return response;
+}
+
 //will need to call the API to log in then set the session user from the response, so add a thunk action for the POST /api/session
     //make sure to use the custom csrfFetch function
     //the POST /api/session route expects the request body to have a key of credential with an existing username or email to have a key of credential with an existing username or email and a key of password
 export const login = (user) => async (dispatch) => {
     const {credential, password} = user;
 
+    //if response does not give error but is not returning everything you want, check back end route
     const response = await csrfFetch('/api/session', {
         method: 'POST',
         body: JSON.stringify({
@@ -31,6 +53,24 @@ export const login = (user) => async (dispatch) => {
     const data = await response.json();
     //and dispatch the action for setting the session user to the user in the response's body
     dispatch(setUser(data.user));
+    return response;
+}
+
+//add a thunk that will call the GET /api/session
+export const restoreUser = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session');
+    //parse the JSON body of the response
+    const data = await response.json();
+    //then dispatch the action for setting the session use to the user in the response's body
+    dispatch(setUser(data.user));
+    return response;
+}
+
+export const logout = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session', {
+        method: 'DELETE',
+    })
+    dispatch(removeUser());
     return response;
 }
 
