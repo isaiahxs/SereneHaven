@@ -3,7 +3,7 @@
 import React from "react";
 import { useModal } from "../../context/Modal";
 
-function OpenModal({
+function OpenModalButton({
     modalComponent, //component to render inside the modal
     buttonText, //text of the button that opens the modal
     onButtonClick, //callback will be called once button that opens the modal is clicked
