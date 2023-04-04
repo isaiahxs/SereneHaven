@@ -9,6 +9,7 @@
     align-items: center;
 }
 
+
 #modal-background {
     position: fixed;
     top: 0;
@@ -21,4 +22,5 @@
 #modal-content {
     position: absolute;
     background-color: white;
+    border-radius: 20px;
 }
