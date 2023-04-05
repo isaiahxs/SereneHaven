@@ -34,11 +34,16 @@ export default function Spots() {
     }
 
     //in the JSX below, return the rendered spots with the desired front end information
+        //we will use the array of landingSpots we created above
     return (
         <>
-        <div>
-            <h1>hello</h1>
-        </div>
+        {/* for each spot, we'll have to display the preview image, if it exists, followed by the city, state, avg rating, name, price */}
+        {/* going to need the clickHandler to redirect user to specific spot's id */}
+            {/* for each spot, we will need to give it a unique key */}
+
+        {/* going to have to show preview image of the spot along with an img elemetn which will display the previewImage if it exists. remember to have an alt tag for accessibility */}
+
+        {/* make a div that will have the details of the spot such as the city, state, avg rating, name, and price. use Unicode star character and avgRating property of the spot object if it exists. will need to display name of spot as well as its price */}
         </>
     )
 }
