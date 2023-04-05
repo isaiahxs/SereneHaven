@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
 import { useDispatch } from "react-redux";
-import {Switch} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 //in phase 4, we reconfigure LoginFormPage to be a modal instead of a page
 // import LoginFormPage from './components/LoginFormPage';
 //bonus refactor
 // import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from './store/session';
 import Navigation from "./components/Navigation";
+import Spots from "./components/Spots";
 
 function App() {
   const dispatch = useDispatch();
@@ -28,6 +29,12 @@ function App() {
           {/* <Route path="/signup">
             <SignupFormPage />
           </Route> */}
+
+          {/* at home url, render Spots component */}
+          <Route exact path={'/'}>
+            <Spots/>
+          </Route>
+
         </Switch>
       )}
     </>
