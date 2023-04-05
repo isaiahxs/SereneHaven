@@ -11,6 +11,7 @@ function Navigation({ isLoaded }){
     <ul>
       <li>
         <NavLink exact to="/" className={'home-button'}>Home</NavLink>
+
       </li>
       {isLoaded && (
         <li>
