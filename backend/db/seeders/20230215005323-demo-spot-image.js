@@ -17,6 +17,26 @@ module.exports = {
         preview: true
       },
       {
+        spotId: 1,
+        url: 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-549139249395273435/original/27259071-06af-410f-ad25-7778d9aae4b1.jpeg?im_w=480',
+        preview: true
+      },
+      {
+        spotId: 1,
+        url: 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-549139249395273435/original/6ab06611-53b2-494e-8513-c6908d8bf6fe.jpeg?im_w=480',
+        preview: true
+      },
+      {
+        spotId: 1,
+        url: 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-549139249395273435/original/eff9096f-51f0-465d-97bc-fdb85bbd1bbe.jpeg?im_w=480',
+        preview: true
+      },
+      {
+        spotId: 1,
+        url: 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-549139249395273435/original/5a0ccf68-6421-46eb-a85d-644e8489fb9b.jpeg?im_w=480',
+        preview: true
+      },
+      {
         spotId: 2,
         url: 'www.abnb/spot-images/nyc.com',
         preview: true
