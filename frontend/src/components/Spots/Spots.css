@@ -1,0 +1,95 @@
+/* CSS notes */
+
+/* responsive layout: adjust columns as browser is resized */
+/* minimum: 1 column */
+/* maximum: 4 columns */
+
+/* image previews must be aligned horizontally, nav bar must be to the top right with an icon of a person */
+
+/* div below the image preview and at the top left of that will be the city and state. to the top right will be the star icon as well as the average rating */
+
+/* to the bottom left will be the price per night of the location */
+
+/* show pointer cursor on hover of clickable elements such as logos, buttons, and spot tiles */
+
+/* show a tooltip on hover over a spo tile which will name the spot in the tooltip's text */
+
+
+/* ----------------------------------------------------- */
+/* set up the container for all the spots and change display to flex and enable wrapping to allow content to carry over */
+
+
+/* put all spots in a line and create some space between them. going to want to use relative measurements like percents or em/rem units for easier dynamic sizing */
+
+/* for the spot images, make sure the picture covers the container and round the edges
+ */
+
+ /* for the ratings, make sure the star is black and i might have to make it two decimals instead of just one */
+
+/* for the loc/location, make the city and state bolder than the text below it. create and emphasize visual hierarchy. */
+
+/* for the price, make the dollar sign and value have a slightly higher weight than the "night" text */
+
+/* for the spots container, create a grid or flex */
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.spot {
+    display: inline-block;
+    margin: 1rem;
+    width: 100%;
+    max-width: 25rem;
+    cursor: pointer;
+}
+
+.preview {
+    position: relative;
+}
+
+.spot-image {
+    width: 100%;
+    height: 17rem;
+    object-fit: cover;
+    border-radius: 5%;
+}
+
+.rating {
+    margin-left: 1rem;
+    font-size: 1.5rem;
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+.loc {
+    font-weight: bold;
+    font-size: 1.5rem;
+    font-family: Arial, sans-serif;
+}
+
+.location-name {
+    font-size: 1.2rem;
+    font-family: Arial, sans-serif;
+}
+
+.price {
+    font-size: 1.2rem;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+}
+
+.location-price {
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+}
+
+.spots-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    margin-top: 1rem;
+}
