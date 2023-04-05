@@ -180,6 +180,10 @@ airbnb spot links - andres and blake recommended stock photo urls since they won
 
 going to have to create a lot of seed data.
 
+use unsplash for the stock photos:
+https://unsplash.com/s/photos/indoor-house
+https://unsplash.com/s/photos/houses
+
 Miami: https://www.airbnb.com/rooms/549139249395273435?source_impression_id=p3_1680667756_LtgHhNzypFF0vHKH
 
 NY:
