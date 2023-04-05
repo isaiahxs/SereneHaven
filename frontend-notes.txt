@@ -1,0 +1,46 @@
+FEATURES
+
+---------------------------------------------------
+SPOTS
+
+Info:
+roadmap says first feature we should work on is Spots which will appear on the landing page.
+
+Navigating to the root URL will show us a list of all the spots.
+
+Responsive layout: adjusting columns as browser is resized
+    Min: 1 column
+    Max: 4 columns
+
+under the image boxes, we will have city, state, price and star value to the side
+
+click anywhere on a spot tile to go to a spot details
+
+CSS notes:
+show pointer cursor on hover of clickable elements such as: logo, buttons, spot tiles
+
+show a tooltip on hover over a spot tile. name of spot is in tooltip's text
+
+Process/procedure:
+
+- create folder in components for the spots that will contain an index.js file as well as a CSS file we will link to the index
+
+- in the store folder, create spots.js like we did for session.js
+    here we will have the POJO action creators as well as thunk action creators that will hit the desired backend route
+
+    after the response from the AJAX call comes back, parse the JSON body of the response
+
+    dispatch the action
+
+- create a reducer for the spots
+
+- insert the reducer for spot in the rootReducer in src/store/index.js
+
+- wireframe shows we'll also have to have the star/review ratings (probably in the same div container as the city, state, and price.)
+
+
+
+
+
+
+---------------------------------------------------

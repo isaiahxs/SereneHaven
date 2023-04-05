@@ -1,0 +1,134 @@
+/* CSS notes */
+
+/* responsive layout: adjust columns as browser is resized */
+/* minimum: 1 column */
+/* maximum: 4 columns */
+
+/* image previews must be aligned horizontally, nav bar must be to the top right with an icon of a person */
+
+/* div below the image preview and at the top left of that will be the city and state. to the top right will be the star icon as well as the average rating */
+
+/* to the bottom left will be the price per night of the location */
+
+/* show pointer cursor on hover of clickable elements such as logos, buttons, and spot tiles */
+
+/* show a tooltip on hover over a spo tile which will name the spot in the tooltip's text */
+
+
+/* ----------------------------------------------------- */
+/* set up the container for all the spots and change display to flex and enable wrapping to allow content to carry over */
+
+
+/* put all spots in a line and create some space between them. going to want to use relative measurements like percents or em/rem units for easier dynamic sizing */
+
+/* for the spot images, make sure the picture covers the container and round the edges
+ */
+
+ /* for the ratings, make sure the star is black and i might have to make it two decimals instead of just one */
+
+/* for the loc/location, make the city and state bolder than the text below it. create and emphasize visual hierarchy. */
+
+/* for the price, make the dollar sign and value have a slightly higher weight than the "night" text */
+
+/* for the spots container, create a grid or flex */
+
+
+/* QUESTION: i'm trying to use this font family
+
+font-family: Circular, -apple-system, BlinkMacSystemFont, Roboto, Helvetica Neue, sans-serif;
+
+but i don't notice a change in the text
+*/
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    color: #222;
+}
+
+.spot {
+    display: inline-block;
+    margin: 1rem;
+    width: 100%;
+    max-width: 20rem;
+    cursor: pointer;
+}
+
+.preview {
+    position: relative;
+}
+
+.spot-image {
+    width: 100%;
+    height: 16rem;
+    object-fit: cover;
+    border-radius: 5%;
+}
+
+.rating {
+    /* margin-left: 1rem; */
+    margin-left: 1rem;
+    font-size: 1.1rem;
+    font-weight: lighter;
+    font-family: Arial, sans-serif;
+}
+
+.loc {
+    font-weight: bold;
+    font-size: 1.1rem;
+    font-family: Arial, sans-serif;
+}
+
+.location-name {
+    font-size: 1.0rem;
+    font-family: Arial, sans-serif;
+    color:#6e6e6e;
+}
+
+.price {
+    font-size: 1.1rem;
+    font-family: Arial, sans-serif;
+    font-weight: 100;
+}
+
+.location-price {
+    font-weight: bold;
+    font-family: Arial, sans-serif;
+    font-size: 1.1rem;
+}
+
+.spots-container {
+    /* display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    gap: 1rem;
+    margin-top: 1rem; */
+    width: 100%;
+    line-height: 1px;
+    display: grid;
+}
+
+/* hide tool tip with visibility of hidden and opacity of 0.
+position it at the bottom of the parent .spot element and center it horizontally */
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    /* position: absolute; */
+    z-index: 999;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem;
+    background-color: #222;
+    color: #fff;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    transition: opacity 0.2s, visibility 0.2s;
+    font-family: Arial, sans-serif;
+  }
+
+/* when user hovers over the .spot element, change visibility and opacity of tooltip */
+  .spot:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }
