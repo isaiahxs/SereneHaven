@@ -10,7 +10,7 @@ const GET_SPOTS = `spots/GET_SPOTS`;
 //action creator that returns an object with the GET_SPOTS type and payload of retrieved spots
 const getSpots = (spots) => ({
     type: GET_SPOTS,
-    payload: spots
+    spots
 })
 
 //spots thunk action creator defined as async function that makes an AJAX call to the proper route on the backend server using csrfFetch, then dispathes getSpots action
@@ -21,7 +21,7 @@ export const spots = () => async (dispatch) => {
     const data = await response.json();
     //and dispatch the action
     dispatch(getSpots(data))
-    return response;
+    return data;
 }
 
 
@@ -34,7 +34,12 @@ const spotReducer = (state=initialState, action) => {
     switch (action.type) {
         //with GET_SPOTS, update the spots property in the state object with the payload of the retrieved spots
         case GET_SPOTS:
-            newState.spots = action.payload;
+            // newState.spots = action.payload;
+            // return newState;
+            const allSpots = {};
+            const getAllSpots = action.spots.Spots;
+            getAllSpots.forEach((eachSpot) => (allSpots[eachSpot.id] = eachSpot));
+            newState["allSpots"] = { ...allSpots };
             return newState;
         default:
             return state;

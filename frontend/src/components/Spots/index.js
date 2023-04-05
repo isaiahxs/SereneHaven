@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { spots } from '../../store/spots';
@@ -11,7 +11,7 @@ export default function Spots() {
     const history = useHistory();
 
     //use useSelector hook to access the spots state object from the Redux store
-    const spotsState = useSelector(state => state.spot.spots);
+    const spotsState = useSelector(state => state.spot.allSpots);
 
     //use useEffect hook to call spots action creator from the Redux store when the component mounts
     useEffect(() => {
@@ -30,20 +30,53 @@ export default function Spots() {
         //add a click handler to the spot element that navigates us to the correct component for that spot when it is clicked by using the history and push function
             //use useHistory to manage browser history
     const clickHandler = spotsId => {
-        history.push(`/spots/{spotsId}`);
+        history.push(`/spots/${spotsId}`);
     }
 
     //in the JSX below, return the rendered spots with the desired front end information
         //we will use the array of landingSpots we created above
     return (
-        <>
+        <div className='container'>
         {/* for each spot, we'll have to display the preview image, if it exists, followed by the city, state, avg rating, name, price */}
-        {/* going to need the clickHandler to redirect user to specific spot's id */}
+            {/* going to need the clickHandler to redirect user to specific spot's id */}
             {/* for each spot, we will need to give it a unique key */}
+        {landingSpots.map((landingSpot) => {
+            return (
 
-        {/* going to have to show preview image of the spot along with an img elemetn which will display the previewImage if it exists. remember to have an alt tag for accessibility */}
+                <div className='spot' key={landingSpot.id} onClick={() => clickHandler(landingSpot.id)}>
+                    {/* going to have to show preview image of the spot along with an img element which will display the previewImage if it exists. remember to have an alt tag for accessibility */}
+                    <div className='preview'>
+                        <img
+                        className='spot-image'
+                        src={landingSpot.previewImage}
+                        alt={`${landingSpot.name}`}
+                        />
+                    </div>
+
+                    <div className='spots-container'>
+                        <p className='loc'>
+                            {landingSpot.city}, {landingSpot.state}
+                            <span className='rating'>
+                            ★ {Number(landingSpot.avgRating)
+                                ? Number(landingSpot.avgRating).toFixed(1)
+                                : '0'}
+                            </span>
+                        </p>
+
+                        <p className='location-name'>{landingSpot.name}</p>
+                        <p className='price'>
+                            <span className='location-price'>${landingSpot.price}</span> night
+                        </p>
+                    </div>
+                </div>
+            )
+        })}
+
+
+
+
 
         {/* make a div that will have the details of the spot such as the city, state, avg rating, name, and price. use Unicode star character and avgRating property of the spot object if it exists. will need to display name of spot as well as its price */}
-        </>
+        </div>
     )
 }
