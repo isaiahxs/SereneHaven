@@ -93,3 +93,27 @@
     gap: 1rem;
     margin-top: 1rem;
 }
+
+/* hide tool tip with visibility of hidden and opacity of 0.
+position it at the bottom of the parent .spot element and center it horizontally */
+.tooltip {
+    visibility: hidden;
+    opacity: 0;
+    /* position: absolute; */
+    z-index: 999;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 0.5rem;
+    background-color: #000;
+    color: #fff;
+    border-radius: 0.5rem;
+    font-size: 0.8rem;
+    transition: opacity 0.2s, visibility 0.2s;
+  }
+
+/* when user hovers over the .spot element, change visibility and opacity of tooltip */
+  .spot:hover .tooltip {
+    visibility: visible;
+    opacity: 1;
+  }

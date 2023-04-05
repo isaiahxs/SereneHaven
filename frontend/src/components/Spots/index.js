@@ -68,6 +68,7 @@ export default function Spots() {
                             <span className='location-price'>${landingSpot.price}</span> night
                         </p>
                     </div>
+                    <span className='tooltip'>{landingSpot.name}</span>
                 </div>
             )
         })}
