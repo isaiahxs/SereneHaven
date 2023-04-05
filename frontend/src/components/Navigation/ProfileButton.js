@@ -58,7 +58,7 @@ function ProfileButton({ user }) {
           </>
         ) : (
           <>
-            <div>
+            <div className="log-in">
               <OpenModalButton
                 buttonText="Log In"
               // <OpenModalMenuItem

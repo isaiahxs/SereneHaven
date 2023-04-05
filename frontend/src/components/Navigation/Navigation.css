@@ -34,6 +34,7 @@ NavLink {
   font-weight: bold;
 }
 
+/* need to come back here later and make the button background consistent with the Log Out */
 button {
   background: white;
   border: 0px;
@@ -43,6 +44,17 @@ button {
   color: black;
   /* width: 34px;
   height: 34px */
+  padding: 5px 10px;
+  font-family: Arial, sans-serif;
+}
+
+
+
+button:hover {
+  background-color: rgb(224, 224, 224);
+  border: 0px;
+  border-radius: 15px;
+  padding: 5px 10px;
 }
 
 .fas {
@@ -51,12 +63,6 @@ button {
   align-items: center;
   height: 30px;
   width: 24px;
-}
-
-button:hover {
-  background: rgb(241, 241, 241);
-  border: 0px;
-  border-radius: 15px;
 }
 
 /* i need to come back here later and center the items that appear in the drop down menu */
@@ -77,10 +83,14 @@ button:hover {
   line-height: 30px;
 }
 
+.log-in {
+  margin-bottom: 10px;
+}
+
 .log-out {
   font-family: Arial, sans-serif;
   font-size: 1.2rem;
-  font-weight: bold;
+  /* font-weight: bold; */
   background: rgb(241, 241, 241);
   border-radius: 15px;
   padding: 5px 10px;
