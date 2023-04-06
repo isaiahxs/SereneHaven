@@ -1,0 +1,1 @@
+am i supposed to change something for serving the static assets in the frontend's build folder? it seems we have public instead of build

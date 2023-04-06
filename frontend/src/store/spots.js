@@ -6,10 +6,17 @@ import { csrfFetch } from "./csrf";
 
 //action type string for retrieving spots
 const GET_SPOTS = `spots/GET_SPOTS`;
+const GET_DETAILS = `spots/GET_DETAILS`;
+
 
 //action creator that returns an object with the GET_SPOTS type and payload of retrieved spots
 const getSpots = (spots) => ({
     type: GET_SPOTS,
+    spots
+})
+
+const getDetails = (spots) => ({
+    type: GET_DETAILS,
     spots
 })
 
@@ -21,6 +28,15 @@ export const spots = () => async (dispatch) => {
     const data = await response.json();
     //and dispatch the action
     dispatch(getSpots(data))
+    return data;
+}
+
+export const spotDetails = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`);
+
+    //after response from AJAX call comes back, parse the JSON body of the response
+    const data = await response.json();
+    dispatch(getDetails(data));
     return data;
 }
 
@@ -40,6 +56,12 @@ const spotReducer = (state=initialState, action) => {
             const getAllSpots = action.spots.Spots;
             getAllSpots.forEach((eachSpot) => (allSpots[eachSpot.id] = eachSpot));
             newState["allSpots"] = { ...allSpots };
+            return newState;
+
+            //assign the action's 'spot' payload to the spotDetails key of the newState object
+            //we'll do this so the spotDetails key in the Redux store holds the details of a single spot, as opposed to an array of spots, which would be held by the allSpots key
+        case GET_DETAILS:
+            newState['spotDetails'] = action.spot;
             return newState;
         default:
             return state;

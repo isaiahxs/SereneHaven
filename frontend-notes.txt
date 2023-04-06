@@ -39,8 +39,20 @@ Process/procedure:
 - wireframe shows we'll also have to have the star/review ratings (probably in the same div container as the city, state, and price.)
 
 
+---------------------------------------------------
+Spot details
+- contents of page should fill to a max of 1000px
+- for reserve button, put "Feature Coming Soon" for the time being
+- show average start rating and review count
+- if user is not logged in, hide "Post Your Review"
+- each review will show user's first name, date of review, and comment text
 
+- create SpotDetails component
+- import all of store/spots into src/index.js like we did sessionActions
+- update the production section
 
-
+- import component into App.js to render it at the specific route of /spot/:spotId
 
 ---------------------------------------------------
+MUST DO:
+logo top left that can be clicked to take user home

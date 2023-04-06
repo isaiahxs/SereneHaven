@@ -43,3 +43,5 @@ const reviewReducer = (state=initialState, action) => {
             return state;
     }
 }
+
+export default reviewReducer;
