@@ -67,7 +67,8 @@ const spotReducer = (state=initialState, action) => {
             //assign the action's 'spot' payload to the spotDetails key of the newState object
             //we'll do this so the spotDetails key in the Redux store holds the details of a single spot, as opposed to an array of spots, which would be held by the allSpots key
         case GET_DETAILS:
-            newState['spotDetails'] = action.spot;
+            console.log('hello this is get details')
+            newState['spotDetails'] = action.spots;
             return newState;
         default:
             return state;

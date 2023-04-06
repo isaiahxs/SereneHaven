@@ -48,6 +48,8 @@ export default function SpotId() {
             <p>State: {detailState.state}</p>
             <p>Country: {detailState.country}</p> */}
         <div>hiiii</div>
+        <div>{detailState.name}</div>
+        <div>{detailState.city}</div>
         </div>
     )
 }
