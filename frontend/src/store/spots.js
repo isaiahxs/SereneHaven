@@ -7,6 +7,7 @@ import { csrfFetch } from "./csrf";
 //action type string for retrieving spots
 const GET_SPOTS = `spots/GET_SPOTS`;
 const GET_DETAILS = `spots/GET_DETAILS`;
+const GET_USER_SPOTS = `spots/GET_USER_SPOTS`;
 
 
 //action creator that returns an object with the GET_SPOTS type and payload of retrieved spots
@@ -20,6 +21,11 @@ const getDetails = (spots) => ({
     spots
 })
 
+const getUserSpots = (spots) => ({
+    type: GET_USER_SPOTS,
+    spots
+})
+
 //spots thunk action creator defined as async function that makes an AJAX call to the proper route on the backend server using csrfFetch, then dispatches getSpots action
 export const spots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots')
@@ -28,6 +34,14 @@ export const spots = () => async (dispatch) => {
     const data = await response.json();
     //and dispatch the action
     dispatch(getSpots(data))
+    return data;
+}
+
+export const userSpotsThunk = () => async (dispatch) => {
+    const response = await csrfFetch('/api/spots/current');
+
+    const data = await response.json();
+    dispatch(getUserSpots(data));
     return data;
 }
 
@@ -70,6 +84,12 @@ const spotReducer = (state=initialState, action) => {
             console.log('hello this is get details')
             newState['spotDetails'] = action.spots;
             return newState;
+
+        case GET_USER_SPOTS:
+            console.log('this is get user spots')
+            newState['userSpots'] = action.userSpots
+
+
         default:
             return state;
     }

@@ -23,6 +23,10 @@ export default function SpotId() {
     //use useEffect which run on mount and update whenever the dispatch or spotId dependencies change
     useEffect(() => {
         dispatch(spotDetails(spotId));
+
+        // clear the spot details when the component unmounts
+
+
     }, [dispatch, spotId])
 
 
@@ -47,9 +51,33 @@ export default function SpotId() {
             <p>City: {detailState.city}</p>
             <p>State: {detailState.state}</p>
             <p>Country: {detailState.country}</p> */}
-        <div>hiiii</div>
-        <div>{detailState.name}</div>
-        <div>{detailState.city}</div>
+        {detailState && (
+            <>
+                <div>hiiii</div>
+                <div>{detailState.name}</div>
+                {/* <div>{detailState.city}</div> */}
+
+            </>
+        )}
         </div>
     )
 }
+
+
+// for some reason, the above code of mine will sometimes say name is undefined.
+
+// "This issue could be happening because the detailState may not be fully populated when the component first renders, causing an error when trying to access detailState.name. When you comment the line out and then comment it back in, the component may be re-rendering after the data has been fetched and updated in the Redux store, which is why it works as intended."
+
+// To fix this issue, you can add a conditional rendering statement to render the component only when detailState is populated. For example, you can update your return statement like this:
+
+// return (
+//     <div className="spot-details">
+//       {detailState && (
+//         <>
+//           <div>hiiii</div>
+//           <div>{detailState.name}</div>
+//           {/* Add more detailState properties here */}
+//         </>
+//       )}
+//     </div>
+//   );
