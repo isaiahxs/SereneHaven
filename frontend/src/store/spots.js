@@ -9,6 +9,8 @@ const GET_SPOTS = `spots/GET_SPOTS`;
 const GET_DETAILS = `spots/GET_DETAILS`;
 const GET_USER_SPOTS = `spots/GET_USER_SPOTS`;
 
+const CLEAR_DETAILS = 'spots/CLEAR_DETAILS';
+
 
 //action creator that returns an object with the GET_SPOTS type and payload of retrieved spots
 const getSpots = (spots) => ({
@@ -24,6 +26,10 @@ const getDetails = (spots) => ({
 const getUserSpots = (spots) => ({
     type: GET_USER_SPOTS,
     spots
+})
+
+export const clearDetails = () => ({
+    type: CLEAR_DETAILS
 })
 
 //spots thunk action creator defined as async function that makes an AJAX call to the proper route on the backend server using csrfFetch, then dispatches getSpots action
@@ -60,6 +66,7 @@ export const spotDetails = (spotId) => async (dispatch) => {
 }
 
 
+
 //the initialState object is defined as an empty object, which will be used as the initial state for the spotReducer
 const initialState = {}
 
@@ -88,6 +95,10 @@ const spotReducer = (state=initialState, action) => {
         case GET_USER_SPOTS:
             console.log('this is get user spots')
             newState['userSpots'] = action.userSpots
+
+        case CLEAR_DETAILS:
+            newState['spotDetails'] = null;
+            return newState;
 
 
         default:

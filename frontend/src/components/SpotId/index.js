@@ -6,6 +6,8 @@ import { spotDetails } from '../../store/spots';
 import { reviewThunk } from '../../store/reviews';
 import { useParams } from 'react-router-dom';
 import './SpotId.css'
+import { clearDetails } from '../../store/spots';
+
 
 export default function SpotId() {
     console.log('yooo');
@@ -25,8 +27,9 @@ export default function SpotId() {
         dispatch(spotDetails(spotId));
 
         // clear the spot details when the component unmounts
-
-
+        return () => {
+            dispatch(clearDetails())
+        }
     }, [dispatch, spotId])
 
 
