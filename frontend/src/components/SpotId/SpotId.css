@@ -1,3 +1,10 @@
 /* contents of page should fill to a max of 1000px
 
 if user is not logged in, hide "Post Your Review" */
+.spot-details {
+    background-color: red;
+    padding: 20px;
+    color: black;
+    height: 20px;
+    width: 500px;
+}

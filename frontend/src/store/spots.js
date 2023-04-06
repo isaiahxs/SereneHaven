@@ -20,7 +20,7 @@ const getDetails = (spots) => ({
     spots
 })
 
-//spots thunk action creator defined as async function that makes an AJAX call to the proper route on the backend server using csrfFetch, then dispathes getSpots action
+//spots thunk action creator defined as async function that makes an AJAX call to the proper route on the backend server using csrfFetch, then dispatches getSpots action
 export const spots = () => async (dispatch) => {
     const response = await csrfFetch('/api/spots')
 
@@ -31,6 +31,11 @@ export const spots = () => async (dispatch) => {
     return data;
 }
 
+//additional notes: when you make a request to the server using csrfFetch, it returns a response object that contains information such as the response status code, headers, and the body of the response as a string
+//in order to work with the data returned by the server, we need to parse the response body as JSON
+    //this returns a promise that resolves to the parsed JSON data, which we are currently assigning to the data variable
+//to ensure that the spotDetails thunk action creator returns the correct data, the final return should be the data variable
+//that way, any code that calls spotDetails and awaits its resolution will receive the parsed JSON data as the resolved value of the returned promise
 export const spotDetails = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`);
 
@@ -50,6 +55,7 @@ const spotReducer = (state=initialState, action) => {
     switch (action.type) {
         //with GET_SPOTS, update the spots property in the state object with the payload of the retrieved spots
         case GET_SPOTS:
+            console.log('hiii')
             // newState.spots = action.payload;
             // return newState;
             const allSpots = {};
