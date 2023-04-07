@@ -3,11 +3,17 @@ import { csrfFetch } from "./csrf";
 
 //action type strings
 const GET_REVIEWS = `reviews/GET_REVIEWS`;
+const ADD_REVIEWS = `reviews/ADD_REVIEWS`;
 
 //action creators
 const getReviews = (reviews) => ({
     type: GET_REVIEWS,
     reviews
+})
+
+const addReviews = (postingReview) => ({
+    type: ADD_REVIEWS,
+    postingReview
 })
 
 //reviews thunk action creators defined as async functions
@@ -19,6 +25,77 @@ export const reviewThunk = (review) => async (dispatch) => {
     dispatch(getReviews(data));
     return data;
 }
+
+//thunk action creator for posting a review
+export const addReviewThunk = ({userId, spotId, stars, review}) => async (dispatch) => {
+
+    //destructure the passed object to get the userId, spotId, stars, and review
+    const postingObject = {
+        userId,
+        spotId,
+        stars,
+        review
+    }
+
+    //make a POST request to the backend to create a new review
+    //the review.spotId is the spotId that is passed in as a parameter to the thunk action creator
+
+    //is my path correct or should i use ${spotId}/reviews instead of review.spotId?
+    const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(postingObject)
+    });
+
+    const postingReview = await response.json();
+    dispatch(addReviews(postingReview));
+    return postingReview;
+}
+
+
+// define an initial state object with a currSpotReviews property set to null
+const initialState = {currSpotReviews: null};
+
+const reviewReducer = (state=initialState, action) => {
+    let reviews;
+
+    switch(action.type) {
+        //when GET_REVIEWS is dispatched, create a copy of the current state object using spread
+        case GET_REVIEWS:
+            reviews = {...state, currSpotReviews: {
+                ...state.currSpotReviews}
+            }
+            //create a new empty object
+            let reviewObject = {};
+            //loop through the reviews array in the action payload and create a new object for each review, using the review's id as the key
+            let reviewArray = action.reviews.Reviews;
+            reviewArray.forEach((review) => (reviewObject[review.id] = review));
+            //update the currSpotReviews with the new object and return the updated state object
+            // this part might have to be changed to take the braces off of reviewObject
+            reviews.currSpotReviews = {...reviewObject};
+
+            return reviews;
+
+        //when ADD_REVIEWS is dispatched, create a copy of the current state object using spread
+        case ADD_REVIEWS:
+            reviews = {...state, currSpotReviews: {
+                ...state.currSpotReviews} }
+
+            //update the currSpotReviews property with the new review object using the review's id as the key
+            reviews.currSpotReviews[action.postingReview.id] = action.postingReview;
+
+            return reviews;
+
+        default:
+            return state;
+    }
+}
+
+
+export default reviewReducer;
+
 
 //------------------------------------------------------------
 
@@ -49,32 +126,3 @@ export const reviewThunk = (review) => async (dispatch) => {
 // }
 
 //------------------------------------------------------------
-
-// define an initial state object with a currSpotReviews property set to null
-const initialState = {currSpotReviews: null};
-
-const reviewReducer = (state=initialState, action) => {
-    let reviews;
-
-    switch(action.type) {
-        //when GET_REVIEWS is dispatched, create a copy of the current state object using spread
-        case GET_REVIEWS:
-            reviews = {...state, currSpotReviews: {
-                ...state.currSpotReviews}
-            }
-            //create a new empty object
-            let reviewObject = {};
-            //loop through the reviews array in the action payload and create a new object for each review, using the review's id as the key
-            let reviewArray = action.reviews.Reviews;
-            reviewArray.forEach((review) => (reviewObject[review.id] = review));
-            //update the currSpotReviews with the new object and return the updated state object
-            // this part might have to be changed to take the braces off of reviewObject
-            reviews.currSpotReviews = {...reviewObject};
-            return reviews;
-        default:
-            return state;
-    }
-}
-
-
-export default reviewReducer;

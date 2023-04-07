@@ -97,6 +97,7 @@ const spotReducer = (state=initialState, action) => {
             newState['userSpots'] = action.userSpots
 
         case CLEAR_DETAILS:
+            console.log('now clearing details');
             newState['spotDetails'] = null;
             return newState;
 
