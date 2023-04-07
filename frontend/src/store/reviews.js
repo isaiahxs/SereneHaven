@@ -5,7 +5,7 @@ import { csrfFetch } from "./csrf";
 const GET_REVIEWS = `reviews/GET_REVIEWS`;
 const ADD_REVIEWS = `reviews/ADD_REVIEWS`;
 
-//action creators
+// action creators
 const getReviews = (reviews) => ({
     type: GET_REVIEWS,
     reviews
@@ -95,6 +95,9 @@ const reviewReducer = (state=initialState, action) => {
 
 
 export default reviewReducer;
+
+//------------------------------------------------------------ about to try something new
+
 
 
 //------------------------------------------------------------

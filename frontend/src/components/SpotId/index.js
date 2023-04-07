@@ -67,7 +67,9 @@ export default function SpotId() {
             review,
             stars,
             spotId,
-            userId: sessionUser.id
+            userId: sessionUser.id,
+
+            //i think the problem might be here.
         }
         dispatch(addReviewThunk(payload));
 
@@ -147,12 +149,14 @@ export default function SpotId() {
                             </div>
                         )}
                         {reviewArray.map((review) => {
+                            // console.log('Review:', review)
                             return (
                                 <div key={review.id}>
-                                    <div>{review.User.firstName} {review.User.lastName}</div>
+                                    <div>firstName: {review.User?.firstName} lastName: {review.User?.lastName}</div>
                                     {/* <div>{review.createdAt}</div> */}
-                                    <div>{review.stars}</div>
-                                    <div>{review.review}</div>
+                                    <div>Star rating: {review.stars}</div>
+                                    <div>Review: {review.review}</div>
+                                    <div>User Id: {review.userId}</div>
                                 </div>
                             )
                         })}
@@ -169,7 +173,10 @@ export default function SpotId() {
 
 //q: when i'm signed in and go to a spot where i have not made a review already, then i click on submit, i get an error saying "cannot read properties of firtName" of undefined. why is this happening? i thought i was passing in the userId as a foreign key in the review table
 
+//----------------------- NEW ITERATION -----------------------
 
+
+//----------------------- OLD ITERATION -----------------------
 
 // my old return before i reorganized it:
     // return (
