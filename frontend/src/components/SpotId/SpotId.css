@@ -8,3 +8,8 @@ if user is not logged in, hide "Post Your Review" */
     height: 20px;
     width: 500px;
 }
+
+.detail-image {
+    height: 400px;
+    width: 400px;
+}

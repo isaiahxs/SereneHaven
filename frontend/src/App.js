@@ -40,6 +40,11 @@ function App() {
             <SpotId/>
           </Route>
 
+          {/* Need to find a way to show a 404 in case a user goes to a page that does not exist */}
+          {/* <Route>
+            Error: 404 - Page Not Found
+          </Route> */}
+
         </Switch>
       )}
     </>
