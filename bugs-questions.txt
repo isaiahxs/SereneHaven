@@ -9,6 +9,8 @@ need to update my seeder bulk deletes Op in things later
 
 need to show client side validation errors when user inputs invalid data
 
+need to add a specific case for SpotId where if user puts invalid url, they will be shown a 404
+
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
