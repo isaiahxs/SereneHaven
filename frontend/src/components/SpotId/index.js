@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //thunk for getting the location's details
 import { spotDetails } from '../../store/spots';
 //thunk for getting the location's reviews
-import { reviewThunk, addReviewThunk, updateReviewThunk } from '../../store/reviews';
+import { reviewThunk, addReviewThunk, updateReviewThunk, deleteReviewThunk } from '../../store/reviews';
 import { useParams } from 'react-router-dom';
 import './SpotId.css'
 import { clearDetails } from '../../store/spots';
@@ -20,6 +20,8 @@ export default function SpotId() {
     const [ratingEdit, setRatingEdit] = useState(1);
     const [reviewEdit, setReviewEdit] = useState('');
     const [showEdit, setShowEdit] = useState(false);
+    const [reviewChanged, setReviewChanged] = useState(false);
+
 
     const [errors, setErrors] = useState([]);
 
@@ -52,7 +54,6 @@ export default function SpotId() {
         }
     }, [dispatch, spotId])
 
-const [reviewChanged, setReviewChanged] = useState(false);
     useEffect(() => {
         dispatch(reviewThunk(spotId));
         setReviewChanged(false);
@@ -74,6 +75,7 @@ const [reviewChanged, setReviewChanged] = useState(false);
         }
       }, [dispatch, reviewArray.length, reviewState, spotId]);
       //i'm getting status 200 from backend
+      //not sure if this actually helped anything. need to check it again.
 
 
 // IMPORTANT: IS THIS SOMETHING I'M GOING TO HAVE TO CHECK FOR LATER?
@@ -117,6 +119,12 @@ const [reviewChanged, setReviewChanged] = useState(false);
         setReviewEdit(reviewEdit);
         setRatingEdit(ratingEdit);
         setShowEdit(false);
+        setReviewChanged(true);
+    }
+
+    const deleteHandler = (reviewId) => {
+        dispatch(deleteReviewThunk(reviewId));
+        //i might need the following line so that it causes the immediate re-rendering of the component
         setReviewChanged(true);
     }
 
@@ -216,7 +224,7 @@ const [reviewChanged, setReviewChanged] = useState(false);
                                     {sessionUser.id === review.userId && (
                                         <div>
                                             <button onClick={() => editReview(review)}>Edit Review</button>
-                                            <button>Delete</button>
+                                            <button onClick={() => deleteHandler(review.id)}>Delete</button>
                                         </div>
                                     )}
                                     {sessionUser.id === review.userId && showEdit && (
