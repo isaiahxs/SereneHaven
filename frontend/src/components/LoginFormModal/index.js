@@ -54,6 +54,9 @@ function LoginFormModal() {
             value={credential}
             onChange={(e) => setCredential(e.target.value)}
             required
+            //not sure if i prefer placeholder or label. problem with placeholder and no label is that you can no longer see which input you're typing in
+            //i checked real bnb site and they have a placeholder that moves to the top left after you start typing in it which is really cool
+            // placeholder='Username or Email'
           />
         </label>
         <label>
@@ -63,10 +66,18 @@ function LoginFormModal() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            // placeholder='Password'
           />
         </label>
         <button type="submit">Log In</button>
       </form>
+      {/* down the line, i want to add a demo user option so viewers can quickly sign in */}
+      {/* <div className='break'>
+        <span className='line'></span>
+        <span className='or'>or</span>
+        <span className='line'></span>
+      </div> */}
+      {/* create a button for Demo User that when clicked, will perform setCredential and setPassword on an existing user */}
     </>
     );
 }

@@ -8,6 +8,7 @@ import {Route, Switch} from 'react-router-dom';
 import * as sessionActions from './store/session';
 import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
+import SpotId from "./components/SpotId";
 
 function App() {
   const dispatch = useDispatch();
@@ -34,6 +35,15 @@ function App() {
           <Route exact path={'/'}>
             <Spots/>
           </Route>
+
+          <Route path='/spots/:spotId'>
+            <SpotId/>
+          </Route>
+
+          {/* Need to find a way to show a 404 in case a user goes to a page that does not exist */}
+          {/* <Route>
+            Error: 404 - Page Not Found
+          </Route> */}
 
         </Switch>
       )}

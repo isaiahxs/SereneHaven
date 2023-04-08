@@ -13,6 +13,7 @@ import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 //import all the actions from session.js
 import * as sessionActions from './store/session';
+import * as spotActions from './store/spots';
 
 const store = configureStore();
 
@@ -23,6 +24,7 @@ if (process.env.NODE_ENV !== "production") {
   window.store = store;
   //attach the actions to the window at the key of sessionActions
   window.sessionActions = sessionActions;
+  window.spotActions = spotActions;
 }
 
 //wrap the application with the Modal provider and render the modal component after the App component so that all the Modal content will be layered as HTML elements on top of all the other HTML elements

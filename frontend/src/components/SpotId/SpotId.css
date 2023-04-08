@@ -1,0 +1,187 @@
+/* contents of page should fill to a max of 1000px
+
+if user is not logged in, hide "Post Your Review" */
+/* .spot-details {
+    background-color: red;
+    padding: 20px;
+    color: black;
+    height: 20px;
+    width: 500px;
+}
+
+.detail-image {
+    height: 400px;
+    width: 400px;
+}
+
+.add-review {
+    background-color: red;
+} */
+
+/*
+Use a large background image of the property as the header.
+Use a clean and simple typography for the spot's name, location, and host information.
+Use a color scheme that complements the image and adds to the overall aesthetic.
+Use a grid layout to display spot information, reviews, and photos.
+Use a consistent font and font size throughout the page.
+Use rounded corners and subtle drop shadows to add depth and visual interest to the elements.
+Use clear and easy-to-use UI components for things like the booking form and adding reviews.
+Use animations and transitions to make the page feel more dynamic and engaging.
+Use high-quality photos to showcase the property and add to the overall visual appeal. */
+
+.outer-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    color: #222;
+  }
+
+  .inner-container {
+    width: 80%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .name {
+    font-size: 36px;
+    font-weight: bold;
+    margin-top: 30px;
+  }
+
+  .heading {
+    display: flex;
+    /* justify-content: space-between; */
+    margin-top: 10px;
+    font-size: 18px;
+  }
+
+  .detail-image {
+    width: 100%;
+    height: 500px;
+    margin-top: 30px;
+    object-fit: cover;
+  }
+
+  .reserve-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 30px;
+  }
+
+  .upper {
+    width: 100%;
+    height: 50px;
+    background-color: #f1f1f1;
+  }
+
+  .button {
+    width: 100%;
+    height: 50px;
+    background-color: #008489;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .button:hover {
+    background-color: #00696b;
+  }
+
+  .review-container {
+    margin-top: 50px;
+  }
+
+  .add-review {
+    margin-top: 20px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .add-review:hover {
+    color: #008489;
+  }
+
+  .review-form {
+    margin-top: 20px;
+  }
+
+  textarea {
+    width: 100%;
+    height: 100px;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    resize: none;
+    font-size: 16px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    /* font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif; */
+
+  }
+
+  input[type="number"] {
+    width: 50px;
+    height: 30px;
+    padding: 5px;
+    margin-right: 10px;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+  }
+
+  button[type="submit"] {
+    width: 100px;
+    height: 40px;
+    background-color: #008489;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+
+  }
+
+  button[type="submit"]:hover {
+    background-color: #00696b;
+  }
+
+  .review {
+    margin-top: 20px;
+  }
+
+  .review-user {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+
+  .review-date {
+    font-size: 14px;
+    margin-bottom: 5px;
+    color: #666;
+  }
+
+  .review-stars {
+    margin-bottom: 10px;
+  }
+
+  .star {
+    width: 25px;
+  }

@@ -39,8 +39,29 @@ Process/procedure:
 - wireframe shows we'll also have to have the star/review ratings (probably in the same div container as the city, state, and price.)
 
 
+---------------------------------------------------
+Spot details
+- contents of page should fill to a max of 1000px
+- for reserve button, put "Feature Coming Soon" for the time being
+- show average start rating and review count
+- if user is not logged in, hide "Post Your Review"
+- each review will show user's first name, date of review, and comment text
 
+- create SpotDetails component
+- import all of store/spots into src/index.js like we did sessionActions
+- update the production section
 
-
+- import component into App.js to render it at the specific route of /spot/:spotId
 
 ---------------------------------------------------
+MUST DO:
+logo top left that can be clicked to take user home
+
+going to have to add client-side validations that will not allow current signed in user to post a review on a spot that they own
+
+similarly to how i did clear details and made sure not to render until everything was ready for spot details, i might have to do the same for reviews
+    EDIT: I might have just fixed the problem by checking for reviewArray instead of reviewState before the HTML portion of the JSX in the SpotId component
+    EDIT: Nevermind, console and terminal are constantly getting reviews. will switch back to reviewState for now.
+
+ABOUT TO / WORKING ON:
+button for updating review

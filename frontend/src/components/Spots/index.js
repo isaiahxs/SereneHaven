@@ -75,10 +75,6 @@ export default function Spots() {
             )
         })}
 
-
-
-
-
         {/* make a div that will have the details of the spot such as the city, state, avg rating, name, and price. use Unicode star character and avgRating property of the spot object if it exists. will need to display name of spot as well as its price */}
         </div>
     )
