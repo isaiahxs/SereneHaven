@@ -7,6 +7,8 @@ owner of a spot should not be able to post a review on their own location.
 
 need to update my seeder bulk deletes Op in things later
 
+need to show client side validation errors when user inputs invalid data
+
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
