@@ -44,6 +44,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     margin: auto;
     display: flex;
     flex-direction: column;
+    max-width: 1000px;
   }
 
   .name {
@@ -81,7 +82,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   .button {
     width: 100%;
     height: 50px;
-    background-color: #008489;
+    background-color: #FF385C;
     color: white;
     display: flex;
     justify-content: center;
@@ -93,7 +94,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   }
 
   .button:hover {
-    background-color: #00696b;
+    background-color: #FF385C;
   }
 
   .review-container {
@@ -109,7 +110,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   }
 
   .add-review:hover {
-    color: #008489;
+    color: #FF385C;
   }
 
   .review-form {
@@ -146,7 +147,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   button[type="submit"] {
     width: 100px;
     height: 40px;
-    background-color: #008489;
+    background-color: #FF385C;
     color: white;
     border: none;
     border-radius: 5px;
@@ -159,7 +160,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   }
 
   button[type="submit"]:hover {
-    background-color: #00696b;
+    background-color: #e73052;
   }
 
   .review {

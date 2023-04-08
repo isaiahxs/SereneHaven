@@ -1,1 +1,58 @@
 am i supposed to change something for serving the static assets in the frontend's build folder? it seems we have public instead of build
+
+sometimes the firstName and lastName don't render immediately, hmm...?
+
+owner of a spot should not be able to post a review on their own location.
+
+
+need to update my seeder bulk deletes Op in things later
+
+need to show client side validation errors when user inputs invalid data
+
+need to add a specific case for SpotId where if user puts invalid url, they will be shown a 404
+
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------
+
+SOLVED:
+when i'm on spot details page and i sign out, i'm getting this error:
+ERROR
+Cannot read properties of null (reading 'id')
+TypeError: Cannot read properties of null (reading 'id')
+    at http://localhost:3000/static/js/bundle.js:1377:37
+    at Array.map (<anonymous>)
+    at SpotId (http://localhost:3000/static/js/bundle.js:1355:33)
+    at renderWithHooks (http://localhost:3000/static/js/bundle.js:25784:22)
+    at updateFunctionComponent
+
+cannot visit a spot right now without being logged in. might have something to do with sessionUser
+
+- reason was i was trying to access 'id' of sessionUser which is null when there is no signed in user. to fix this, i had to add a check to ensure sessionUser was not null before trying to access its properties.
+    -in the submitHandler, i updated userId to be userId: sessionUser?.id
+    -in editSubmitHandler, i updated it as well to be userId: sessionUser?.id
+    -then before rendering the reviews and edit/delete buttons, i updated the condition to check if 'sessionUser' existed before comparing the id's
+
+---------------------------------------------------------------------------------------------
+
+when i'm a signed in user posting a review on a spot i have not reviewed before, the User firstName and User lastName do not render immediately. a 'quick fix' is to add reviewArray or reviewState in the dependency array of the useEffect, but it causes my app to make a million calls per second.
+
+- reason for the large number of calls was that we added reviewArray to the dep of the useEffect hook. When we add a review, reviewArray changes, causing the useEffect hook to run and fetch the updated reviews again. this in turn causes reviewArray to update once more, creating an infinite loop of fetching and updating reviews
+    -to avoid this issue, we can keep track of the review count in the component state and update it when a review is added, edited, or deleted. this way, we won't need to depend on the reviewArray in the useEffect hook, and it won't trigger an infinite loop
+    -first created a new state variable for the review count `const [reviewCount, setReviewCount] = useState(0);`
+    -then update the reviewCount when a review is added, edited, or deleted:
+        -in submitHandler, added this line after dispatching addReviewThunk: `setReviewCount(reviewCount + 1);`
+        -in editSubmitHandler, added this line after dispatching updateReviewThunk:  `setReviewCount(reviewCount + 1);`
+        -in deleteHandler, added this line after dispatching deleteReviewThunk: `setReviewCount(reviewCount - 1);`
+        updated useEffect hook's dependency array to use reviewCount instead of reviewArray
+
+        useEffect(() => {
+            dispatch(reviewThunk(spotId));
+            setReviewChanged(false);
+        }, [dispatch, spotId, reviewChanged, reviewCount])
+
+    -by implementing these changes, we updated the review count only when a review is added, edited, or deleted, preventing the infinite loop and reducing the number of calls to the server
+
+---------------------------------------------------------------------------------------------

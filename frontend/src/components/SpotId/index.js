@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //thunk for getting the location's details
 import { spotDetails } from '../../store/spots';
 //thunk for getting the location's reviews
-import { reviewThunk, addReviewThunk, updateReviewThunk } from '../../store/reviews';
+import { reviewThunk, addReviewThunk, updateReviewThunk, deleteReviewThunk } from '../../store/reviews';
 import { useParams } from 'react-router-dom';
 import './SpotId.css'
 import { clearDetails } from '../../store/spots';
@@ -20,8 +20,12 @@ export default function SpotId() {
     const [ratingEdit, setRatingEdit] = useState(1);
     const [reviewEdit, setReviewEdit] = useState('');
     const [showEdit, setShowEdit] = useState(false);
+    const [reviewChanged, setReviewChanged] = useState(false);
 
-    const [errors, setErrors] = useState([]);
+    const [reviewCount, setReviewCount] = useState(0);
+
+
+    // const [errors, setErrors] = useState([]);
 
     const dispatch = useDispatch();
     //retrieve spotId from parameter from URL
@@ -31,11 +35,17 @@ export default function SpotId() {
         //return null if spotDetails is falsy and render nothing
     const detailState = useSelector(state => state.spot.spotDetails);
 
+    //original
     const reviewState = useSelector(state => state.review.currSpotReviews);
+    // const reviewState = useSelector((state => {
+    //     if (detailState) {return state.review?.currSpotReviews}
+    //     else return;
+    // }))
+
     //using singular review instead of reviews because the currSpotReviews property is an object with the review objects as the values, and the review id as the key
 
     const sessionUser = useSelector(state => state.session.user);
-    const allSpots = useSelector(state => state.spot.allSpots);
+    // const allSpots = useSelector(state => state.spot.allSpots);
 
     let reviewArray = [];
     if (reviewState) reviewArray = Object.values(reviewState);
@@ -52,11 +62,10 @@ export default function SpotId() {
         }
     }, [dispatch, spotId])
 
-const [reviewChanged, setReviewChanged] = useState(false);
     useEffect(() => {
         dispatch(reviewThunk(spotId));
         setReviewChanged(false);
-    }, [dispatch, spotId, reviewChanged])
+    }, [dispatch, spotId, reviewChanged,])
     //going to take it out of here for right now
 
     //KIND OF SOLVED THE PROBLEM OF FIRST NAME AND LAST NAME NOT APPEARING INSTANTLY AFTER POSTING A REVIEW. HOWEVER THIS INTRODUCES A BUG THAT OCCURS SOMETIMES WHERE THE USER'S REVIEW RENDERS, THEN GOES AWAY, THEN RE-RENDERS AGAIN. I THINK IT HAS SOMETHING TO DO WITH THE REVIEW ARRAY BEING UPDATED AFTER THE REVIEW IS POSTED, BUT BEFORE THE REVIEW IS RENDERED. I THINK I NEED TO FIGURE OUT A WAY TO MAKE THE REVIEW ARRAY UPDATE AFTER THE REVIEW IS RENDERED.
@@ -74,6 +83,7 @@ const [reviewChanged, setReviewChanged] = useState(false);
         }
       }, [dispatch, reviewArray.length, reviewState, spotId]);
       //i'm getting status 200 from backend
+      //not sure if this actually helped anything. need to check it again.
 
 
 // IMPORTANT: IS THIS SOMETHING I'M GOING TO HAVE TO CHECK FOR LATER?
@@ -92,12 +102,13 @@ const [reviewChanged, setReviewChanged] = useState(false);
             review,
             stars,
             spotId,
-            userId: sessionUser.id,
+            userId: sessionUser?.id,
 
             //i think the problem might be here.
         }
         dispatch(addReviewThunk(payload));
 
+        setReviewCount(reviewCount + 1);
         setAddReview(false);
         setReview('');
         setStars(1);
@@ -109,11 +120,12 @@ const [reviewChanged, setReviewChanged] = useState(false);
             review: reviewEdit,
             stars: ratingEdit,
             spotId,
-            userId: sessionUser.id,
+            userId: sessionUser?.id,
             reviewId
         }
         dispatch(updateReviewThunk(payload));
 
+        setReviewCount(reviewCount + 1);
         setReviewEdit(reviewEdit);
         setRatingEdit(ratingEdit);
         setShowEdit(false);
@@ -148,6 +160,12 @@ const [reviewChanged, setReviewChanged] = useState(false);
         setReviewEdit(review.review)
     }
 
+    const deleteHandler = (reviewId) => {
+        dispatch(deleteReviewThunk(reviewId));
+        //i might need the following line so that it causes the immediate re-rendering of the component
+        setReviewChanged(true);
+        setReviewCount(reviewCount - 1);
+    }
 
 
     //should i be checking for reviewArray here?
@@ -213,13 +231,13 @@ const [reviewChanged, setReviewChanged] = useState(false);
                                     <div>Review: {review.review}</div>
                                     {/* need to create a button / area that the user can click and submit to edit their review */}
                                     {/* {sessionUser && sessionUser.id === review.userId && ( */}
-                                    {sessionUser.id === review.userId && (
+                                    {sessionUser && sessionUser.id === review.userId && (
                                         <div>
                                             <button onClick={() => editReview(review)}>Edit Review</button>
-                                            <button>Delete</button>
+                                            <button onClick={() => deleteHandler(review.id)}>Delete</button>
                                         </div>
                                     )}
-                                    {sessionUser.id === review.userId && showEdit && (
+                                    {sessionUser && sessionUser.id === review.userId && showEdit && (
                                         <div className='review-form'>
                                             <form onSubmit={(e) => editSubmitHandler(e, review.id)}>
                                                 <textarea

@@ -11,7 +11,7 @@ export default function Spots() {
     const history = useHistory();
 
     //use useSelector hook to access the spots state object from the Redux store
-    const spotsState = useSelector(state => state.spot.allSpots);
+    const spotsState = useSelector(state => state?.spot?.allSpots);
 
     //use useEffect hook to call spots action creator from the Redux store when the component mounts
     useEffect(() => {
