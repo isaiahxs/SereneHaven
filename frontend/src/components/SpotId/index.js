@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 //thunk for getting the location's details
 import { spotDetails } from '../../store/spots';
 //thunk for getting the location's reviews
-import { reviewThunk, addReviewThunk } from '../../store/reviews';
+import { reviewThunk, addReviewThunk, updateReviewThunk } from '../../store/reviews';
 import { useParams } from 'react-router-dom';
 import './SpotId.css'
 import { clearDetails } from '../../store/spots';
@@ -15,6 +15,12 @@ export default function SpotId() {
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(1);
     const [addReview, setAddReview] = useState(false);
+
+    //following are for updated review
+    const [ratingEdit, setRatingEdit] = useState(1);
+    const [reviewEdit, setReviewEdit] = useState('');
+    const [showEdit, setShowEdit] = useState(false);
+
     const [errors, setErrors] = useState([]);
 
     const dispatch = useDispatch();
@@ -46,10 +52,29 @@ export default function SpotId() {
         }
     }, [dispatch, spotId])
 
-
+const [reviewChanged, setReviewChanged] = useState(false);
     useEffect(() => {
         dispatch(reviewThunk(spotId));
-    }, [dispatch, spotId])
+        setReviewChanged(false);
+    }, [dispatch, spotId, reviewChanged])
+    //going to take it out of here for right now
+
+    //KIND OF SOLVED THE PROBLEM OF FIRST NAME AND LAST NAME NOT APPEARING INSTANTLY AFTER POSTING A REVIEW. HOWEVER THIS INTRODUCES A BUG THAT OCCURS SOMETIMES WHERE THE USER'S REVIEW RENDERS, THEN GOES AWAY, THEN RE-RENDERS AGAIN. I THINK IT HAS SOMETHING TO DO WITH THE REVIEW ARRAY BEING UPDATED AFTER THE REVIEW IS POSTED, BUT BEFORE THE REVIEW IS RENDERED. I THINK I NEED TO FIGURE OUT A WAY TO MAKE THE REVIEW ARRAY UPDATE AFTER THE REVIEW IS RENDERED.
+    //i think i can do that by using a useEffect hook that runs whenever the reviewArray changes?
+    //or maybe use clear details like i did for the spot details?
+
+    //need to figure out how to get the first name and last name to appear immediately after posting a review
+
+    //need to have updated review render immediately after clicking submit. currently it only renders after refreshing the page. going to have to listen for changes in the review state and then re-render the component / re-fetch reviews
+    useEffect(() => {
+        if (!reviewState) return;
+        const numReviews = Object.keys(reviewState).length;
+        if (numReviews !== reviewArray.length) {
+          dispatch(reviewThunk(spotId));
+        }
+      }, [dispatch, reviewArray.length, reviewState, spotId]);
+      //i'm getting status 200 from backend
+
 
 // IMPORTANT: IS THIS SOMETHING I'M GOING TO HAVE TO CHECK FOR LATER?
     // if (!detailState) return null;
@@ -78,6 +103,24 @@ export default function SpotId() {
         setStars(1);
     }
 
+    const editSubmitHandler = (e, reviewId) => {
+        e.preventDefault();
+        const payload = {
+            review: reviewEdit,
+            stars: ratingEdit,
+            spotId,
+            userId: sessionUser.id,
+            reviewId
+        }
+        dispatch(updateReviewThunk(payload));
+
+        setReviewEdit(reviewEdit);
+        setRatingEdit(ratingEdit);
+        setShowEdit(false);
+        setReviewChanged(true);
+    }
+
+
     const addingReview = () => {
         //loop through the reviewArray and check if the userId of the current review matches the userId of the current sessionUser
         //if it does, then alert the user that they have already reviewed this location
@@ -95,8 +138,20 @@ export default function SpotId() {
         }
     }
 
+    const editReview = (review) => {
+        setShowEdit(!showEdit);
+        //going to try both
+        // setReviewEdit(reviewState[reviewId].review);
+        // setRatingEdit(reviewState[reviewId].stars);
+
+        setRatingEdit(review.stars)
+        setReviewEdit(review.review)
+    }
+
+
 
     //should i be checking for reviewArray here?
+    //did changing this to reviewArray fix the problem of rapid repeated rendering?
     if(detailState && reviewState) {
         return (
             <div className='outer-container'>
@@ -152,12 +207,42 @@ export default function SpotId() {
                             // console.log('Review:', review)
                             return (
                                 <div key={review.id}>
-                                    <div>firstName: {review.User?.firstName} lastName: {review.User?.lastName}</div>
+                                    <div>{review.User?.firstName} {review.User?.lastName}</div>
                                     {/* <div>{review.createdAt}</div> */}
                                     <div>Star rating: {review.stars}</div>
                                     <div>Review: {review.review}</div>
-                                    <div>User Id: {review.userId}</div>
+                                    {/* need to create a button / area that the user can click and submit to edit their review */}
+                                    {/* {sessionUser && sessionUser.id === review.userId && ( */}
+                                    {sessionUser.id === review.userId && (
+                                        <div>
+                                            <button onClick={() => editReview(review)}>Edit Review</button>
+                                            <button>Delete</button>
+                                        </div>
+                                    )}
+                                    {sessionUser.id === review.userId && showEdit && (
+                                        <div className='review-form'>
+                                            <form onSubmit={(e) => editSubmitHandler(e, review.id)}>
+                                                <textarea
+                                                    value={reviewEdit}
+                                                    onChange={(e) => setReviewEdit(e.target.value)}
+                                                    placeholder='Write a review'
+                                                    required
+                                                    maxLength={200}
+                                                />
+                                                <input
+                                                type='number'
+                                                value={ratingEdit}
+                                                onChange={(e) => setRatingEdit(e.target.value)}
+                                                min={1}
+                                                max={5}
+                                                required
+                                                placeholder='Rating'
+                                                />
+                                                <button type='submit'>Submit</button>
+                                            </form>
                                 </div>
+                            )}
+                            </div>
                             )
                         })}
                     </div>
@@ -172,6 +257,7 @@ export default function SpotId() {
 }
 
 //q: when i'm signed in and go to a spot where i have not made a review already, then i click on submit, i get an error saying "cannot read properties of firtName" of undefined. why is this happening? i thought i was passing in the userId as a foreign key in the review table
+    //i think i resolved this. put a question mark after review.User in the divs
 
 //----------------------- NEW ITERATION -----------------------
 

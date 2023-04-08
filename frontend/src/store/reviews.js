@@ -4,6 +4,7 @@ import { csrfFetch } from "./csrf";
 //action type strings
 const GET_REVIEWS = `reviews/GET_REVIEWS`;
 const ADD_REVIEWS = `reviews/ADD_REVIEWS`;
+const UPDATE_REVIEWS = `reviews/UPDATE_REVIEWS`;
 
 // action creators
 const getReviews = (reviews) => ({
@@ -14,6 +15,11 @@ const getReviews = (reviews) => ({
 const addReviews = (postingReview) => ({
     type: ADD_REVIEWS,
     postingReview
+})
+
+const updateReviews = (updatedReview) => ({
+    type: UPDATE_REVIEWS,
+    updatedReview
 })
 
 //reviews thunk action creators defined as async functions
@@ -54,6 +60,30 @@ export const addReviewThunk = ({userId, spotId, stars, review}) => async (dispat
     return postingReview;
 }
 
+//thunk action creator for updating a review
+export const updateReviewThunk = ({userId, spotId, stars, review, reviewId}) => async (dispatch) => {
+
+    //destructure the passed object to get the userId, spotId, stars, review, and reviewId
+    const updatedObject = {
+        userId,
+        spotId,
+        stars,
+        review,
+        // reviewId
+    }
+
+    const response = await csrfFetch(`/api/reviews/${reviewId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(updatedObject)
+            });
+        const data = await response.json();
+        dispatch(updateReviews(data));
+        return data;
+}
+
 
 // define an initial state object with a currSpotReviews property set to null
 const initialState = {currSpotReviews: null};
@@ -87,6 +117,11 @@ const reviewReducer = (state=initialState, action) => {
             reviews.currSpotReviews[action.postingReview.id] = action.postingReview;
 
             return reviews;
+
+        //when UPDATE_REVIEWS is dispatched, create a copy of the current state object using spread and update the currSpotReviews property with the updated review object using the review's id as the key
+        case UPDATE_REVIEWS:
+            reviews = {...state, currSpotReviews: { ...state.currSpotReviews} }
+            reviews.currSpotReviews[action.updatedReview.id] = action.updatedReview;
 
         default:
             return state;
