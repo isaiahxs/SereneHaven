@@ -22,6 +22,7 @@ export default function SpotId() {
     const [showEdit, setShowEdit] = useState(false);
     const [reviewChanged, setReviewChanged] = useState(false);
 
+    const [reviewCount, setReviewCount] = useState(0);
 
 
     // const [errors, setErrors] = useState([]);
@@ -64,7 +65,7 @@ export default function SpotId() {
     useEffect(() => {
         dispatch(reviewThunk(spotId));
         setReviewChanged(false);
-    }, [dispatch, spotId, reviewChanged])
+    }, [dispatch, spotId, reviewChanged, reviewCount])
     //going to take it out of here for right now
 
     //KIND OF SOLVED THE PROBLEM OF FIRST NAME AND LAST NAME NOT APPEARING INSTANTLY AFTER POSTING A REVIEW. HOWEVER THIS INTRODUCES A BUG THAT OCCURS SOMETIMES WHERE THE USER'S REVIEW RENDERS, THEN GOES AWAY, THEN RE-RENDERS AGAIN. I THINK IT HAS SOMETHING TO DO WITH THE REVIEW ARRAY BEING UPDATED AFTER THE REVIEW IS POSTED, BUT BEFORE THE REVIEW IS RENDERED. I THINK I NEED TO FIGURE OUT A WAY TO MAKE THE REVIEW ARRAY UPDATE AFTER THE REVIEW IS RENDERED.
@@ -107,6 +108,7 @@ export default function SpotId() {
         }
         dispatch(addReviewThunk(payload));
 
+        setReviewCount(reviewCount + 1);
         setAddReview(false);
         setReview('');
         setStars(1);
@@ -123,6 +125,7 @@ export default function SpotId() {
         }
         dispatch(updateReviewThunk(payload));
 
+        setReviewCount(reviewCount + 1);
         setReviewEdit(reviewEdit);
         setRatingEdit(ratingEdit);
         setShowEdit(false);
@@ -161,6 +164,7 @@ export default function SpotId() {
         dispatch(deleteReviewThunk(reviewId));
         //i might need the following line so that it causes the immediate re-rendering of the component
         setReviewChanged(true);
+        setReviewCount(reviewCount - 1);
     }
 
 

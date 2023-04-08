@@ -44,6 +44,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     margin: auto;
     display: flex;
     flex-direction: column;
+    max-width: 1000px;
   }
 
   .name {
