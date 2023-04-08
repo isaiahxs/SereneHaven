@@ -23,7 +23,8 @@ export default function SpotId() {
     const [reviewChanged, setReviewChanged] = useState(false);
 
 
-    const [errors, setErrors] = useState([]);
+
+    // const [errors, setErrors] = useState([]);
 
     const dispatch = useDispatch();
     //retrieve spotId from parameter from URL
@@ -33,11 +34,17 @@ export default function SpotId() {
         //return null if spotDetails is falsy and render nothing
     const detailState = useSelector(state => state.spot.spotDetails);
 
+    //original
     const reviewState = useSelector(state => state.review.currSpotReviews);
+    // const reviewState = useSelector((state => {
+    //     if (detailState) {return state.review?.currSpotReviews}
+    //     else return;
+    // }))
+
     //using singular review instead of reviews because the currSpotReviews property is an object with the review objects as the values, and the review id as the key
 
     const sessionUser = useSelector(state => state.session.user);
-    const allSpots = useSelector(state => state.spot.allSpots);
+    // const allSpots = useSelector(state => state.spot.allSpots);
 
     let reviewArray = [];
     if (reviewState) reviewArray = Object.values(reviewState);
@@ -94,7 +101,7 @@ export default function SpotId() {
             review,
             stars,
             spotId,
-            userId: sessionUser.id,
+            userId: sessionUser?.id,
 
             //i think the problem might be here.
         }
@@ -111,7 +118,7 @@ export default function SpotId() {
             review: reviewEdit,
             stars: ratingEdit,
             spotId,
-            userId: sessionUser.id,
+            userId: sessionUser?.id,
             reviewId
         }
         dispatch(updateReviewThunk(payload));
@@ -119,12 +126,6 @@ export default function SpotId() {
         setReviewEdit(reviewEdit);
         setRatingEdit(ratingEdit);
         setShowEdit(false);
-        setReviewChanged(true);
-    }
-
-    const deleteHandler = (reviewId) => {
-        dispatch(deleteReviewThunk(reviewId));
-        //i might need the following line so that it causes the immediate re-rendering of the component
         setReviewChanged(true);
     }
 
@@ -156,6 +157,11 @@ export default function SpotId() {
         setReviewEdit(review.review)
     }
 
+    const deleteHandler = (reviewId) => {
+        dispatch(deleteReviewThunk(reviewId));
+        //i might need the following line so that it causes the immediate re-rendering of the component
+        setReviewChanged(true);
+    }
 
 
     //should i be checking for reviewArray here?
@@ -221,13 +227,13 @@ export default function SpotId() {
                                     <div>Review: {review.review}</div>
                                     {/* need to create a button / area that the user can click and submit to edit their review */}
                                     {/* {sessionUser && sessionUser.id === review.userId && ( */}
-                                    {sessionUser.id === review.userId && (
+                                    {sessionUser && sessionUser.id === review.userId && (
                                         <div>
                                             <button onClick={() => editReview(review)}>Edit Review</button>
                                             <button onClick={() => deleteHandler(review.id)}>Delete</button>
                                         </div>
                                     )}
-                                    {sessionUser.id === review.userId && showEdit && (
+                                    {sessionUser && sessionUser.id === review.userId && showEdit && (
                                         <div className='review-form'>
                                             <form onSubmit={(e) => editSubmitHandler(e, review.id)}>
                                                 <textarea
