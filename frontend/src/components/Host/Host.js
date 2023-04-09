@@ -1,19 +1,38 @@
+//this will be the create component for the Host
+
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { userSpotsThunk } from "../../store/spots";
+import { Redirect, useHistory } from "react-router-dom";
+import { useModal } from "../../context/Modal";
+import * as spotActions from "../../store/spots";
 import './Host.css';
+import { Route } from "react-router-dom";
 
 export default function Host() {
     const dispatch = useDispatch();
+    const history = useHistory();
+    const {closeModal} = useModal();
+
+    const sessionUser = useSelector(state => state.session.user);
+
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     const [location, setLocation] = useState('');
     const [price, setPrice] = useState('');
     const [image, setImage] = useState('');
+    const [address, setAddress] = useState('');
+    const [city, setCity] = useState('');
+    const [state, setState] = useState('');
+    const [country, setCountry] = useState('');
+    // const [lat, setLat] = useState('');
     const [errors, setErrors] = useState([]);
 
     // tried commenting this out and passing in {user} as a prop from App.js but it didn't work right now
     // const user = useSelector(state => state.session.user);
+
+    //if user is not logged in, redirect to home page
+{/* <Route path="/host" render={() => sessionUser ? <Host /> : <Redirect to="/" />} /> */}
 
     // useEffect(() => {
     //     dispatch(userSpotsThunk(user.id));
@@ -21,6 +40,13 @@ export default function Host() {
     useEffect(() => {
         dispatch(userSpotsThunk());
     }, [])
+
+    //i can see host page for a brief second before it redirects to home page
+    // useEffect(() => {
+    //     if (!sessionUser) {
+    //         history.push('/');
+    //     }
+    // }, []);
 
     const userSpotsState = useSelector(state => state?.spots?.userSpots);
 

@@ -9,6 +9,9 @@ const GET_SPOTS = `spots/GET_SPOTS`;
 const GET_DETAILS = `spots/GET_DETAILS`;
 const GET_USER_SPOTS = `spots/GET_USER_SPOTS`;
 const ADD_SPOT = `spots/ADD_SPOT`
+const UPDATE_SPOT = `spots/UPDATE_SPOT`
+const DELETE_SPOT = `spots/DELETE_SPOT`
+
 
 const CLEAR_DETAILS = 'spots/CLEAR_DETAILS';
 
@@ -32,6 +35,16 @@ const getUserSpots = (spots) => ({
 const addSpot = (spot) => ({
     type: ADD_SPOT,
     spot
+})
+
+const updateSpot = (updatedSpot) => ({
+    type: UPDATE_SPOT,
+    updatedSpot
+})
+
+const deleteSpot = (deletedSpot) => ({
+    type: DELETE_SPOT,
+    deletedSpot
 })
 
 export const clearDetails = () => ({
@@ -129,6 +142,37 @@ export const createSpotThunk = (spot, prevImg) => async (dispatch) => {
 //going to refactor reducer
 
 //the initialState object is defined as an empty object, which will be used as the initial state for the spotReducer
+
+export const updateSpotThunk = (updatedSpot, spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(updatedSpot)
+    })
+    const improvedSpot = await response.json();
+    const spot = {...updatedSpot, id: spotId}
+    dispatch(updateSpot(spot));
+    return improvedSpot;
+}
+
+export const deleteSpotThunk = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    if(response.ok){
+        dispatch(deleteSpot(spotId));
+        //no need to return anything since we're not using the return of this thunk action creator anywhere
+    }
+}
+
+
+
 const initialState = {}
 
 //reducer function that takes in a state object and an action object, and returns a new state object based on the action type
@@ -156,6 +200,19 @@ const spotReducer = (state=initialState, action) => {
         case ADD_SPOT:
             console.log('this is add spot')
             newState['spotDetails'] = action.spot;
+            return newState;
+
+        case UPDATE_SPOT:
+            console.log('this is update spot')
+            newState['spotDetails'] = action.updatedSpot;
+            return newState;
+
+            //in the UPDATE_SPOT case, we need to assign the updatedSpot to the spotDetails key of the newState object because we want to update the spotDetails key in the Redux store with the updated spot details
+
+        case DELETE_SPOT:
+            console.log('this is delete spot')
+            const deleted = action.spotId;
+            delete newState.userSpots[deleted];
             return newState;
 
         case GET_USER_SPOTS:

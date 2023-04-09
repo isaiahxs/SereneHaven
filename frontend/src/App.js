@@ -11,8 +11,8 @@ import Spots from "./components/Spots";
 import SpotId from "./components/SpotId";
 import Host from "./components/Host/Host";
 import Error404 from "./components/Error404";
-// import { useSelector } from "react-redux";
-// import { Redirect } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
@@ -23,7 +23,7 @@ function App() {
     setIsLoaded(true);
   }, [dispatch])
 
-  // const user = useSelector((state) => state.session.user);
+  const user = useSelector((state) => state.session.user);
 
   return (
     <>
@@ -44,9 +44,15 @@ function App() {
 
           <Route path={'/host'}>
             {/* original */}
+            {/* need to fix this so that non-signed in user cannot access /host */}
             <Host/>
+
             {/* check if user is available before rendering host component */}
             {/* {user ? <Host user={user}/> : <Redirect to={'/'}/>} */}
+
+            {/* {user ? <Host/> : <Redirect to={'/'}/>} */}
+
+            {/* {isLoaded ? (user ? <Host/> : <Redirect to={'/'}/>) : null} */}
           </Route>
 
           <Route path='/spots/:spotId'>

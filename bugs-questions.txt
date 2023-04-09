@@ -1,6 +1,5 @@
 am i supposed to change something for serving the static assets in the frontend's build folder? it seems we have public instead of build
 
-sometimes the firstName and lastName don't render immediately, hmm...?
 
 owner of a spot should not be able to post a review on their own location.
 
@@ -12,6 +11,8 @@ need to show client side validation errors when user inputs invalid data
 need to add a specific case for SpotId where if user puts invalid url, they will be shown a 404
 
 my css for log in modal got altered somehow. probably when i was doing create a spot's css and probably overlapping something of the same class or type.
+
+need to disable non-signed in user from accessing 'host'
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
