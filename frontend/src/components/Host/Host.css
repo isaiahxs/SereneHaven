@@ -1,0 +1,79 @@
+:host {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  }
+
+.host-container {
+    width: 80%;
+    margin: 0 auto;
+    color: #222;
+    display: flex;
+    flex-direction: column;
+    max-width: 1000px;
+    justify-content: center;
+    align-items: center;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1,
+h2,
+h3 {
+    margin-bottom: 0.5em;
+}
+
+h3 {
+    font-size: 1em;
+    font-weight: normal;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: #222;
+    margin: 2em 0;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.host-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1em;
+}
+
+input {
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    padding: 10px;
+    font-size: 1em;
+    color: #222;
+}
+
+input[type="text"],
+input[type="number"] {
+    width: 100%;
+}
+
+textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* button {
+    background-color: #FF385C;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+} */
+
+/* button:hover {
+    background-color: #e0344f;
+} */

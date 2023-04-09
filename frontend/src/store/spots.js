@@ -8,6 +8,7 @@ import { csrfFetch } from "./csrf";
 const GET_SPOTS = `spots/GET_SPOTS`;
 const GET_DETAILS = `spots/GET_DETAILS`;
 const GET_USER_SPOTS = `spots/GET_USER_SPOTS`;
+const ADD_SPOT = `spots/ADD_SPOT`
 
 const CLEAR_DETAILS = 'spots/CLEAR_DETAILS';
 
@@ -26,6 +27,11 @@ const getDetails = (spots) => ({
 const getUserSpots = (spots) => ({
     type: GET_USER_SPOTS,
     spots
+})
+
+const addSpot = (spot) => ({
+    type: ADD_SPOT,
+    spot
 })
 
 export const clearDetails = () => ({
@@ -65,7 +71,62 @@ export const spotDetails = (spotId) => async (dispatch) => {
     return data;
 }
 
+export const createSpotThunk = (spot, prevImg) => async (dispatch) => {
+    const response = await csrfFetch('/api/spots', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(spot)
+    })
+    const data = await response.json();
+    const imgResponse = await csrfFetch(`/api/spots/${data.id}/images`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+            url: prevImg,
+            preview: true
+        })
+    })
 
+    const imgData = await imgResponse.json();
+    data.prevImg = imgData.url;
+    dispatch(addSpot(data));
+    return data;
+}
+
+//one possible way
+
+// export const createSpotThunk = ({country, address, city, state, lat, lng, description, name, price}) => async (dispatch) => {
+//     const spotObject = {
+//         country,
+//         address,
+//         city,
+//         state,
+//         lat,
+//         lng,
+//         description,
+//         name,
+//         price
+//     }
+
+//     const response = await csrfFetch('/api/spots', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(spotObject)
+//     })
+//     const data = await response.json();
+//     dispatch(addSpot(data));
+//     return data;
+// }
+
+
+
+//going to refactor reducer
 
 //the initialState object is defined as an empty object, which will be used as the initial state for the spotReducer
 const initialState = {}
@@ -92,6 +153,11 @@ const spotReducer = (state=initialState, action) => {
             newState['spotDetails'] = action.spots;
             return newState;
 
+        case ADD_SPOT:
+            console.log('this is add spot')
+            newState['spotDetails'] = action.spot;
+            return newState;
+
         case GET_USER_SPOTS:
             console.log('this is get user spots')
             newState['userSpots'] = action.userSpots
@@ -106,5 +172,7 @@ const spotReducer = (state=initialState, action) => {
             return state;
     }
 }
+
+
 
 export default spotReducer;

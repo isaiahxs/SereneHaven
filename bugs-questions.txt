@@ -11,6 +11,7 @@ need to show client side validation errors when user inputs invalid data
 
 need to add a specific case for SpotId where if user puts invalid url, they will be shown a 404
 
+my css for log in modal got altered somehow. probably when i was doing create a spot's css and probably overlapping something of the same class or type.
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
