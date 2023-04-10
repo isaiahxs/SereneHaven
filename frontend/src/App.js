@@ -9,21 +9,23 @@ import * as sessionActions from './store/session';
 import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
 import SpotId from "./components/SpotId";
-import Host from "./components/Host/Host";
+import Manage from "./components/Host/Manage";
 import Error404 from "./components/Error404";
-import { useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
+import AddSpot from "./components/Host/AddSpot";
+// import { useSelector } from "react-redux";
+// import { Redirect } from "react-router-dom";
 
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
 
+
+  //ORIGINAL
   useEffect(() => {
     dispatch(sessionActions.restoreUser())
     setIsLoaded(true);
   }, [dispatch])
 
-  const user = useSelector((state) => state.session.user);
 
   return (
     <>
@@ -43,16 +45,12 @@ function App() {
           </Route>
 
           <Route path={'/host'}>
-            {/* original */}
             {/* need to fix this so that non-signed in user cannot access /host */}
-            <Host/>
+            {/* <Manage/> */}
 
-            {/* check if user is available before rendering host component */}
-            {/* {user ? <Host user={user}/> : <Redirect to={'/'}/>} */}
+            {/* this is supposed to be Manage, i just altered it to see what it looked like upon appearance */}
+            <AddSpot/>
 
-            {/* {user ? <Host/> : <Redirect to={'/'}/>} */}
-
-            {/* {isLoaded ? (user ? <Host/> : <Redirect to={'/'}/>) : null} */}
           </Route>
 
           <Route path='/spots/:spotId'>

@@ -6,27 +6,34 @@ import { userSpotsThunk } from "../../store/spots";
 import { Redirect, useHistory } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as spotActions from "../../store/spots";
-import './Host.css';
+import './AddSpot.css';
 import { Route } from "react-router-dom";
 
-export default function Host() {
+export default function AddSpot() {
     const dispatch = useDispatch();
     const history = useHistory();
     const {closeModal} = useModal();
 
     const sessionUser = useSelector(state => state.session.user);
+    console.log('sessionUser', sessionUser)
+
+
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
-    const [location, setLocation] = useState('');
+    // const [location, setLocation] = useState('');
     const [price, setPrice] = useState('');
-    const [image, setImage] = useState('');
+    const [imageURL, setImageURL] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
     const [country, setCountry] = useState('');
-    // const [lat, setLat] = useState('');
+    const [lat, setLat] = useState('');
+    const [lng, setLng] = useState('');
     const [errors, setErrors] = useState([]);
+
+    if (!sessionUser) return <Redirect to={'/'} />;
+    // if (sessionUser === null) { return <Redirect to={'/'} />; }
 
     // tried commenting this out and passing in {user} as a prop from App.js but it didn't work right now
     // const user = useSelector(state => state.session.user);
@@ -37,9 +44,9 @@ export default function Host() {
     // useEffect(() => {
     //     dispatch(userSpotsThunk(user.id));
     // }, [dispatch, user.id]);
-    useEffect(() => {
-        dispatch(userSpotsThunk());
-    }, [])
+    // useEffect(() => {
+    //     dispatch(userSpotsThunk());
+    // }, [])
 
     //i can see host page for a brief second before it redirects to home page
     // useEffect(() => {
@@ -48,37 +55,111 @@ export default function Host() {
     //     }
     // }, []);
 
-    const userSpotsState = useSelector(state => state?.spots?.userSpots);
+    // const userSpotsState = useSelector(state => state?.spots?.userSpots);
 
-    let userSpotsArr = [];
-    if (userSpotsState) {
-        userSpotsArr = Object.values(userSpotsState);
-    }
+    // let userSpotsArr = [];
+    // if (userSpotsState) {
+    //     userSpotsArr = Object.values(userSpotsState);
+    // }
 
 
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const payload = {
-        name,
-        description,
-        location,
-        price,
-        image,
-        userId: userSpotsState.id
-        }
-        const res = await fetch('/api/spots', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
-        });
-        const data = await res.json();
-        if (data.errors) {
-        setErrors(data.errors);
-        }
-    }
+    //first attempt
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+
+    //     return dispatch (
+    //       spotActions.createSpotThunk({
+    //           name,
+    //           description,
+    //           price,
+    //           // imageURL,
+    //           address,
+    //           city,
+    //           state,
+    //           country,
+    //           lat,
+    //           lng,
+    //           // image: {url: imageURL}
+    //         },
+    //         {
+    //           url: imageURL,
+    //           preview: true
+    //         }
+    //       )
+    //     ).then((spot) => {
+    //       closeModal();
+    //       history.push(`/spots/${spot.id}`);
+    //     })
+    //     .catch(async (res) => {
+    //       const data = await res.json();
+    //       //original
+    //       if (data && data.errors) setErrors(data.errors);
+
+    //       //my second attempt
+    //       //trying to solve the problem for when i receive "errors.map" is not a function
+    //       //i believe the problem might be that sometimes, data.errors is not an array
+    //       // if (data && data.errors) {
+    //       //   setErrors(Array.isArray(data.errors) ? data.errors : [data.errors]);
+    //       // }
+    //     });
+    // };
+
+
+        //second iteration
+        // const payload = {
+        // name,
+        // description,
+        // location,
+        // price,
+        // image,
+        // userId: userSpotsState.id
+        // }
+        // const res = await fetch('/api/spots', {
+        // method: 'POST',
+        // headers: {
+        //     'Content-Type': 'application/json'
+        // },
+        // body: JSON.stringify(payload)
+        // });
+        // const data = await res.json();
+        // if (data.errors) {
+        // setErrors(data.errors);
+        // }
+
+        //third iteration
+        const handleSubmit = async (e) => {
+          e.preventDefault();
+          let errorsArr = [];
+          setErrors([]);
+
+          if (!imageURL.endsWith('.jpg') && !imageURL.endsWith('.jpeg') && !imageURL.endsWith('.png')) {
+              errorsArr.push('Image URL must end in .png, .jpg, or .jpeg');
+          }
+
+          if (!address.includes(' ') || address.length < 3) {
+              errorsArr.push('Address must include a street name and number');
+          }
+
+          if (description.length < 30) {
+              errorsArr.push('Description needs a minimum of 30 characters');
+          }
+
+          if (price < 0) {
+              errorsArr.push('Price cannot be negative');
+          }
+
+          if (errorsArr.length > 0) {
+              setErrors(errorsArr);
+              return;
+          } else if (errorsArr.length === 0) {
+            dispatch(spotActions.createSpotThunk({name, country, city, state, address, description, price, lat, lng}))
+            //i don't think i need imageURL above because it is not a column in the database
+            //lat & lng might cause a problem
+              //need to dispatch a thunk that will add an image to the spot
+          }
+         };
+
 
     //original
     // return (
@@ -148,8 +229,8 @@ export default function Host() {
                 <label>Country</label>
                 <input
                   type="text"
-                  value={location}
-                  onChange={(e) => setLocation(e.target.value)}
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
                   required
                   placeholder="Country"
                 />
@@ -158,8 +239,8 @@ export default function Host() {
                 <label>Street Address</label>
                 <input
                   type="text"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  value={address}
+                  onChange={(e) => setAddress(e.target.value)}
                   required
                     placeholder="Street Address"
                 />
@@ -168,34 +249,35 @@ export default function Host() {
                 <label>City</label>
                 <input
                   type="text"
-                  value={description}
-                  onChange={(e) => setDescription(e.target.value)}
+                  value={city}
+                  onChange={(e) => setCity(e.target.value)}
                   required
                     placeholder="City"
                 />
                 <label>State</label>
                 <input
                   type="text"
-                  value={price}
-                  onChange={(e) => setPrice(e.target.value)}
+                  value={state}
+                  onChange={(e) => setState(e.target.value)}
                   required
                   placeholder="STATE"
                 />
               </div>
+              {/* ALSO WOULD NEED TO EDIT THESE LATER SO IT'S NOT SETIMAGE */}
               <div className="host-input">
                 <label>Latitude</label>
                 <input
-                  type="text"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
+                  type="number"
+                  value={lat}
+                  onChange={(e) => setLat(e.target.value)}
                   required
                   placeholder="Latitude"
                 />
                 <label>Longitude</label>
                 <input
-                  type="text"
-                  value={image}
-                  onChange={(e) => setImage(e.target.value)}
+                  type="number"
+                  value={lng}
+                  onChange={(e) => setLng(e.target.value)}
                   required
                     placeholder="Longitude"
                 />
@@ -245,7 +327,7 @@ export default function Host() {
             <hr />
             <h2>Liven up your spot with photos</h2>
             <h3>Submit a link to at least one photo to publish your spot.</h3>
-            {Array.from({ length: 5 }).map((_, index) => (
+            {/* {Array.from({ length: 5 }).map((_, index) => (
                 <div key={index} className="host-input">
                 <input
                     type="text"
@@ -255,9 +337,30 @@ export default function Host() {
                     placeholder="Image URL"
                 />
                 </div>
-            ))}
+            ))} */}
+            {/* need to add the other image url inputs */}
+            <div className="host-input">
+                <input
+                type='url'
+                value={imageURL}
+                onChange={(e) => setImageURL(e.target.value)}
+                required
+                placeholder="Preview Image URL"
+                />
+                <ul>
+                  {errors.map((error, id) => (
+                    <li key={id}>{error}</li>
+                  ))}
+                </ul>
+                {/* my second attempt */}
+                {/* <ul>
+                  {Object.entries(spotDetails).map(([key, value]) => (
+                    <li key={key}>{value}</li>
+                  ))}
+                </ul> */}
+            </div>
             <hr />
-            <button type="submit">Create a Spot</button>
+            <button onClick={handleSubmit} type="submit">Create a Spot</button>
           </form>
         </div>
       );

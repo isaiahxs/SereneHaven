@@ -9,6 +9,7 @@ const GET_SPOTS = `spots/GET_SPOTS`;
 const GET_DETAILS = `spots/GET_DETAILS`;
 const GET_USER_SPOTS = `spots/GET_USER_SPOTS`;
 const ADD_SPOT = `spots/ADD_SPOT`
+const ADD_IMG_TO_SPOT = `spots/ADD_IMG_TO_SPOT`
 const UPDATE_SPOT = `spots/UPDATE_SPOT`
 const DELETE_SPOT = `spots/DELETE_SPOT`
 
@@ -32,9 +33,14 @@ const getUserSpots = (spots) => ({
     spots
 })
 
-const addSpot = (spot) => ({
+const addSpot = (newSpot) => ({
     type: ADD_SPOT,
-    spot
+    newSpot
+})
+
+const addImgToSpot = ({url, spotId}) => ({
+    type: ADD_IMG_TO_SPOT,
+    payload: {url, spotId}
 })
 
 const updateSpot = (updatedSpot) => ({
@@ -79,35 +85,47 @@ export const spotDetails = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`);
 
     //after response from AJAX call comes back, parse the JSON body of the response
-    const data = await response.json();
-    dispatch(getDetails(data));
-    return data;
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getDetails(data));
+        return data;
+    }
 }
 
-export const createSpotThunk = (spot, prevImg) => async (dispatch) => {
+export const createSpotThunk = (newSpot, prevImg) => async (dispatch) => {
     const response = await csrfFetch('/api/spots', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(spot)
-    })
-    const data = await response.json();
-    const imgResponse = await csrfFetch(`/api/spots/${data.id}/images`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-            url: prevImg,
-            preview: true
-        })
+        body: JSON.stringify(newSpot)
+        // body: JSON.stringify({
+        //     url: prevImg.url,
+        //     preview: true
+        // })
     })
 
-    const imgData = await imgResponse.json();
-    data.prevImg = imgData.url;
-    dispatch(addSpot(data));
-    return data;
+    if (response.ok) {
+        const data = await response.json();
+        const imgResponse = await csrfFetch(`/api/spots/${data.id}/images`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            // body: JSON.stringify({
+            //     url: prevImg.url,
+            //     preview: true
+            // })
+            body: JSON.stringify(newSpot)
+        })
+
+        if (imgResponse.ok) {
+            const imgData = await imgResponse.json();
+            data.prevImg = imgData.url;
+            dispatch(addSpot(data));
+            return data;
+        }
+    }
 }
 
 //one possible way
@@ -137,11 +155,28 @@ export const createSpotThunk = (spot, prevImg) => async (dispatch) => {
 //     return data;
 // }
 
+// export const addImgToSpotThunk = (url, previewImg, spotId) => async (dispatch) => {
+//     const addImageToSpotObject = {
+//         url,
+//         previewImg,
+//     }
 
+//     const response = await csrfFetch(`/api/spots/${spotId}/images`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(addImageToSpotObject)
+//     })
+//     const data = await response.json();
+//     dispatch(addImgToSpot({url: data.url, spotId: data.spotId}));
+//     return data;
 
-//going to refactor reducer
+//     //returning data is the response from the server
 
-//the initialState object is defined as an empty object, which will be used as the initial state for the spotReducer
+//     //spotId: data.spotId because the response from the server is the data that we want to use to update the state
+//     }
+
 
 export const updateSpotThunk = (updatedSpot, spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
@@ -171,11 +206,13 @@ export const deleteSpotThunk = (spotId) => async (dispatch) => {
     }
 }
 
+//going to refactor reducer
 
+//the initialState object is defined as an empty object, which will be used as the initial state for the spotReducer
 
 const initialState = {}
 
-//reducer function that takes in a state object and an action object, and returns a new state object based on the action type
+// reducer function that takes in a state object and an action object, and returns a new state object based on the action type
 const spotReducer = (state=initialState, action) => {
     let newState = {...state};
     switch (action.type) {
@@ -199,8 +236,15 @@ const spotReducer = (state=initialState, action) => {
 
         case ADD_SPOT:
             console.log('this is add spot')
+            const addSpot = action.newSpot;
+            return addSpot;
+
+        case ADD_IMG_TO_SPOT:
+            console.log('this is add img to spot')
             newState['spotDetails'] = action.spot;
             return newState;
+            //this seems like it would override the spotDetails key in the Redux store with the spot object that we're passing in as the payload of the action object
+
 
         case UPDATE_SPOT:
             console.log('this is update spot')
@@ -229,6 +273,73 @@ const spotReducer = (state=initialState, action) => {
             return state;
     }
 }
+
+//going to make this reducer more like my reviews reducer
+
+// const initialState = {landingSpots: null, userSpots: null, currentSpot: null};
+
+// const spotReducer = (state=initialState, action) => {
+//     let spots;
+//     switch (action.type) {
+//         case GET_SPOTS:
+//             spots = {...state, landingSpots: {...state.landingSpots}, userSpots: {...state.userSpots}, currentSpot: null}
+//         let landingSpots = {};
+//         for (let spot of action.spots.Spots) {
+//             landingSpots[spot.id] = spot;
+//         }
+//         spots.landingSpots = landingSpots;
+//         return spots;
+
+//         case GET_DETAILS:
+//             spots = {...state, landingSpots: {...state.landingSpots}, userSpots: {...state.userSpots}, currentSpot: {...state.currentSpot}}
+//             spots.currentSpot = action.spot;
+//             return spots;
+
+//         case ADD_SPOT:
+//             spots = {...state, landingSpots: {...state.landingSpots}, userSpots: {...state.userSpots}, currentSpot: {...state.currentSpot}}
+//             spots.landingSpots[action.spot.id] = action.spot;
+//             spots.userSpots[action.spot.id] = action.spot;
+//             return spots;
+
+//         case ADD_IMG_TO_SPOT:
+//             spots = {...state, landingSpots: {...state.landingSpots}, userSpots: {...state.userSpots}};
+//             spots.userSpots[action.payload.spotId].previewImage = action.payload.url;
+//             return spots;
+//             //
+
+//         case UPDATE_SPOT:
+//             spots = {...state, landingSpots: {...state.landingSpots}, userSpots: {...state.userSpots}, currentSpot: {...state.currentSpot}}
+//             spots.landingSpots[action.updatedSpot.id] = action.updatedSpot;
+//             spots.userSpots[action.updatedSpot.id] = action.updatedSpot;
+//             return spots;
+
+//         case DELETE_SPOT:
+//             spots = {...state, landingSpots: {...state.landingSpots}, userSpots: {...state.userSpots}, currentSpot: {...state.currentSpot}}
+//             delete spots.landingSpots[action.spotId];
+//             delete spots.userSpots[action.spotId];
+//             return spots;
+
+//         case GET_USER_SPOTS:
+//             spots = {...state, landingSpots: {...state.landingSpots}, userSpots: {...state.userSpots}, currentSpot: {...state.currentSpot}}
+//             let userSpots = {};
+//             for (let spot of action.spots.Spots) {
+//                 userSpots[spot.id] = spot;
+//             }
+//             spots.userSpots = userSpots;
+//             return spots;
+//             //we need to spread the state object and the landingSpots and userSpots objects instead of just doing spots = {landingSpots: {}, userSpots: {}, currentSpot: null} because we want to keep the current state of the landingSpots and userSpots keys in the Redux store, and we only want to update the userSpots key with the userSpots that we're passing in as the payload of the action object
+//             // should have action.spots.Spots because the payload of the action object is the response from the backend, which is an object with a key of Spots, and the value of Spots is an array of spot objects
+
+//         //need to review this one
+//         // case CLEAR_DETAILS:
+//         //     spots = {...state, landingSpots: {...state.landingSpots}, userSpots: {...state.userSpots}, currentSpot: {...state.currentSpot}}
+//         //     spots.currentSpot = null;
+//         //     return spots;
+
+//         default:
+//             return state;
+//     }
+// }
 
 
 

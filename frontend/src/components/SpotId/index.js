@@ -34,6 +34,8 @@ export default function SpotId() {
     //use useSelector hook to get spotDetails object from the spot slice of the Redux store
         //return null if spotDetails is falsy and render nothing
     const detailState = useSelector(state => state.spot.spotDetails);
+    let detailArray = [];
+    if (detailState) detailArray = Object.values(detailState);
 
     //original
     const reviewState = useSelector(state => state.review.currSpotReviews);
@@ -132,7 +134,7 @@ export default function SpotId() {
         setReviewChanged(true);
     }
 
-
+//firstName and lastName issue is a timing issue. need to figure out how to get the firstName and lastName to appear immediately after posting a review think i need to add something else to the if statement
     const addingReview = () => {
         //loop through the reviewArray and check if the userId of the current review matches the userId of the current sessionUser
         //if it does, then alert the user that they have already reviewed this location
@@ -186,7 +188,8 @@ export default function SpotId() {
                     </div>
 
 
-                    <img className='detail-image' src={detailState.SpotImages[0].url} alt='preview'/>
+{/* need to find a different way to key into previewImage */}
+                    <img className='detail-image' src={detailState.previewImage} alt='preview'/>
                     <div>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</div>
                     <div>{detailState.description}</div>
 
@@ -221,6 +224,7 @@ export default function SpotId() {
                                 </form>
                             </div>
                         )}
+                        {/* need to put a check here to render only after the data is available to avoid the firstName and lastName bug */}
                         {reviewArray.map((review) => {
                             // console.log('Review:', review)
                             return (
