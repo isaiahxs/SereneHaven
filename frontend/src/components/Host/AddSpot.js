@@ -65,45 +65,45 @@ export default function AddSpot() {
 
 
     //first attempt
-    // const handleSubmit = async (e) => {
-    //     e.preventDefault();
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
-    //     return dispatch (
-    //       spotActions.createSpotThunk({
-    //           name,
-    //           description,
-    //           price,
-    //           // imageURL,
-    //           address,
-    //           city,
-    //           state,
-    //           country,
-    //           lat,
-    //           lng,
-    //           // image: {url: imageURL}
-    //         },
-    //         {
-    //           url: imageURL,
-    //           preview: true
-    //         }
-    //       )
-    //     ).then((spot) => {
-    //       closeModal();
-    //       history.push(`/spots/${spot.id}`);
-    //     })
-    //     .catch(async (res) => {
-    //       const data = await res.json();
-    //       //original
-    //       if (data && data.errors) setErrors(data.errors);
+        return dispatch (
+          spotActions.createSpotThunk({
+              name,
+              description,
+              price,
+              // imageURL,
+              address,
+              city,
+              state,
+              country,
+              lat,
+              lng,
+              // image: {url: imageURL}
+            },
+            {
+              url: imageURL,
+              preview: true
+            }
+          )
+        ).then((spot) => {
+          closeModal();
+          history.push(`/spots/${spot.id}`);
+        })
+        .catch(async (res) => {
+          const data = await res.json();
+          //original
+          if (data && data.errors) setErrors(data.errors);
 
-    //       //my second attempt
-    //       //trying to solve the problem for when i receive "errors.map" is not a function
-    //       //i believe the problem might be that sometimes, data.errors is not an array
-    //       // if (data && data.errors) {
-    //       //   setErrors(Array.isArray(data.errors) ? data.errors : [data.errors]);
-    //       // }
-    //     });
-    // };
+          //my second attempt
+          //trying to solve the problem for when i receive "errors.map" is not a function
+          //i believe the problem might be that sometimes, data.errors is not an array
+          // if (data && data.errors) {
+          //   setErrors(Array.isArray(data.errors) ? data.errors : [data.errors]);
+          // }
+        });
+    };
 
 
         //second iteration
@@ -128,37 +128,37 @@ export default function AddSpot() {
         // }
 
         //third iteration
-        const handleSubmit = async (e) => {
-          e.preventDefault();
-          let errorsArr = [];
-          setErrors([]);
+        // const handleSubmit = async (e) => {
+        //   e.preventDefault();
+        //   let errorsArr = [];
+        //   setErrors([]);
 
-          if (!imageURL.endsWith('.jpg') && !imageURL.endsWith('.jpeg') && !imageURL.endsWith('.png')) {
-              errorsArr.push('Image URL must end in .png, .jpg, or .jpeg');
-          }
+        //   if (!imageURL.endsWith('.jpg') && !imageURL.endsWith('.jpeg') && !imageURL.endsWith('.png')) {
+        //       errorsArr.push('Image URL must end in .png, .jpg, or .jpeg');
+        //   }
 
-          if (!address.includes(' ') || address.length < 3) {
-              errorsArr.push('Address must include a street name and number');
-          }
+        //   if (!address.includes(' ') || address.length < 3) {
+        //       errorsArr.push('Address must include a street name and number');
+        //   }
 
-          if (description.length < 30) {
-              errorsArr.push('Description needs a minimum of 30 characters');
-          }
+        //   if (description.length < 30) {
+        //       errorsArr.push('Description needs a minimum of 30 characters');
+        //   }
 
-          if (price < 0) {
-              errorsArr.push('Price cannot be negative');
-          }
+        //   if (price < 0) {
+        //       errorsArr.push('Price cannot be negative');
+        //   }
 
-          if (errorsArr.length > 0) {
-              setErrors(errorsArr);
-              return;
-          } else if (errorsArr.length === 0) {
-            dispatch(spotActions.createSpotThunk({name, country, city, state, address, description, price, lat, lng}))
-            //i don't think i need imageURL above because it is not a column in the database
-            //lat & lng might cause a problem
-              //need to dispatch a thunk that will add an image to the spot
-          }
-         };
+        //   if (errorsArr.length > 0) {
+        //       setErrors(errorsArr);
+        //       return;
+        //   } else if (errorsArr.length === 0) {
+        //     dispatch(spotActions.createSpotThunk({name, country, city, state, address, description, price, lat, lng}))
+        //     //i don't think i need imageURL above because it is not a column in the database
+        //     //lat & lng might cause a problem
+        //       //need to dispatch a thunk that will add an image to the spot
+        //   }
+        //  };
 
 
     //original
