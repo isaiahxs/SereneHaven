@@ -17,8 +17,6 @@ export default function AddSpot() {
     const sessionUser = useSelector(state => state.session.user);
     console.log('sessionUser', sessionUser)
 
-
-
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     // const [location, setLocation] = useState('');
@@ -33,13 +31,6 @@ export default function AddSpot() {
     const [errors, setErrors] = useState([]);
 
     if (!sessionUser) return <Redirect to={'/'} />;
-    // if (sessionUser === null) { return <Redirect to={'/'} />; }
-
-    // tried commenting this out and passing in {user} as a prop from App.js but it didn't work right now
-    // const user = useSelector(state => state.session.user);
-
-    //if user is not logged in, redirect to home page
-{/* <Route path="/host" render={() => sessionUser ? <Host /> : <Redirect to="/" />} /> */}
 
     // useEffect(() => {
     //     dispatch(userSpotsThunk(user.id));
@@ -65,46 +56,112 @@ export default function AddSpot() {
 
 
     //first attempt
-    const handleSubmit = async (e) => {
-        e.preventDefault();
+    //ORIGINAL THAT WORKS
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
 
-        return dispatch (
+    //     return dispatch (
+    //       spotActions.createSpotThunk({
+    //           name,
+    //           description,
+    //           price,
+    //           // imageURL,
+    //           address,
+    //           city,
+    //           state,
+    //           country,
+    //           lat,
+    //           lng,
+    //           // image: {url: imageURL}
+    //         },
+    //         {
+    //           url: imageURL,
+    //           preview: true
+    //         }
+    //       )
+    //     ).then((spot) => {
+    //       closeModal();
+    //       history.push(`/spots/${spot.id}`);
+    //     })
+    //     .catch(async (res) => {
+    //       const data = await res.json();
+    //       //original
+    //       if (data && data.errors) setErrors(data.errors);
+
+    //       //my second attempt
+    //       //trying to solve the problem for when i receive "errors.map" is not a function
+    //       //i believe the problem might be that sometimes, data.errors is not an array
+    //       // if (data && data.errors) {
+    //       //   setErrors(Array.isArray(data.errors) ? data.errors : [data.errors]);
+    //       // }
+    //     });
+    // };
+
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+
+      let errorsArr = [];
+
+      // Add some checks to ensure that the user has entered valid data for the inputs
+      if (!country) {
+        errorsArr.push('Please enter a valid country.');
+      }
+      if (!address || address.length < 3) {
+        errorsArr.push('Please enter a valid address.');
+      }
+      if (!city) {
+        errorsArr.push('Please enter a valid city.');
+      }
+      if (!state) {
+        errorsArr.push('Please enter a valid state.');
+      }
+      if (!lat || lat < -90 || lat > 90) {
+        errorsArr.push('Please enter a valid latitude.');
+      }
+      if (!lng || lng < -180 || lng > 180) {
+        errorsArr.push('Please enter a valid longitude.');
+      }
+      if (!name || name.length < 3 || name.length > 50) {
+        errorsArr.push('Please enter a valid name for your spot.');
+      }
+      if (!description || description.length < 30) {
+        errorsArr.push('Please enter a description with at least 30 characters.');
+      }
+      if (!price || price < 0) {
+        errorsArr.push('Please enter a valid price for your spot.');
+      }
+
+      //display validation errors to the user
+      setErrors(errorsArr);
+
+      if (errorsArr.length === 0) {
+        dispatch(
           spotActions.createSpotThunk({
-              name,
-              description,
-              price,
-              // imageURL,
-              address,
-              city,
-              state,
-              country,
-              lat,
-              lng,
-              // image: {url: imageURL}
-            },
-            {
-              url: imageURL,
-              preview: true
-            }
-          )
+            name,
+            description,
+            price,
+            address,
+            city,
+            state,
+            country,
+            lat,
+            lng,
+          },
+          {
+            url: imageURL,
+            preview: true
+          }
+        )
         ).then((spot) => {
           closeModal();
           history.push(`/spots/${spot.id}`);
         })
         .catch(async (res) => {
           const data = await res.json();
-          //original
           if (data && data.errors) setErrors(data.errors);
-
-          //my second attempt
-          //trying to solve the problem for when i receive "errors.map" is not a function
-          //i believe the problem might be that sometimes, data.errors is not an array
-          // if (data && data.errors) {
-          //   setErrors(Array.isArray(data.errors) ? data.errors : [data.errors]);
-          // }
-        });
-    };
-
+      });
+      };
+  };
 
         //second iteration
         // const payload = {
@@ -234,6 +291,9 @@ export default function AddSpot() {
                   required
                   placeholder="Country"
                 />
+                {errors.includes('Please enter a valid country.') && (
+                <span className="error-message">Please enter a valid country.</span>
+                )}
               </div>
               <div className="host-input">
                 <label>Street Address</label>
@@ -244,6 +304,9 @@ export default function AddSpot() {
                   required
                     placeholder="Street Address"
                 />
+                {errors.includes('Please enter a valid address.') && (
+                <span className="error-message">Please enter a valid address.</span>
+                )}
               </div>
               <div className="host-input">
                 <label>City</label>
@@ -254,6 +317,9 @@ export default function AddSpot() {
                   required
                     placeholder="City"
                 />
+                {errors.includes('Please enter a valid city.') && (
+                <span className="error-message">Please enter a valid city.</span>
+                )}
                 <label>State</label>
                 <input
                   type="text"
@@ -262,8 +328,10 @@ export default function AddSpot() {
                   required
                   placeholder="STATE"
                 />
+                {errors.includes('Please enter a valid state.') && (
+                <span className="error-message">Please enter a valid state.</span>
+                )}
               </div>
-              {/* ALSO WOULD NEED TO EDIT THESE LATER SO IT'S NOT SETIMAGE */}
               <div className="host-input">
                 <label>Latitude</label>
                 <input
@@ -273,6 +341,9 @@ export default function AddSpot() {
                   required
                   placeholder="Latitude"
                 />
+                {errors.includes('Please enter a valid latitude.') && (
+                <span className="error-message">Please enter a valid latitude.</span>
+                )}
                 <label>Longitude</label>
                 <input
                   type="number"
@@ -281,6 +352,9 @@ export default function AddSpot() {
                   required
                     placeholder="Longitude"
                 />
+                {errors.includes('Please enter a valid longitude.') && (
+                <span className="error-message">Please enter a valid longitude.</span>
+                )}
               </div>
             </div>
             <hr />
@@ -298,6 +372,9 @@ export default function AddSpot() {
                 required
                 placeholder="Please write at least 30 characters."
               ></textarea>
+              {errors.includes('Please enter a description with at least 30 characters.') && (
+                <span className="error-message">Please enter a description with at least 30 characters.</span>
+                )}
             </div>
             <hr />
             <h2>Create a title for your spot</h2>
@@ -310,6 +387,9 @@ export default function AddSpot() {
                 required
                 placeholder="Name of your spot"
                 />
+                {errors.includes('Please enter a valid name for your spot.') && (
+                <span className="error-message">Please enter a valid name.</span>
+                )}
             </div>
             <hr />
             <h2>Set a base price for your spot</h2>
@@ -323,6 +403,9 @@ export default function AddSpot() {
                 required
                 placeholder="Price per night (USD)"
                 />
+                {errors.includes('Please enter a valid price for your spot.') && (
+                <span className="error-message">Please enter a valid price.</span>
+                )}
             </div>
             <hr />
             <h2>Liven up your spot with photos</h2>
@@ -347,20 +430,17 @@ export default function AddSpot() {
                 required
                 placeholder="Preview Image URL"
                 />
-                <ul>
-                  {errors.map((error, id) => (
+                {/* <ul> */}
+                  {/* {errors.map((error, id) => (
                     <li key={id}>{error}</li>
-                  ))}
-                </ul>
-                {/* my second attempt */}
-                {/* <ul>
-                  {Object.entries(spotDetails).map(([key, value]) => (
-                    <li key={key}>{value}</li>
-                  ))}
-                </ul> */}
+                  ))} */}
+                  {/* {Array.isArray(errors) && errors.map((error, id) => (
+                    <li key={id} className='error-message'>{error}</li>
+                  ))} */}
+                {/* </ul> */}
             </div>
             <hr />
-            <button onClick={handleSubmit} type="submit">Create a Spot</button>
+            <button onClick={handleSubmit} type="submit">Create Spot</button>
           </form>
         </div>
       );
