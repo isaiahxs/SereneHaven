@@ -35,6 +35,7 @@ export default function SpotId() {
         //return null if spotDetails is falsy and render nothing
     const detailState = useSelector(state => state.spot.spotDetails);
     let detailArray = [];
+    console.log('detailStateeeeeeeeee', detailState)
     if (detailState) detailArray = Object.values(detailState);
 
     //original
@@ -169,6 +170,7 @@ export default function SpotId() {
         setReviewCount(reviewCount - 1);
     }
 
+    // console.log('DETAIL STATE PREVIEW IMAGEEEEEEEEEE', reviewArray[1])
 
     //should i be checking for reviewArray here?
     //did changing this to reviewArray fix the problem of rapid repeated rendering?
@@ -188,8 +190,12 @@ export default function SpotId() {
                     </div>
 
 
-{/* need to find a different way to key into previewImage */}
+{/* need to find a different way to key into the images */}
+                    {/* ORIGINAL ORIGINAL ORIGINAL */}
+                    <img className='detail-image' src={detailState.SpotImages[0].url} alt='preview'/>
+                    {/* {detailState.previewImage && (
                     <img className='detail-image' src={detailState.previewImage} alt='preview'/>
+                    )} */}
                     <div>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</div>
                     <div>{detailState.description}</div>
 

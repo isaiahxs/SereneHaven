@@ -90,7 +90,7 @@ router.delete(
 //authentication is asked for here, but this is one of the areas we were following along for and they didn't put 'requireAuth' in the params
 router.get(
     '/',
-    restoreUser, requireAuth,
+    restoreUser,
     (req, res) => {
       const { user } = req;
       if (user) {

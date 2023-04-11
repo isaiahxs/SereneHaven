@@ -112,11 +112,11 @@ export const createSpotThunk = (newSpot, prevImg) => async (dispatch) => {
             headers: {
                 'Content-Type': 'application/json'
             },
-            // body: JSON.stringify({
-            //     url: prevImg.url,
-            //     preview: true
-            // })
-            body: JSON.stringify(newSpot)
+            body: JSON.stringify({
+                url: prevImg.url,
+                preview: true
+            })
+            // body: JSON.stringify(newSpot)
         })
 
         if (imgResponse.ok) {
