@@ -63,5 +63,8 @@ similarly to how i did clear details and made sure not to render until everythin
     EDIT: I might have just fixed the problem by checking for reviewArray instead of reviewState before the HTML portion of the JSX in the SpotId component
     EDIT: Nevermind, console and terminal are constantly getting reviews. will switch back to reviewState for now.
 
+
+
+
 ABOUT TO / WORKING ON:
-button for updating review
+create spots. just created addSpotThunk but not sure if i should have it all in one thunk or if i should have two thunks, and one where i can add images to a spot

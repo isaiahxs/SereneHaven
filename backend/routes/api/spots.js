@@ -1150,6 +1150,17 @@ router.get('/:spotId/reviews', async (req, res) => {
     //extract spotId from params
     const spotId = req.params.spotId;
 
+    //check for spot at this spotId
+    const spot = await Spot.findByPk(spotId);
+
+    //if there is no spot, return a 404
+    if (!spot) {
+        return res.status(404).json({
+            message: "Spot couldn't be found",
+            statusCode: 404
+        })
+    }
+
     //obtain reviews for this spotId and include Users and ReviewImages
     const reviews = await Review.findAll({
         where: {
@@ -1181,14 +1192,10 @@ router.get('/:spotId/reviews', async (req, res) => {
         ReviewImages: rev.ReviewImages
     }))
 
-    //if there have been reviews retreived for this spot, return status 200 with json
-    if (spotReviews.length > 0) return res.status(200).json({Reviews: spotReviews})
+    //if there have been reviews retreived for this spot, return status 200 with json. if not, then just return the empty array that will be spotReviews.
+    // if (spotReviews.length > 0) return res.status(200).json({Reviews: spotReviews})
 
-    //if no reviews were found for this spot, return a 404 with specific message
-    return res.status(404).json({
-        message: "Spot couldn't be found",
-        statusCode: 404
-    })
+    return res.status(200).json({Reviews: spotReviews})
 })
 
 //Create a booking from a spot based on the spot's id

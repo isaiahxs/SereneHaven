@@ -5,6 +5,9 @@ import './Modal.css';
 //create a React context called a ModalContext
 const ModalContext = React.createContext();
 
+// export const useModalContext = () => useContext(ModalContext);
+
+
 //create and export a functional comp called ModalProvider that renders the ModalContext.Provider comp with all the children from the props as a child
     //make sure it is a named export and not a  default
 export function ModalProvider({children}) {

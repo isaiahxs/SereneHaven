@@ -33,9 +33,11 @@ export const reviewThunk = (review) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${review}/reviews`);
 
     //after response from the AJAX call comes back, parse the JSON body of the response
-    const data = await response.json();
-    dispatch(getReviews(data));
-    return data;
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getReviews(data));
+        return data;
+    }
 }
 
 //thunk action creator for posting a review
