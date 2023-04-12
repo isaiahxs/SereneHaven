@@ -177,6 +177,7 @@ export const createSpotThunk = (newSpot, prevImage, images) => async (dispatch) 
       );
 
       if (imageDataWithPreview) {
+        data.SpotImages = imageDataArr;
         data.prevImage = imageDataWithPreview.url;
       }
 

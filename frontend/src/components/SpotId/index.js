@@ -25,6 +25,7 @@ export default function SpotId() {
     const [reviewCount, setReviewCount] = useState(0);
 
 
+
     // const [errors, setErrors] = useState([]);
 
     const dispatch = useDispatch();
@@ -37,6 +38,12 @@ export default function SpotId() {
     let detailArray = [];
     console.log('detailStateeeeeeeeee', detailState)
     if (detailState) detailArray = Object.values(detailState);
+
+
+    //need to show small images ONLY if they exist in SpotDetails
+    const prevImg = detailState?.SpotImages?.find(img => img.preview);
+    const smallImages = detailState?.SpotImages?.filter(img => !img.preview);
+
 
     //original
     const reviewState = useSelector(state => state.review.currSpotReviews);
@@ -193,13 +200,17 @@ export default function SpotId() {
 {/* ---------------------------------------------------------------------- */}
                     <div className='images-container'>
                         <div className='large-image-container'>
-                            <img className='detail-image' src={detailState.SpotImages[0].url} alt={`${detailState.name}`}/>
+                            {/* <img className='detail-image' src={detailState.SpotImages[0].url} alt={`${detailState.name}`}/> */}
+                            <img className='preview-image' src={prevImg.url} alt={`${detailState.name}`}/>
                         </div>
                         <div className='small-image-container'>
-                            <img className='small-image' src={detailState.SpotImages[1].url} alt={`${detailState.name}`}/>
+                            {/* <img className='small-image' src={detailState.SpotImages[1].url} alt={`${detailState.name}`}/>
                             <img className='small-image' src={detailState.SpotImages[2].url} alt={`${detailState.name}`}/>
                             <img className='small-image' src={detailState.SpotImages[3].url} alt={`${detailState.name}`}/>
-                            <img className='small-image' src={detailState.SpotImages[4].url} alt={`${detailState.name}`}/>
+                            <img className='small-image' src={detailState.SpotImages[4].url} alt={`${detailState.name}`}/> */}
+                            {smallImages.map((image, i) => (
+                                <img key={i} src={image.url} alt={detailState.name} className='small-images'/>
+                                ))}
                         </div>
                     </div>
 
