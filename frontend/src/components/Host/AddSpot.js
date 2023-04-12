@@ -137,17 +137,17 @@ export default function AddSpot() {
       if (!imageURL.endsWith('.jpg') && !imageURL.endsWith('.png') && !imageURL.endsWith('.jpeg')) {
         errorsArr.push('Please enter a valid image URL.');
       }
-      if (!image1.endsWith('.jpg') || !image1.endsWith('.png') || !image1.endsWith('.jpeg')) {
-        errorsArr.push('Please enter a valid image URL.');
+      if (image1 && !image1.endsWith('.jpg') && !image1.endsWith('.png') && !image1.endsWith('.jpeg')) {
+        errorsArr.push('Invalid image1 url.');
       }
-      if (!image2.endsWith('.jpg') || !image2.endsWith('.png') || !image2.endsWith('.jpeg')) {
-        errorsArr.push('Please enter a valid image URL.');
+      if (image2 && !image2.endsWith('.jpg') && !image2.endsWith('.png') && !image2.endsWith('.jpeg')) {
+        errorsArr.push('Invalid image2 url.');
       }
-      if (!image3.endsWith('.jpg') || !image3.endsWith('.png') || !image3.endsWith('.jpeg')) {
-        errorsArr.push('Please enter a valid image URL.');
+      if (image3 && !image3.endsWith('.jpg') && !image3.endsWith('.png') && !image3.endsWith('.jpeg')) {
+        errorsArr.push('Invalid image3 url.');
       }
-      if (!image4.endsWith('.jpg') || !image4.endsWith('.png') || !image4.endsWith('.jpeg')) {
-        errorsArr.push('Please enter a valid image URL.');
+      if (image4 && !image4.endsWith('.jpg') && !image4.endsWith('.png') && !image4.endsWith('.jpeg')) {
+        errorsArr.push('Invalid image4 url.');
       }
 
 
@@ -448,51 +448,51 @@ export default function AddSpot() {
                 type='url'
                 value={image1}
                 onChange={(e) => setImage1(e.target.value)}
-                placeholder="Preview Image URL"
+                placeholder="Optional image URL"
                 />
-                {/* {errors.includes('Please enter a valid image URL.') && (
+                {errors.includes('Invalid image1 url.') && (
                 <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
-                )} */}
+                )}
             </div>
             <div>
             <input
                 type='url'
                 value={image2}
                 onChange={(e) => setImage2(e.target.value)}
-                placeholder="Preview Image URL"
+                placeholder="Optional image URL"
                 />
-                {/* {errors.includes('Please enter a valid image URL.') && (
+                {errors.includes('Invalid image2 url.') && (
                 <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
-                )} */}
+                )}
             </div>
             <div>
             <input
                 type='url'
                 value={image3}
                 onChange={(e) => setImage3(e.target.value)}
-                placeholder="Preview Image URL"
+                placeholder="Optional image URL"
                 />
-                {/* {errors.includes('Please enter a valid image URL.') && (
+                {errors.includes('Invalid image3 url.') && (
                 <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
-                )} */}
+                )}
             </div>
             <div>
             <input
                 type='url'
                 value={image4}
                 onChange={(e) => setImage4(e.target.value)}
-                placeholder="Preview Image URL"
+                placeholder="Optional image URL"
                 />
-                {/* {errors.includes('Please enter a valid image URL.') && (
+                {errors.includes('Invalid image4 url.') && (
                 <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
-                )} */}
+                )}
             </div>
             <hr />
-            <ul>
+            {/* <ul>
               {Array.isArray(errors) && errors.map((error, id) => (
                 <li key={id}>{error}</li>
               ))}
-            </ul>
+            </ul> */}
             <button onClick={handleSubmit} type="submit">Create Spot</button>
           </form>
         </div>
