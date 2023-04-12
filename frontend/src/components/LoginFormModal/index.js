@@ -33,12 +33,25 @@ function LoginFormModal() {
     //make sure to handle and display errors from the login thunk action if there are any
     const handleSubmit = (e) => {
         e.preventDefault();
+        //clear any previous errors from the state
         setErrors([]);
+
+        //dispatch the login action with the entered credentials and password
         return dispatch(sessionActions.login({credential, password}))
+            //if the login is successful, close the modal
             .then(closeModal)
+            //if there is an error, catch it and display the appropriate error message
             .catch(async (res) => {
+                //parse the error response body as JSON
                 const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
+                //if there are errors, set them in the state
+                if (data && data.errors) {
+                  setErrors(data.errors);
+                } else {
+                  //if the response from the server doesn't include an 'errors' property in the JSON body, then the response is indicating that the provided credentials were invalid
+                  //so in that case, we can set the error state to an array with a single string, which would be the default error message that we want to show the user for invalid credentials
+                  setErrors(['The provided credentials were invalid.'])
+                }
             });
     }
 
@@ -121,7 +134,7 @@ function LoginFormModal() {
       <h1 className='log-in-label'>Log In</h1>
       <form onSubmit={handleSubmit}>
 
-        <ul>
+        <ul className='error-message'>
           {errors.map((error, idx) => (
             <li key={idx}>{error}</li>
           ))}
