@@ -101,87 +101,176 @@ export default function AddSpot() {
     //     });
     // };
 
-    const handleSubmit = async (e) => {
-      e.preventDefault();
+  //   const handleSubmit = async (e) => {
+  //     e.preventDefault();
 
-      let errorsArr = [];
+  //     let errorsArr = [];
 
-      // Add some checks to ensure that the user has entered valid data for the inputs
-      if (!country) {
-        errorsArr.push('Please enter a valid country.');
-      }
-      if (!address || address.length < 3) {
-        errorsArr.push('Please enter a valid address.');
-      }
-      if (!city) {
-        errorsArr.push('Please enter a valid city.');
-      }
-      if (!state) {
-        errorsArr.push('Please enter a valid state.');
-      }
-      if (!lat || lat < -90 || lat > 90) {
-        errorsArr.push('Please enter a valid latitude.');
-      }
-      if (!lng || lng < -180 || lng > 180) {
-        errorsArr.push('Please enter a valid longitude.');
-      }
-      if (!name || name.length < 3 || name.length > 50) {
-        errorsArr.push('Please enter a valid name for your spot.');
-      }
-      if (!description || description.length < 30) {
-        errorsArr.push('Please enter a description with at least 30 characters.');
-      }
-      if (!price || price < 0) {
-        errorsArr.push('Please enter a valid price for your spot.');
-      }
-      if (!imageURL.endsWith('.jpg') && !imageURL.endsWith('.png') && !imageURL.endsWith('.jpeg')) {
-        errorsArr.push('Please enter a valid image URL.');
-      }
-      if (image1 && !image1.endsWith('.jpg') && !image1.endsWith('.png') && !image1.endsWith('.jpeg')) {
-        errorsArr.push('Invalid image1 url.');
-      }
-      if (image2 && !image2.endsWith('.jpg') && !image2.endsWith('.png') && !image2.endsWith('.jpeg')) {
-        errorsArr.push('Invalid image2 url.');
-      }
-      if (image3 && !image3.endsWith('.jpg') && !image3.endsWith('.png') && !image3.endsWith('.jpeg')) {
-        errorsArr.push('Invalid image3 url.');
-      }
-      if (image4 && !image4.endsWith('.jpg') && !image4.endsWith('.png') && !image4.endsWith('.jpeg')) {
-        errorsArr.push('Invalid image4 url.');
-      }
+  //     // Add some checks to ensure that the user has entered valid data for the inputs
+  //     if (!country) {
+  //       errorsArr.push('Please enter a valid country.');
+  //     }
+  //     if (!address || address.length < 3) {
+  //       errorsArr.push('Please enter a valid address.');
+  //     }
+  //     if (!city) {
+  //       errorsArr.push('Please enter a valid city.');
+  //     }
+  //     if (!state) {
+  //       errorsArr.push('Please enter a valid state.');
+  //     }
+  //     if (!lat || lat < -90 || lat > 90) {
+  //       errorsArr.push('Please enter a valid latitude.');
+  //     }
+  //     if (!lng || lng < -180 || lng > 180) {
+  //       errorsArr.push('Please enter a valid longitude.');
+  //     }
+  //     if (!name || name.length < 3 || name.length > 50) {
+  //       errorsArr.push('Please enter a valid name for your spot.');
+  //     }
+  //     if (!description || description.length < 30) {
+  //       errorsArr.push('Please enter a description with at least 30 characters.');
+  //     }
+  //     if (!price || price < 0) {
+  //       errorsArr.push('Please enter a valid price for your spot.');
+  //     }
+  //     if (!imageURL.endsWith('.jpg') && !imageURL.endsWith('.png') && !imageURL.endsWith('.jpeg')) {
+  //       errorsArr.push('Please enter a valid image URL.');
+  //     }
+  //     if (image1 && !image1.endsWith('.jpg') && !image1.endsWith('.png') && !image1.endsWith('.jpeg')) {
+  //       errorsArr.push('Invalid image1 url.');
+  //     }
+  //     if (image2 && !image2.endsWith('.jpg') && !image2.endsWith('.png') && !image2.endsWith('.jpeg')) {
+  //       errorsArr.push('Invalid image2 url.');
+  //     }
+  //     if (image3 && !image3.endsWith('.jpg') && !image3.endsWith('.png') && !image3.endsWith('.jpeg')) {
+  //       errorsArr.push('Invalid image3 url.');
+  //     }
+  //     if (image4 && !image4.endsWith('.jpg') && !image4.endsWith('.png') && !image4.endsWith('.jpeg')) {
+  //       errorsArr.push('Invalid image4 url.');
+  //     }
 
 
-      //display validation errors to the user
-      setErrors(errorsArr);
+  //     //display validation errors to the user
+  //     setErrors(errorsArr);
 
-      if (errorsArr.length === 0) {
-        dispatch(
-          spotActions.createSpotThunk({
-            name,
-            description,
-            price,
-            address,
-            city,
-            state,
-            country,
-            lat,
-            lng,
-          },
-          {
-            url: imageURL,
-            preview: true
-          }
-        )
-        ).then((spot) => {
-          closeModal();
-          history.push(`/spots/${spot.id}`);
-        })
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) setErrors(data.errors);
-      });
-      };
-  };
+  //     if (errorsArr.length === 0) {
+  //       dispatch(
+  //         spotActions.createSpotThunk({
+  //           name,
+  //           description,
+  //           price,
+  //           address,
+  //           city,
+  //           state,
+  //           country,
+  //           lat,
+  //           lng,
+  //         },
+  //         {
+  //           url: imageURL,
+  //           preview: true
+  //         }
+  //       )
+  //       ).then((spot) => {
+  //         closeModal();
+  //         history.push(`/spots/${spot.id}`);
+  //       })
+  //       .catch(async (res) => {
+  //         const data = await res.json();
+  //         if (data && data.errors) setErrors(data.errors);
+  //     });
+  //     };
+  // };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    let errorsArr = [];
+    const images = [image1, image2, image3, image4].filter(Boolean).map((url) => ({
+      url,
+      preview: false,
+  }));
+
+    // Add some checks to ensure that the user has entered valid data for the inputs
+    if (!country) {
+      errorsArr.push('Please enter a valid country.');
+    }
+    if (!address || address.length < 3) {
+      errorsArr.push('Please enter a valid address.');
+    }
+    if (!city) {
+      errorsArr.push('Please enter a valid city.');
+    }
+    if (!state) {
+      errorsArr.push('Please enter a valid state.');
+    }
+    if (!lat || lat < -90 || lat > 90) {
+      errorsArr.push('Please enter a valid latitude.');
+    }
+    if (!lng || lng < -180 || lng > 180) {
+      errorsArr.push('Please enter a valid longitude.');
+    }
+    if (!name || name.length < 3 || name.length > 50) {
+      errorsArr.push('Please enter a valid name for your spot.');
+    }
+    if (!description || description.length < 30) {
+      errorsArr.push('Please enter a description with at least 30 characters.');
+    }
+    if (!price || price < 0) {
+      errorsArr.push('Please enter a valid price for your spot.');
+    }
+    if (!imageURL.endsWith('.jpg') && !imageURL.endsWith('.png') && !imageURL.endsWith('.jpeg')) {
+      errorsArr.push('Please enter a valid image URL.');
+    }
+    if (image1 && !image1.endsWith('.jpg') && !image1.endsWith('.png') && !image1.endsWith('.jpeg')) {
+      errorsArr.push('Invalid image1 url.');
+    }
+    if (image2 && !image2.endsWith('.jpg') && !image2.endsWith('.png') && !image2.endsWith('.jpeg')) {
+      errorsArr.push('Invalid image2 url.');
+    }
+    if (image3 && !image3.endsWith('.jpg') && !image3.endsWith('.png') && !image3.endsWith('.jpeg')) {
+      errorsArr.push('Invalid image3 url.');
+    }
+    if (image4 && !image4.endsWith('.jpg') && !image4.endsWith('.png') && !image4.endsWith('.jpeg')) {
+      errorsArr.push('Invalid image4 url.');
+    }
+
+
+    //display validation errors to the user
+    setErrors(errorsArr);
+
+    if (errorsArr.length === 0) {
+      dispatch(
+        spotActions.createSpotThunk({
+          name,
+          description,
+          price,
+          address,
+          city,
+          state,
+          country,
+          lat,
+          lng,
+        },
+        {
+          url: imageURL,
+          preview: true
+        },
+        images
+      )
+      ).then((spot) => {
+        closeModal();
+        history.push(`/spots/${spot.id}`);
+      })
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) setErrors(data.errors);
+    });
+    };
+};
+
+
 
         //second iteration
         // const payload = {

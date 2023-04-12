@@ -172,8 +172,6 @@ export default function SpotId() {
 
     // console.log('DETAIL STATE PREVIEW IMAGEEEEEEEEEE', reviewArray[1])
 
-    //should i be checking for reviewArray here?
-    //did changing this to reviewArray fix the problem of rapid repeated rendering?
     if(detailState && reviewState) {
         return (
             <div className='outer-container'>
@@ -189,10 +187,22 @@ export default function SpotId() {
                         <div>{detailState.country}</div>
                     </div>
 
-
-{/* need to find a different way to key into the images */}
+{/* ---------------------------------------------------------------------- */}
                     {/* ORIGINAL ORIGINAL ORIGINAL */}
-                    <img className='detail-image' src={detailState.SpotImages[0].url} alt='preview'/>
+                    {/* <img className='detail-image' src={detailState.SpotImages[0].url} alt='preview'/> */}
+{/* ---------------------------------------------------------------------- */}
+                    <div className='images-container'>
+                        <div className='large-image-container'>
+                            <img className='detail-image' src={detailState.SpotImages[0].url} alt={`${detailState.name}`}/>
+                        </div>
+                        <div className='small-image-container'>
+                            <img className='small-image' src={detailState.SpotImages[1].url} alt={`${detailState.name}`}/>
+                            <img className='small-image' src={detailState.SpotImages[2].url} alt={`${detailState.name}`}/>
+                            <img className='small-image' src={detailState.SpotImages[3].url} alt={`${detailState.name}`}/>
+                            <img className='small-image' src={detailState.SpotImages[4].url} alt={`${detailState.name}`}/>
+                        </div>
+                    </div>
+
                     {/* {detailState.previewImage && (
                     <img className='detail-image' src={detailState.previewImage} alt='preview'/>
                     )} */}
