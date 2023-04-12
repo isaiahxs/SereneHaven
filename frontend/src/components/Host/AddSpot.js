@@ -15,13 +15,12 @@ export default function AddSpot() {
     const {closeModal} = useModal();
 
     const sessionUser = useSelector(state => state.session.user);
-    console.log('sessionUser', sessionUser)
+    // console.log('sessionUser', sessionUser)
 
     const [name, setName] = useState('');
     const [description, setDescription] = useState('');
     // const [location, setLocation] = useState('');
     const [price, setPrice] = useState('');
-    const [imageURL, setImageURL] = useState('');
     const [address, setAddress] = useState('');
     const [city, setCity] = useState('');
     const [state, setState] = useState('');
@@ -29,6 +28,11 @@ export default function AddSpot() {
     const [lat, setLat] = useState('');
     const [lng, setLng] = useState('');
     const [errors, setErrors] = useState([]);
+    const [imageURL, setImageURL] = useState('');
+    const [image1, setImage1] = useState('');
+    const [image2, setImage2] = useState('');
+    const [image3, setImage3] = useState('');
+    const [image4, setImage4] = useState('');
 
     if (!sessionUser) return <Redirect to={'/'} />;
 
@@ -130,6 +134,22 @@ export default function AddSpot() {
       if (!price || price < 0) {
         errorsArr.push('Please enter a valid price for your spot.');
       }
+      if (!imageURL.endsWith('.jpg') && !imageURL.endsWith('.png') && !imageURL.endsWith('.jpeg')) {
+        errorsArr.push('Please enter a valid image URL.');
+      }
+      if (!image1.endsWith('.jpg') || !image1.endsWith('.png') || !image1.endsWith('.jpeg')) {
+        errorsArr.push('Please enter a valid image URL.');
+      }
+      if (!image2.endsWith('.jpg') || !image2.endsWith('.png') || !image2.endsWith('.jpeg')) {
+        errorsArr.push('Please enter a valid image URL.');
+      }
+      if (!image3.endsWith('.jpg') || !image3.endsWith('.png') || !image3.endsWith('.jpeg')) {
+        errorsArr.push('Please enter a valid image URL.');
+      }
+      if (!image4.endsWith('.jpg') || !image4.endsWith('.png') || !image4.endsWith('.jpeg')) {
+        errorsArr.push('Please enter a valid image URL.');
+      }
+
 
       //display validation errors to the user
       setErrors(errorsArr);
@@ -410,17 +430,6 @@ export default function AddSpot() {
             <hr />
             <h2>Liven up your spot with photos</h2>
             <h3>Submit a link to at least one photo to publish your spot.</h3>
-            {/* {Array.from({ length: 5 }).map((_, index) => (
-                <div key={index} className="host-input">
-                <input
-                    type="text"
-                    value={image}
-                    onChange={(e) => setImage(e.target.value)}
-                    required
-                    placeholder="Image URL"
-                />
-                </div>
-            ))} */}
             {/* need to add the other image url inputs */}
             <div className="host-input">
                 <input
@@ -430,16 +439,60 @@ export default function AddSpot() {
                 required
                 placeholder="Preview Image URL"
                 />
-                {/* <ul> */}
-                  {/* {errors.map((error, id) => (
-                    <li key={id}>{error}</li>
-                  ))} */}
-                  {/* {Array.isArray(errors) && errors.map((error, id) => (
-                    <li key={id} className='error-message'>{error}</li>
-                  ))} */}
-                {/* </ul> */}
+                {errors.includes('Please enter a valid image URL.') && (
+                <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
+                )}
+            </div>
+            <div>
+            <input
+                type='url'
+                value={image1}
+                onChange={(e) => setImage1(e.target.value)}
+                placeholder="Preview Image URL"
+                />
+                {/* {errors.includes('Please enter a valid image URL.') && (
+                <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
+                )} */}
+            </div>
+            <div>
+            <input
+                type='url'
+                value={image2}
+                onChange={(e) => setImage2(e.target.value)}
+                placeholder="Preview Image URL"
+                />
+                {/* {errors.includes('Please enter a valid image URL.') && (
+                <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
+                )} */}
+            </div>
+            <div>
+            <input
+                type='url'
+                value={image3}
+                onChange={(e) => setImage3(e.target.value)}
+                placeholder="Preview Image URL"
+                />
+                {/* {errors.includes('Please enter a valid image URL.') && (
+                <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
+                )} */}
+            </div>
+            <div>
+            <input
+                type='url'
+                value={image4}
+                onChange={(e) => setImage4(e.target.value)}
+                placeholder="Preview Image URL"
+                />
+                {/* {errors.includes('Please enter a valid image URL.') && (
+                <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
+                )} */}
             </div>
             <hr />
+            <ul>
+              {Array.isArray(errors) && errors.map((error, id) => (
+                <li key={id}>{error}</li>
+              ))}
+            </ul>
             <button onClick={handleSubmit} type="submit">Create Spot</button>
           </form>
         </div>

@@ -80,7 +80,7 @@ textarea {
 
 .error-message {
     color: #FF385C;
-    font-size: 0.8em;
-    margin-top: 0.5em;
-    background-color: black;
+    font-size: 1.0em;
+    /* margin-top: 0.5em; */
+    /* background-color: black; */
 }
