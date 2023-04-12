@@ -201,7 +201,7 @@ export default function SpotId() {
 
                             {smallImages.map((image, i) => (
                                 <img key={i} src={image.url} alt={detailState.name} className='small-images'/>
-                                ))}
+                            ))}
                         </div>
                     </div>
 
@@ -211,34 +211,48 @@ export default function SpotId() {
                             <p>{detailState.description}</p>
                         </div>
                         <div className='reservation-container'>
-                            <div className='reserve-stars'>
+                            <div className='prices-and-stars'>
                                 <div className='price'><span className='amount'>${detailState.price}</span>night</div>
+
+                                <div className='total-reviews-container'>
+                                    {Number(detailState.avgStarRating) ? (
+                                        <div className='stars'>
+                                            <Star className='star-icon' alt='little-star'/>
+                                            {Number(detailState.avgStarRating).toFixed(1)}
+                                            <span>•</span>
+                                            <p>{detailState.numReviews === 1 ? '1 Review' : `${detailState.numReviews} Reviews`}</p>
+                                        </div>
+                                    ) : (
+                                        <div className='stars'>
+                                            <Star alt='little-star'/>
+                                            New
+                                        </div>
+                                    )}
+                                </div>
                             </div>
-                            <div className='total-reviews-container'>
-                                {Number(detailState.avgStarRating) ? (
-                                    <div className='review-stars'>
-                                        <Star className='star-icon' alt='little-star'/>
-                                        {Number(detailState.avgStarRating).toFixed(1)}
-                                        <span>•</span>
-                                        <p>{detailState.numReviews === 1 ? '1 Review' : `${detailState.numReviews} Reviews`}</p>
-                                    </div>
-                                ) : (
-                                    <div className='review-stars'>
-                                        <Star alt='little-star'/>
-                                        New
-                                    </div>
-                                )}
-                            </div>
+                            {/* need to say that this feature is coming soon */}
+                            <button className='reserve-button'>Reserve</button>
                         </div>
-                        {/* need to say that this feature is coming soon */}
-                        <button className='reserve-button'>Reserve</button>
                     </div>
 
 
-
-
                     <div className='review-container'>
-                        <div>Reviews</div>
+                        {/* <div>Reviews</div> */}
+                        <div className='review-summary'>
+                            {Number(detailState.avgStarRating) ? (
+                                <div className='stars'>
+                                    <Star className='star-icon' alt='little-star'/>
+                                    {Number(detailState.avgStarRating).toFixed(1)}
+                                    <span>•</span>
+                                    <p>{detailState.numReviews === 1 ? '1 Review' : `${detailState.numReviews} Reviews`}</p>
+                                </div>
+                            ) : (
+                                <div className='stars'>
+                                    <Star alt='little-star'/>
+                                    New
+                                    </div>
+                            )}
+                        </div>
                         <div className='add-review' onClick={addingReview}>Post Your Review</div>
                         {addReview && (
                             <div className='review-form'>

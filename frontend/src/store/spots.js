@@ -334,6 +334,8 @@ const spotReducer = (state=initialState, action) => {
     }
 }
 
+export default spotReducer;
+
 //going to make this reducer more like my reviews reducer
 
 // const initialState = {landingSpots: null, userSpots: null, currentSpot: null};
@@ -400,7 +402,3 @@ const spotReducer = (state=initialState, action) => {
 //             return state;
 //     }
 // }
-
-
-
-export default spotReducer;
