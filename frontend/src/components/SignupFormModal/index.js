@@ -44,6 +44,38 @@ function SignupFormModal() {
     //     return setErrors(['Confirm Password field must be the same as the Password field'])
     // }
 
+    //THIS WORKSSSSSSSSSSSSSSSSSSSSSSSS
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();
+    //   let errorsArr = [];
+
+    //   if (!email) errorsArr.push('Email field cannot be empty.');
+    //   if (username.length < 4) errorsArr.push('Username field cannot be less than 4 characters.');
+    //   if (!firstName) errorsArr.push('First Name field cannot be empty.');
+    //   if (!lastName) errorsArr.push('Last Name field cannot be empty.');
+    //   if (!password) errorsArr.push('Password field cannot be empty.');
+    //   if (!confirmPassword) errorsArr.push('Confirm Password field cannot be empty.');
+    //   if (password !== confirmPassword) {
+    //     errorsArr.push('Confirm Password field must be the same as the Password field.');
+    //   }
+
+    //   setErrors(errorsArr);
+    //   if (errorsArr.length === 0) {
+    //     dispatch(
+    //       sessionActions.signup({ email, username, firstName, lastName, password })
+    //     ).then(closeModal)
+    //     .catch(async (res) => {
+    //       const data = await res.json();
+    //       if (data && data.errors) {
+    //         setErrors(Array.isArray(data.errors) ? data.errors : [])
+    //       } else {
+    //         setErrors([]);
+    //       }
+    //     })
+    //   }
+    // }
+
+    //allows me to submit. but displays error if it it 400 or 403
     const handleSubmit = async (e) => {
       e.preventDefault();
       let errorsArr = [];
@@ -60,19 +92,56 @@ function SignupFormModal() {
 
       setErrors(errorsArr);
       if (errorsArr.length === 0) {
-        dispatch(
-          sessionActions.signup({ email, username, firstName, lastName, password })
-        ).then(closeModal)
-        .catch(async (res) => {
-          const data = await res.json();
-          if (data && data.errors) {
-            setErrors(Array.isArray(data.errors) ? data.errors : [])
+        try {
+          const response = await dispatch(
+            sessionActions.signup({email, username, firstName, lastName, password})
+          );
+          if (response.status === 400 || response.status === 403) {
+            const data = await response.json();
+            const serverErrors = [];
+            if (data.errors.email) serverErrors.push(data.errors.email);
+            if (data.errors.username) serverErrors.push(data.errors.username);
+            setErrors(serverErrors);
           } else {
-            setErrors([]);
+            closeModal();
           }
-        })
-      }
+        } catch (error) {
+          console.error('Error signing up:', error);
+          setErrors(['Email and Username must be unique.']);
+        }
     }
+    }
+
+    //not ideal yet
+    // const handleSubmit = (e) => {
+    //   e.preventDefault();
+    //   if (password === confirmPassword) {
+    //     setErrors([]);
+    //     return dispatch(sessionActions.signup({ email, username, firstName, lastName, password }))
+    //       .catch(async (res) => {
+    //         const data = await res.json();
+    //         if (data && data.errors) {
+    //           setErrors(data.errors);
+    //           for (let error of data.errors) {
+    //             if (error === 'Password must be 6 characters or more.') {
+    //               setPassword('');
+    //               setConfirmPassword('');
+    //             }
+    //         if (error === 'User with that email already exists.') {
+    //           setEmail('');
+    //         }
+    //         if (error === 'Please provide a username with at least 4 characters.') {
+    //           setUsername('');
+    //         }
+    //       }
+    //       }
+    //     })
+    //   } else {
+    //     setErrors(['Confirm Password field must be the same as the Password field.'])
+    //     setPassword('');
+    //     setConfirmPassword('');
+    //   }
+    // }
 
     const validateForm = () => {
       if (
@@ -99,7 +168,9 @@ function SignupFormModal() {
       <>
       <h1>Sign Up</h1>
       <form onSubmit={handleSubmit}>
-        <ul>
+        {/* {errors.length > 0 &&
+        } */}
+        <ul className="error-message">
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
         <label>

@@ -35,49 +35,6 @@ const validateSignup = [
     handleValidationErrors
 ];
 
-// Sign up CLOSE WIP
-// router.post(
-//     '/',
-//     validateSignup,
-//     async (req, res, next) => {
-//         const { email, password, username, firstName, lastName } = req.body;
-//         try {
-//             const existingEmail = await User.findOne({where: {email}});
-//             if (existingEmail) {
-//                 // return res.status(403).json({message: "User already exists with the specified email"});
-//                 //need to improve the format
-//                 const error = new Error('User already exists');
-//                 error.status = 403;
-//                 error.errors = {email: 'User with that email already exists'}
-//                 next(error)
-//             }
-
-//             const existingUsername = await User.findOne({where: {username}});
-//             if (existingUsername) {
-//                 // return res.status(403).json({message: "User with that username already exists"});
-//                 //need to improve the format
-//                 const error = new Error('User already exists');
-//                 error.status = 403;
-//                 error.errors = {username: 'User with that username already exists'}
-//                 next(error);
-//             }
-//             const user = await User.signup({ email, username, password, firstName, lastName });
-//             const token = await setTokenCookie(res, user);
-
-
-//             return res.json({
-//                 id: user.id,
-//                 firstName: user.firstName,
-//                 lastName: user.lastName,
-//                 email: user.email,
-//                 username: user.username,
-//                 token
-//             });
-//         } catch (error) {
-//             next(error);
-//         }
-//     }
-// );
 
 //original
 // router.post('/', validateSignup, async(req, res) => {
@@ -88,6 +45,7 @@ const validateSignup = [
 //         const user = await User.signup({email, username, password, firstName, lastName, createdAt, updatedAt});
 //         const token = await setTokenCookie(res, user);
 
+//IMPORTANT TO REALIZE I DID NOT HAVE user: {} HERE WHICH RESULTED IN USER NOT BEING SIGNED IN AUTOMATICALLY AFTER SIGNING UP
 //         return res.json({
 //             id: user.id,
 //             firstName: user.firstName,
@@ -175,7 +133,7 @@ router.post('/', validateSignup, async(req, res, next) => {
         });
     }
 });
-// In the updated code, the function first checks for existing users with the provided email and username. If any existing users are found, it returns a 403 error with the appropriate error message. If there are no existing users, it proceeds with the user signup process.
+
 
 
 module.exports = router;
