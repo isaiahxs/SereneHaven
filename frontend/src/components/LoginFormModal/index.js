@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import * as sessionActions from '../../store/session';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 //refactoring in phase 4
 // import { Redirect } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
@@ -51,6 +51,69 @@ function LoginFormModal() {
       setPassword(e.target.value);
       setButtonDisabled(credential.length < 4 || e.target.value.length < 6);
     }
+
+    // const handleSubmit = (e) => {
+    //   e.preventDefault();
+    //   setErrors([]);
+
+    //   if (credential.trim().length < 4) {
+    //     setErrors(['Username or email must be at least 4 characters']);
+    //     return;
+    //   }
+
+    //   if (password.trim().length < 6) {
+    //     setErrors(['Password must be at least 6 characters']);
+    //     return;
+    //   }
+
+    //   dispatch(sessionActions.login({ credential, password }))
+    //     .then(closeModal)
+    //     .catch(async (res) => {
+    //       const data = await res.json();
+    //       if (data && data.errors) setErrors(data.errors);
+    //     });
+    // };
+
+    // const handleCredentialChange = (e) => {
+    //   const input = e.target.value;
+    //   setCredential(input);
+    //   setButtonDisabled(input.length < 4);
+    //   if (input.length < 4) {
+    //     setErrors(['Username or email must be at least 4 characters']);
+    //   } else {
+    //     setErrors([]);
+    //   }
+    // };
+
+    // const handlePasswordChange = (e) => {
+    //   const input = e.target.value;
+    //   setPassword(input);
+    //   setButtonDisabled(input.length < 6);
+    //   if (input.length < 6) {
+    //     setErrors(['Password must be at least 6 characters']);
+    //   } else {
+    //     setErrors([]);
+    //   }
+    // };
+
+    // const sessionUser = useSelector(state => state.session.user);
+    // const handleSubmit = (e) => {
+    //   e.preventDefault();
+    //   setErrors([]);
+
+    //   dispatch(sessionActions.login({ credential, password }))
+    //     .catch(async (res) => {
+    //       const data = await res.json();
+    //       if (data && data.errors) {
+    //         setErrors(data.errors);
+    //         setPassword('');
+    //         setCredential('');
+    //     }
+    //   });
+    //   return
+    // }
+
+
 
 
     return (
