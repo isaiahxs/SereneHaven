@@ -92,41 +92,102 @@ export const spotDetails = (spotId) => async (dispatch) => {
     }
 }
 
-export const createSpotThunk = (newSpot, prevImg) => async (dispatch) => {
-    const response = await csrfFetch('/api/spots', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newSpot)
-        // body: JSON.stringify({
-        //     url: prevImg.url,
-        //     preview: true
-        // })
-    })
+//ORIGINAL ORIGINAL
+// export const createSpotThunk = (newSpot, prevImg) => async (dispatch) => {
+//     const response = await csrfFetch('/api/spots', {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify(newSpot)
+//         // body: JSON.stringify({
+//         //     url: prevImg.url,
+//         //     preview: true
+//         // })
+//     })
 
+//     if (response.ok) {
+//         const data = await response.json();
+//         const imgResponse = await csrfFetch(`/api/spots/${data.id}/images`, {
+//             method: 'POST',
+//             headers: {
+//                 'Content-Type': 'application/json'
+//             },
+//             body: JSON.stringify({
+//                 url: prevImg.url,
+//                 preview: true
+//             })
+//             // body: JSON.stringify(newSpot)
+//         })
+
+//         if (imgResponse.ok) {
+//             const imgData = await imgResponse.json();
+//             data.prevImg = imgData.url;
+//             dispatch(addSpot(data));
+//             return data;
+//         }
+//     }
+// }
+
+//need to find a way to add the other smaller images into SpotDetails page
+export const createSpotThunk = (newSpot, prevImage, images) => async (dispatch) => {
+
+    //make a post request to the server to create a new spot
+    const response = await csrfFetch(`/api/spots`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newSpot),
+    });
+
+    //if the response is successful, parse the response as JSON and store it in the data variable
     if (response.ok) {
-        const data = await response.json();
-        const imgResponse = await csrfFetch(`/api/spots/${data.id}/images`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                url: prevImg.url,
-                preview: true
-            })
-            // body: JSON.stringify(newSpot)
-        })
+      const data = await response.json();
 
-        if (imgResponse.ok) {
-            const imgData = await imgResponse.json();
-            data.prevImg = imgData.url;
-            dispatch(addSpot(data));
-            return data;
-        }
+      //build an array of image objects, each containing the image URL and a boolean indicating whether it is a preview image
+      const imagesArr = [
+        {
+          url: prevImage.url,
+          preview: true,
+        },
+        ...images.map((image) => ({
+          url: image.url,
+          preview: false,
+        })),
+      ];
+
+      //make a POST request to the server to save each image in the imagesArr array
+      const imageResponses = await Promise.all(
+        imagesArr.map((image) =>
+          csrfFetch(`/api/spots/${data.id}/images`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(image),
+          })
+        )
+      );
+
+      //parse each image response as JSON and store it in the imageDataArr array
+      const imageDataArr = await Promise.all(
+        imageResponses.map((response) => response.json())
+      );
+
+      //find the image object in the imageDataArr array that has a preview property of true and set it as the preview image for the new spot
+      const imageDataWithPreview = imageDataArr.find(
+        (imageData) => imageData.preview
+      );
+
+      if (imageDataWithPreview) {
+        // data.SpotImages = imageDataArr;
+        data.prevImage = imageDataWithPreview.url;
+      }
+
+      //dispatch a new createSpotThunk action with data as the payload and return data
+      dispatch(createSpotThunk(data));
+      return data;
     }
-}
+  };
+
+
 
 //one possible way
 

@@ -77,3 +77,10 @@ textarea {
 /* button:hover {
     background-color: #e0344f;
 } */
+
+.error-message {
+    color: #FF385C;
+    font-size: 1.0em;
+    /* margin-top: 0.5em; */
+    /* background-color: black; */
+}
