@@ -182,11 +182,10 @@ export const createSpotThunk = (newSpot, prevImage, images) => async (dispatch) 
       }
 
       //dispatch a new createSpotThunk action with data as the payload and return data
-      dispatch(createSpotThunk(data));
+      dispatch(addSpot(data));
       return data;
     }
   };
-
 
 
 //one possible way
