@@ -7,6 +7,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from "../SignupFormModal";
 import { useHistory } from 'react-router-dom';
+import './ProfileButton.css'
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
@@ -53,7 +54,7 @@ function ProfileButton({ user }) {
         {user ? (
           <>
             <div>{user.username}</div>
-            <div>{user.firstName} {user.lastName}</div>
+            <div>Hello, {user.firstName}</div>
             <div>{user.email}</div>
             <div>
               <button onClick={logout} className="log-out">Log Out</button>

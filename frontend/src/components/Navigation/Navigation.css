@@ -8,21 +8,24 @@ ul {
   font-family: Arial, sans-serif;
 }
 
-li {
-  margin-left: 20px;
+#nav-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  padding: 0px 40px;
+  border-radius: 5px;
+  font-family: Arial, sans-serif;
+  line-height: 30px;
+  height: 70px;
+  width: 100%;
 }
 
-.home-button {
-  /* color:red; */
-  margin-right: 10px;
-  background-color: white;
-  height: 30px;
-  width: 30px;
-
-}
-
-.home-button:hover {
-  background-color: rgb(241, 241, 241);
+.top-right {
+  display: flex;
+  justify-content: flex-end;
 }
 
 NavLink {
@@ -45,13 +48,6 @@ button {
   height: 34px */
 }
 
-.fas {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 30px;
-  width: 24px;
-}
 
 button:hover {
   background: rgb(241, 241, 241);
@@ -59,22 +55,7 @@ button:hover {
   border-radius: 15px;
 }
 
-/* i need to come back here later and center the items that appear in the drop down menu */
-/* EDIT: found a slight/possible fix. changed them from li elements to divs */
-.profile-dropdown {
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  top: 50px;
-  right: 20px;
-  background-color: white;
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
-  z-index: 1;
-  padding: 15px;
-  border-radius: 5px;
-  font-family: Arial, sans-serif;
-  line-height: 30px;
-}
+
 
 .log-out {
   font-family: Arial, sans-serif;
@@ -92,6 +73,30 @@ button:hover {
   /* border: 2px solid black; */
 }
 
-.hidden {
-  display: none;
+
+
+.logo {
+  margin-left: 0px;
+  align-self: flex-start;
+  width: 200px;
+  height: 40px;
+  /* background-color: #222; */
+}
+
+.create-spot {
+  margin-right: 10px;
+  background-color: white;
+  height: 50px;
+  width: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  /* display: flex;
+  justify-content: center;
+  align-items: center; */
+
+}
+
+.create-spot:hover {
+  background-color: rgb(241, 241, 241);
 }

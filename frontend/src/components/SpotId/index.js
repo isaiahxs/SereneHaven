@@ -187,36 +187,23 @@ export default function SpotId() {
                     <div className='name'>{detailState.name}</div>
 
                     <div className='heading'>
-                        {/* <div>{detailState.avgStarRating}</div>
-                        <div>{detailState.numReviews}</div> */}
                         <div>{detailState.city}</div>
                         <div>{detailState.state}</div>
                         <div>{detailState.country}</div>
                     </div>
-
-{/* ---------------------------------------------------------------------- */}
-                    {/* ORIGINAL ORIGINAL ORIGINAL */}
-                    {/* <img className='detail-image' src={detailState.SpotImages[0].url} alt='preview'/> */}
-{/* ---------------------------------------------------------------------- */}
                     <div className='images-container'>
                         <div className='large-image-container'>
-                            {/* <img className='detail-image' src={detailState.SpotImages[0].url} alt={`${detailState.name}`}/> */}
+
                             <img className='preview-image' src={prevImg.url} alt={`${detailState.name}`}/>
                         </div>
                         <div className='small-image-container'>
-                            {/* <img className='small-image' src={detailState.SpotImages[1].url} alt={`${detailState.name}`}/>
-                            <img className='small-image' src={detailState.SpotImages[2].url} alt={`${detailState.name}`}/>
-                            <img className='small-image' src={detailState.SpotImages[3].url} alt={`${detailState.name}`}/>
-                            <img className='small-image' src={detailState.SpotImages[4].url} alt={`${detailState.name}`}/> */}
+
                             {smallImages.map((image, i) => (
                                 <img key={i} src={image.url} alt={detailState.name} className='small-images'/>
                                 ))}
                         </div>
                     </div>
 
-                    {/* {detailState.previewImage && (
-                    <img className='detail-image' src={detailState.previewImage} alt='preview'/>
-                    )} */}
                     <div>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</div>
                     <div>{detailState.description}</div>
 
