@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from '../../store/session';
@@ -90,6 +90,10 @@ function SignupFormModal() {
         setButtonDisabled(false);
       }
     }
+
+    useEffect(() => {
+      validateForm();
+    }, [email, username, firstName, lastName, password, confirmPassword]);
 
     return (
       <>

@@ -537,7 +537,7 @@ export default function AddSpot() {
                 type='url'
                 value={image1}
                 onChange={(e) => setImage1(e.target.value)}
-                placeholder="Optional image URL"
+                placeholder="Image URL"
                 />
                 {errors.includes('Invalid image1 url.') && (
                 <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
@@ -548,7 +548,7 @@ export default function AddSpot() {
                 type='url'
                 value={image2}
                 onChange={(e) => setImage2(e.target.value)}
-                placeholder="Optional image URL"
+                placeholder="Image URL"
                 />
                 {errors.includes('Invalid image2 url.') && (
                 <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
@@ -559,7 +559,7 @@ export default function AddSpot() {
                 type='url'
                 value={image3}
                 onChange={(e) => setImage3(e.target.value)}
-                placeholder="Optional image URL"
+                placeholder="Image URL"
                 />
                 {errors.includes('Invalid image3 url.') && (
                 <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
@@ -570,7 +570,7 @@ export default function AddSpot() {
                 type='url'
                 value={image4}
                 onChange={(e) => setImage4(e.target.value)}
-                placeholder="Optional image URL"
+                placeholder="Image URL"
                 />
                 {errors.includes('Invalid image4 url.') && (
                 <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>

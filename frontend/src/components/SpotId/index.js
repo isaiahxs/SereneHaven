@@ -221,7 +221,7 @@ export default function SpotId() {
                                     <textarea
                                         value={review}
                                         onChange={(e) => setReview(e.target.value)}
-                                        placeholder='Write a review'
+                                        placeholder='Leave your review here...'
                                         required
                                         maxLength={200}
                                     />
@@ -261,7 +261,7 @@ export default function SpotId() {
                                                 <textarea
                                                     value={reviewEdit}
                                                     onChange={(e) => setReviewEdit(e.target.value)}
-                                                    placeholder='Write a review'
+                                                    placeholder='Leave your review here...'
                                                     required
                                                     maxLength={200}
                                                 />
