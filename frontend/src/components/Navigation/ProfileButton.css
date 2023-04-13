@@ -1,19 +1,21 @@
-/* .fas {
+.fas {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 44px;
+    height: 30px;
     width: 30px;
-    background-color: red;
-} */
+    /* background-color: red; */
+}
 
 .fa-user-circle {
-    color: #222;
+    color: black;
     font-size: 2.0rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    /* background-color: white; */
+    /* background-color: rgb(255, 131, 131); */
+    background-color: white;
+    border-radius: 30px;
     /* margin-right: 1rem; */
 }
 
@@ -37,7 +39,11 @@
 }
 
 .pfp {
-    background-color: white;
+    background-color: #ff8488;
+    /* i like these colors:
+     #ffa4cf
+     #aec1f3
+     but does it look like i mismatched the theme on accident*/
     /* border-width: 0px; */
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
@@ -71,11 +77,11 @@
 .menu {
     /* border: 2px solid black; */
     /* border-radius: 5px; */
-    transition: none;
+    transition: all 0.3s ease-in-out;
     background-color: white;
     color: white;
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-
+    margin-right: 5px;
 }
 
 .menu:hover {

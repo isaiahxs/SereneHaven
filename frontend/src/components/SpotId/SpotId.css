@@ -259,7 +259,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   .prices-and-stars {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-around; */
     align-items: center;
   }
 
@@ -281,13 +281,25 @@ Use high-quality photos to showcase the property and add to the overall visual a
     /* justify-content: space-between; */
   }
 
+  .dot {
+    margin: 0px 5px 0px 5px;
+  }
+
   .detail-edit-button {
     margin-bottom: 8px;
-    margin-top: 12px;
+    margin-top: 8px;
+    margin-right: 8px;
   }
 
   .star-icon {
-    font-size: 1.7rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* height: 20px; */
+    /* background-color: red; */
+    margin-top: 3px;
+    margin-right: 3px;
+
   }
 
   .reserve-button {
@@ -325,7 +337,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     /* background-color: black; */
     width: 160px;
     height: auto;
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: bold;
   }
 
@@ -334,6 +346,9 @@ Use high-quality photos to showcase the property and add to the overall visual a
     justify-content: center;
     align-items: center;
     font-size: 1.4rem;
+    /* margin: 5px; */
+    margin-right: 7px;
+    margin-bottom: 10px;
   }
 
   .review-date {

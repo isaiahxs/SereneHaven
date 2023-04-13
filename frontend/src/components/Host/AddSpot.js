@@ -483,7 +483,7 @@ export default function AddSpot() {
                 placeholder="Please write at least 30 characters."
               ></textarea>
               {errors.includes('Please enter a description with at least 30 characters.') && (
-                <span className="error-message">Please enter a description with at least 30 characters.</span>
+                <span className="error-description">Please enter a description with at least 30 characters.</span>
                 )}
             </div>
             {/* <hr /> */}

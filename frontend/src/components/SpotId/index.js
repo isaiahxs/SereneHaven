@@ -222,14 +222,14 @@ export default function SpotId() {
                         </div>
                         <div className='reservation-container'>
                             <div className='prices-and-stars'>
-                                <div className='detail-price'><span className='amount'>${detailState.price}</span> night </div>
+                                <div className='detail-price'><span className='amount'>${detailState.price}</span>night</div>
 
                                 <div className='total-reviews-container'>
                                     {Number(detailState.avgStarRating) ? (
                                         <div className='stars'>
                                             <Star className='star-icon' alt='little-star'/>
                                             {Number(detailState.avgStarRating).toFixed(1)}
-                                            <span>•</span>
+                                            <span className='dot'>•</span>
                                             <p>{detailState.numReviews === 1 ? '1 Review' : `${detailState.numReviews} Reviews`}</p>
                                         </div>
                                     ) : (
@@ -253,7 +253,7 @@ export default function SpotId() {
                                 <div className='stars'>
                                     <Star className='star-icon' alt='little-star'/>
                                     {Number(detailState.avgStarRating).toFixed(1)}
-                                    <span>•</span>
+                                    <span className='dot'>•</span>
                                     <p>{detailState.numReviews === 1 ? '1 Review' : `${detailState.numReviews} Reviews`}</p>
                                 </div>
                             ) : (

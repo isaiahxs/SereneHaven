@@ -171,13 +171,18 @@ button[type="submit"]:disabled {
 }
 
 textarea {
-    width: 100%;
+    width: 90%;
     min-height: 100px;
     resize: vertical;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    border: 1px solid black;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    resize: none;
+    padding: 10px;
+    font-size: 1em;
 }
 
-textarea {
+/* textarea {
     width: 90%;
     height: 100px;
     padding: 10px;
@@ -188,6 +193,4 @@ textarea {
     resize: none;
     font-size: 16px;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
-    /* font-family: proxima-nova, 'Helvetica Neue', Helvetica, Arial, sans-serif; */
-
-}
+} */

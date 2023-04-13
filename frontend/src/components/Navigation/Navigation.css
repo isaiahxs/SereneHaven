@@ -64,7 +64,7 @@ NavLink {
 .create-spot {
   background-color: #FF385C;
   color: #222;
-  padding: 6px 8px;
+  padding: 6px 8px 9px 8px;
   border: 2px solid black;
   height: 50px;
   width: 50px;
