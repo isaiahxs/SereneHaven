@@ -205,7 +205,7 @@ export default function SpotId() {
 
                     <div className='details-bottom-container'>
                         <div className='owner-info'>
-                            <h2>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
+                            <h2 className='host-name'>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
                             <h3>{detailState.description}</h3>
                         </div>
                         <div className='reservation-container'>

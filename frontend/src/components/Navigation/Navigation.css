@@ -30,25 +30,19 @@ NavLink {
   font-weight: bold;
 }
 
-.log-out {
+/* .log-out {
   font-family: Arial, sans-serif;
   font-size: 1.2rem;
   font-weight: bold;
-  background: rgb(241, 241, 241);
+  background: #FF385C;
   border-radius: 15px;
   padding: 5px 10px;
-  /* for nicer styling down the line */
-  /* border: 2px solid black; */
-}
-
-.log-out:hover {
-  background-color: rgb(224, 224, 224);
-  /* border: 2px solid black; */
-}
+  border: 2px solid black;
+} */
 
 .logo {
   align-self: flex-start;
-  width: 200px;
+  width: 150px;
   height: 40px;
   margin-top: 5px;
   /* background-color: #222; */

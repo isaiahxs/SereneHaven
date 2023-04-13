@@ -386,10 +386,11 @@ export default function AddSpot() {
 
     return (
         <div className="host-container">
-          <h1>Create a new Spot</h1>
+          <div className="form-container">
+          <form className="create-form" onSubmit={handleSubmit}>
+          <h1 className="create-header">Create a new Spot</h1>
           <h2>Where's your place located?</h2>
           <h3>Guests will only get your exact address once they booked a reservation.</h3>
-          <form onSubmit={handleSubmit}>
             <div className="host-inputs">
               <div className="host-input">
                 <label>Country</label>
@@ -466,7 +467,7 @@ export default function AddSpot() {
                 )}
               </div>
             </div>
-            <hr />
+            {/* <hr /> */}
             <h2>Describe your place to guests</h2>
             <h3>
               Mention the best features of your space, any special amenities like fast
@@ -485,7 +486,7 @@ export default function AddSpot() {
                 <span className="error-message">Please enter a description with at least 30 characters.</span>
                 )}
             </div>
-            <hr />
+            {/* <hr /> */}
             <h2>Create a title for your spot</h2>
             <h3>Catch guest's attention with a spot title that highlights what makes your place special.</h3>
             <div className="host-input">
@@ -500,7 +501,7 @@ export default function AddSpot() {
                 <span className="error-message">Please enter a valid name.</span>
                 )}
             </div>
-            <hr />
+            {/* <hr /> */}
             <h2>Set a base price for your spot</h2>
             <h3>Competitive pricing can help your listing stand out and rank higher in search results.</h3>
             <div className="host-input">
@@ -516,7 +517,7 @@ export default function AddSpot() {
                 <span className="error-message">Please enter a valid price.</span>
                 )}
             </div>
-            <hr />
+            {/* <hr /> */}
             <h2>Liven up your spot with photos</h2>
             <h3>Submit a link to at least one photo to publish your spot.</h3>
             {/* need to add the other image url inputs */}
@@ -576,7 +577,7 @@ export default function AddSpot() {
                 <span className="error-message">Please enter a url that ends with .jpg, .jpeg, or .png.</span>
                 )}
             </div>
-            <hr />
+            {/* <hr /> */}
             {/* <ul>
               {Array.isArray(errors) && errors.map((error, id) => (
                 <li key={id}>{error}</li>
@@ -584,6 +585,7 @@ export default function AddSpot() {
             </ul> */}
             <button onClick={handleSubmit} type="submit" className="add-spot-button">Create Spot</button>
           </form>
+          </div>
         </div>
       );
 }

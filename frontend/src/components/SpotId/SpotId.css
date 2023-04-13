@@ -90,11 +90,25 @@ Use high-quality photos to showcase the property and add to the overall visual a
     left: 0; */
   }
 
+  .preview-image {
+    width: 100%;
+    height: 100%;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+
   .small-images {
     width: calc(50% - 5px);
     height: calc(50% - 5px);
     box-sizing: border-box;
     object-fit: cover;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+
+  .spot-image {
+    border: 2px solid #222;
+    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
   }
 
   .name {
@@ -189,10 +203,15 @@ Use high-quality photos to showcase the property and add to the overall visual a
   .owner-info {
     flex: 1;
     padding-top: none;
+    margin-top: none;
+  }
+
+  .host-name {
+    margin-top: 0px;
   }
 
   .reservation-container {
-    flex-basis: 50%;
+    width: 40%;
     height: auto;
     border: 3px solid black;
     border-radius: 12px;
@@ -225,7 +244,11 @@ Use high-quality photos to showcase the property and add to the overall visual a
 
   .reserve-button {
     width: 100%;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
     padding: 5px;
+    margin: 5px;
     background-color: #FF385C;
     border: 2px solid black;
   }
@@ -300,9 +323,4 @@ Use high-quality photos to showcase the property and add to the overall visual a
       width: 80%;
       height: auto;
     }
-  }
-
-  .preview-image {
-    width: 100%;
-    height: 100%;
   }
