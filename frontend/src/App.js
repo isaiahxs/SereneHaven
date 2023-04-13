@@ -12,6 +12,8 @@ import SpotId from "./components/SpotId";
 import Manage from "./components/Host/Manage";
 import Error404 from "./components/Error404";
 import AddSpot from "./components/Host/AddSpot";
+import EditSpot from "./components/Host/EditSpot";
+import ManageSpots from "./components/Host/ManageSpots";
 // import { useSelector } from "react-redux";
 // import { Redirect } from "react-router-dom";
 
@@ -41,6 +43,14 @@ function App() {
           {/* at home url, render Spots component */}
           <Route exact path={'/'}>
             <Spots/>
+          </Route>
+
+          <Route path={'/spots/:spotId/edit'}>
+            <EditSpot/>
+          </Route>
+
+          <Route path={'/manage'}>
+            <ManageSpots/>
           </Route>
 
           <Route path={'/host'}>

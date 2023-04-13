@@ -38,10 +38,10 @@ const addSpot = (newSpot) => ({
     newSpot
 })
 
-const addImgToSpot = ({url, spotId}) => ({
-    type: ADD_IMG_TO_SPOT,
-    payload: {url, spotId}
-})
+// const addImgToSpot = ({url, spotId}) => ({
+//     type: ADD_IMG_TO_SPOT,
+//     payload: {url, spotId}
+// })
 
 const updateSpot = (updatedSpot) => ({
     type: UPDATE_SPOT,
@@ -321,7 +321,8 @@ const spotReducer = (state=initialState, action) => {
 
         case GET_USER_SPOTS:
             console.log('this is get user spots')
-            newState['userSpots'] = action.userSpots
+            newState['userSpots'] = action.spots
+            return newState;
 
         case CLEAR_DETAILS:
             console.log('now clearing details');

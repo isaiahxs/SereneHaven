@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
 import * as spotActions from "../../store/spots";
+import { Redirect } from "react-router-dom";
 import './EditSpot.css';
 
 export default function EditSpot({initialSpot}) {
