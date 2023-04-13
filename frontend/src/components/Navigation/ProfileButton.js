@@ -8,6 +8,7 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from "../SignupFormModal";
 import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {

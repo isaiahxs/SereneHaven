@@ -76,6 +76,19 @@ export const userSpotsThunk = () => async (dispatch) => {
     return data;
 }
 
+// other attempt
+// export const userSpotsThunk = () => async (dispatch) => {
+//     const response = await csrfFetch('/api/spots/current');
+
+//     if (response.ok) {
+//         const data = await response.json();
+//         dispatch(getUserSpots(data));
+//         return data;
+//     } else {
+//         return {};
+//     }
+// }
+
 //additional notes: when you make a request to the server using csrfFetch, it returns a response object that contains information such as the response status code, headers, and the body of the response as a string
 //in order to work with the data returned by the server, we need to parse the response body as JSON
     //this returns a promise that resolves to the parsed JSON data, which we are currently assigning to the data variable
