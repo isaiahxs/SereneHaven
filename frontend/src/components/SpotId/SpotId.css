@@ -183,7 +183,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     margin-bottom: 10px;
   }
 
-  .add-review {
+  /* .add-review {
     margin-top: 5px;
     margin-bottom: 15px;
     font-size: 18px;
@@ -193,16 +193,17 @@ Use high-quality photos to showcase the property and add to the overall visual a
     max-width: 240px;
     border: 2px solid black;
     border-radius: 12px;
-    /* padding: 3px;
-    padding-left: 8px; */
+    padding: 3px;
+    padding-left: 8px;
     padding: 5px 10px;
     background-color: #FF385C;
     transition: all 0.3s ease-in-out;
-  }
+  } */
 
-  .add-review:hover {
-    background-color: #ff9fb1;
-    /* margin-top: 2px; */
+  .add-review {
+    /* background-color: #ff9fb1; */
+    margin-bottom: 10px;
+    margin-top: -8px;
   }
 
   .reviewer-name {

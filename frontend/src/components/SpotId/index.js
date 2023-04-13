@@ -222,7 +222,10 @@ export default function SpotId() {
                         </div>
                         <div className='reservation-container'>
                             <div className='prices-and-stars'>
-                                <div className='detail-price'><span className='amount'>${detailState.price}</span>night</div>
+                                <div className='detail-price'>
+                                    <span className='amount'>${detailState.price}</span>
+                                    night
+                                    </div>
 
                                 <div className='total-reviews-container'>
                                     {Number(detailState.avgStarRating) ? (
@@ -276,9 +279,9 @@ export default function SpotId() {
 
                         {
                             showReviewButton() && (
-                                <div className='add-review' onClick={addingReview}>
+                                <button className='add-review' onClick={addingReview}>
                                 {reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
-                                </div>
+                                </button>
                             )
                         }
                         {/* ----------------------------------- */}
@@ -356,7 +359,7 @@ export default function SpotId() {
         )
     } else {
         return (
-            <div>Loading...</div>
+            <div class='loading'>Loading...</div>
         )
     }
 }
