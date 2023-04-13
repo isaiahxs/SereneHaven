@@ -1,26 +1,19 @@
-ul {
-  display: flex;
-  justify-content: flex-end;
-  align-items: center;
-  margin: 0;
-  padding: 10px;
-  list-style: none;
-  font-family: Arial, sans-serif;
-}
-
 #nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: rgb(255, 255, 255);
-  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.6);
   z-index: 1;
   padding: 0px 40px;
   border-radius: 5px;
   font-family: Arial, sans-serif;
   line-height: 30px;
   height: 70px;
-  width: 100%;
+  width: auto;
+  border: 3px solid black;
+  margin-bottom: 15px;
+  /* box-sizing: border-box; */
 }
 
 .top-right {
@@ -36,26 +29,6 @@ NavLink {
 .active {
   font-weight: bold;
 }
-
-button {
-  background: white;
-  border: 0px;
-  border-radius: 15px;
-  cursor: pointer;
-  font-size: 1.2rem;
-  color: black;
-  /* width: 34px;
-  height: 34px */
-}
-
-
-button:hover {
-  background: rgb(241, 241, 241);
-  border: 0px;
-  border-radius: 15px;
-}
-
-
 
 .log-out {
   font-family: Arial, sans-serif;
@@ -73,30 +46,38 @@ button:hover {
   /* border: 2px solid black; */
 }
 
-
-
 .logo {
-  margin-left: 0px;
   align-self: flex-start;
   width: 200px;
   height: 40px;
+  margin-top: 5px;
   /* background-color: #222; */
 }
 
 .create-spot {
-  margin-right: 10px;
-  background-color: white;
+  margin-right: 0px;
+  background-color: #FF385C;
+  color: #222;
+  border-radius: 15px;
+  padding: 8px;
+  border: 2px solid black;
   height: 50px;
   width: 50px;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   font-weight: bold;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   /* display: flex;
   justify-content: center;
   align-items: center; */
+  transition: all 0.3s ease-in-out;
+  text-decoration: none;
 
 }
 
 .create-spot:hover {
-  background-color: rgb(241, 241, 241);
+  background-color: #FFE5B4;
+}
+
+.menu {
+  background-color: #FF385C;
 }

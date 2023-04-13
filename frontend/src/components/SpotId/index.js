@@ -187,11 +187,9 @@ export default function SpotId() {
 
                     <div className='name'>{detailState.name}</div>
 
-                    <div className='heading'>
-                        <div>{detailState.city}</div>
-                        <div>{detailState.state}</div>
-                        <div>{detailState.country}</div>
-                    </div>
+                    <h2 className='heading'>
+                        <div>{detailState.city}, {detailState.state}, {detailState.country}</div>
+                    </h2>
                     <div className='images-container'>
                         <div className='large-image-container'>
 
@@ -208,11 +206,11 @@ export default function SpotId() {
                     <div className='details-bottom-container'>
                         <div className='owner-info'>
                             <h2>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
-                            <p>{detailState.description}</p>
+                            <h3>{detailState.description}</h3>
                         </div>
                         <div className='reservation-container'>
                             <div className='prices-and-stars'>
-                                <div className='price'><span className='amount'>${detailState.price}</span>night</div>
+                                <div className='detail-price'><span className='amount'>${detailState.price}</span> night </div>
 
                                 <div className='total-reviews-container'>
                                     {Number(detailState.avgStarRating) ? (

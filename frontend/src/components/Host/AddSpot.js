@@ -582,7 +582,7 @@ export default function AddSpot() {
                 <li key={id}>{error}</li>
               ))}
             </ul> */}
-            <button onClick={handleSubmit} type="submit">Create Spot</button>
+            <button onClick={handleSubmit} type="submit" className="add-spot-button">Create Spot</button>
           </form>
         </div>
       );
