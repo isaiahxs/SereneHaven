@@ -1,21 +1,8 @@
 WORKING ON:
-when i try to access a spot that has been created but that was not seeder, i get "url" is undefined or something.
-    -if i comment out the line in html that has "url" in it, i can then see the spot's details as well as the reviews and i can CRUD Reviews
 
-when i try to create a spot, if i input all the correct data, i will get an error saying errors.map is not a valid function in my AddSpot component.
-    -if i comment out that code and then run my code, all the error validations appear in terminal, as if i am not passing any of them
+terminal for backend is doing the 404 thing again even though we cleared browser history, cache, etc. it returned. and it is not showing me the messages i should be seeing there
 
-i can see spots i created in my local database, but they do not appear in my landing page
-
-
-in my store.spots.js, i changed ~102 to be body: JSON.stringify(newSpot) and it seemed to get rid of one error. if i tried the same thing around ~116, i would get a 500 error saying errors: [
-    'SpotImage.url cannot be null',
-    'SpotImage.preview cannot be null'
-  ],
-  title: 'Validation error'
-}
-POST /api/spots/37/images 500 115.704 ms - 192
-
+need to make a validation so user submits at least one photo url. also need to make the text inputs for the other four pictures.
 
 
 in my backend folder
@@ -31,13 +18,11 @@ owner of a spot should not be able to post a review on their own location.
 
 need to update my seeder bulk deletes Op in things later
 
-need to show client side validation errors when user inputs invalid data
 
 need to add a specific case for SpotId where if user puts invalid url, they will be shown a 404
 
 my css for log in modal got altered somehow. probably when i was doing create a spot's css and probably overlapping something of the same class or type.
 
-need to disable non-signed in user from accessing 'host'
 
 renamed Host/Host.js to Host/Manage because it makes more sense. getting Resource could not be found though when on url /host
 
@@ -45,11 +30,7 @@ IMPORTANT: for right now, i put AddSpot component in App.js just to see what it 
     -edit fixed the lat lng problem i think. need to figure out url being interpreted as object or array problem
     -and also errors not being able to be mapped through
 
-when i'm host and go to /host, fill out the form properly, the local database shows that the new spot was created. however, when i try to navigate to a spot's details, i get a 404 uncaught promise because it can't get the reviews for a spot.
-    - edit i think i solved this by tweaking backend/api/routes/spots and get reviews by spot id.
-    - i was returning 404 if there were no reviews instead of returning 404 when there was not a spot at that id.
 
-something about my spotDetails is not allowing the spot to render just because the site cannot find the reviews for it.
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
 ---------------------------------------------------------------------------------------------
@@ -93,5 +74,45 @@ when i'm a signed in user posting a review on a spot i have not reviewed before,
         }, [dispatch, spotId, reviewChanged, reviewCount])
 
     -by implementing these changes, we updated the review count only when a review is added, edited, or deleted, preventing the infinite loop and reducing the number of calls to the server
+
+---------------------------------------------------------------------------------------------
+
+i can see spots i created in my local database, but they do not appear in my landing page
+
+---------------------------------------------------------------------------------------------
+
+when i try to access a spot that has been created but that was not seeder, i get "url" is undefined or something.
+    -if i comment out the line in html that has "url" in it, i can then see the spot's details as well as the reviews and i can CRUD Reviews
+    -SOLVED, reason was because i was only seeing spots 1-20 and 10-20 did not have their url's properly put
+
+---------------------------------------------------------------------------------------------
+
+when i try to create a spot, if i input all the correct data, i will get an error saying errors.map is not a valid function in my AddSpot component.
+    -if i comment out that code and then run my code, all the error validations appear in terminal, as if i am not passing any of them
+    -edit i think this is solved?
+
+---------------------------------------------------------------------------------------------
+
+in my store.spots.js, i changed ~102 to be body: JSON.stringify(newSpot) and it seemed to get rid of one error. if i tried the same thing around ~116, i would get a 500 error saying errors: [
+    'SpotImage.url cannot be null',
+    'SpotImage.preview cannot be null'
+  ],
+  title: 'Validation error'
+}
+POST /api/spots/37/images 500 115.704 ms - 192
+
+something about my spotDetails is not allowing the spot to render just because the site cannot find the reviews for it.
+
+---------------------------------------------------------------------------------------------
+
+when i'm host and go to /host, fill out the form properly, the local database shows that the new spot was created. however, when i try to navigate to a spot's details, i get a 404 uncaught promise because it can't get the reviews for a spot.
+    - edit i think i solved this by tweaking backend/api/routes/spots and get reviews by spot id.
+    - i was returning 404 if there were no reviews instead of returning 404 when there was not a spot at that id.
+
+---------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------
 
 ---------------------------------------------------------------------------------------------

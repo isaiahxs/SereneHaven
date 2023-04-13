@@ -5,7 +5,7 @@ import './Modal.css';
 //create a React context called a ModalContext
 const ModalContext = React.createContext();
 
-// export const useModalContext = () => useContext(ModalContext);
+export const useModalContext = () => useContext(ModalContext);
 
 
 //create and export a functional comp called ModalProvider that renders the ModalContext.Provider comp with all the children from the props as a child
@@ -16,6 +16,10 @@ export function ModalProvider({children}) {
     const [modalContent, setModalContent] = useState(null);
     //callback function that will  be called when modal is closing
     const [onModalClose, setOnModalClose] = useState(null);
+    const [showReviewModal, setShowReviewModal] = useState(false);
+    const [showLoginHost, setShowLoginHost] = useState(false);
+
+
 
     const closeModal = () => {
         setModalContent(null); //clear the modal contents

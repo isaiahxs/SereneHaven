@@ -5,8 +5,9 @@ import { spotDetails } from '../../store/spots';
 //thunk for getting the location's reviews
 import { reviewThunk, addReviewThunk, updateReviewThunk, deleteReviewThunk } from '../../store/reviews';
 import { useParams } from 'react-router-dom';
-import './SpotId.css'
+import {ReactComponent as Star} from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
+import './SpotId.css'
 
 
 export default function SpotId() {
@@ -187,54 +188,79 @@ export default function SpotId() {
                     <div className='name'>{detailState.name}</div>
 
                     <div className='heading'>
-                        {/* <div>{detailState.avgStarRating}</div>
-                        <div>{detailState.numReviews}</div> */}
                         <div>{detailState.city}</div>
                         <div>{detailState.state}</div>
                         <div>{detailState.country}</div>
                     </div>
-
-{/* ---------------------------------------------------------------------- */}
-                    {/* ORIGINAL ORIGINAL ORIGINAL */}
-                    {/* <img className='detail-image' src={detailState.SpotImages[0].url} alt='preview'/> */}
-{/* ---------------------------------------------------------------------- */}
                     <div className='images-container'>
                         <div className='large-image-container'>
-                            {/* <img className='detail-image' src={detailState.SpotImages[0].url} alt={`${detailState.name}`}/> */}
+
                             <img className='preview-image' src={prevImg.url} alt={`${detailState.name}`}/>
                         </div>
                         <div className='small-image-container'>
-                            {/* <img className='small-image' src={detailState.SpotImages[1].url} alt={`${detailState.name}`}/>
-                            <img className='small-image' src={detailState.SpotImages[2].url} alt={`${detailState.name}`}/>
-                            <img className='small-image' src={detailState.SpotImages[3].url} alt={`${detailState.name}`}/>
-                            <img className='small-image' src={detailState.SpotImages[4].url} alt={`${detailState.name}`}/> */}
+
                             {smallImages.map((image, i) => (
                                 <img key={i} src={image.url} alt={detailState.name} className='small-images'/>
-                                ))}
+                            ))}
                         </div>
                     </div>
 
-                    {/* {detailState.previewImage && (
-                    <img className='detail-image' src={detailState.previewImage} alt='preview'/>
-                    )} */}
-                    <div>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</div>
-                    <div>{detailState.description}</div>
+                    <div className='details-bottom-container'>
+                        <div className='owner-info'>
+                            <h2>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
+                            <p>{detailState.description}</p>
+                        </div>
+                        <div className='reservation-container'>
+                            <div className='prices-and-stars'>
+                                <div className='price'><span className='amount'>${detailState.price}</span>night</div>
 
-                    <div className='reserve-container'>
-                        <div className='upper'></div>
-                        {/* <div className='button'></div> */}
+                                <div className='total-reviews-container'>
+                                    {Number(detailState.avgStarRating) ? (
+                                        <div className='stars'>
+                                            <Star className='star-icon' alt='little-star'/>
+                                            {Number(detailState.avgStarRating).toFixed(1)}
+                                            <span>•</span>
+                                            <p>{detailState.numReviews === 1 ? '1 Review' : `${detailState.numReviews} Reviews`}</p>
+                                        </div>
+                                    ) : (
+                                        <div className='stars'>
+                                            <Star alt='little-star'/>
+                                            New
+                                        </div>
+                                    )}
+                                </div>
+                            </div>
+                            {/* need to say that this feature is coming soon */}
+                            <button className='reserve-button'>Reserve</button>
+                        </div>
                     </div>
 
+
                     <div className='review-container'>
-                        <div>Reviews</div>
-                        <div className='add-review' onClick={addingReview}>Add Review</div>
+                        {/* <div>Reviews</div> */}
+                        <div className='review-summary'>
+                            {Number(detailState.avgStarRating) ? (
+                                <div className='stars'>
+                                    <Star className='star-icon' alt='little-star'/>
+                                    {Number(detailState.avgStarRating).toFixed(1)}
+                                    <span>•</span>
+                                    <p>{detailState.numReviews === 1 ? '1 Review' : `${detailState.numReviews} Reviews`}</p>
+                                </div>
+                            ) : (
+                                <div className='stars'>
+                                    <Star alt='little-star'/>
+                                    New
+                                    </div>
+                            )}
+                        </div>
+                        <div className='add-review' onClick={addingReview}>Post Your Review</div>
                         {addReview && (
                             <div className='review-form'>
                                 <form onSubmit={submitHandler}>
                                     <textarea
                                         value={review}
                                         onChange={(e) => setReview(e.target.value)}
-                                        placeholder='Write a review'
+                                        placeholder='Leave your review here...'
                                         required
                                         maxLength={200}
                                     />
@@ -256,8 +282,8 @@ export default function SpotId() {
                             // console.log('Review:', review)
                             return (
                                 <div key={review.id}>
-                                    <div>{review.User?.firstName} {review.User?.lastName}</div>
-                                    {/* <div>{review.createdAt}</div> */}
+                                    <div>{review.User?.firstName}</div>
+                                    <div>{review.createdAt}</div>
                                     <div>Star rating: {review.stars}</div>
                                     <div>Review: {review.review}</div>
                                     {/* need to create a button / area that the user can click and submit to edit their review */}
@@ -274,7 +300,7 @@ export default function SpotId() {
                                                 <textarea
                                                     value={reviewEdit}
                                                     onChange={(e) => setReviewEdit(e.target.value)}
-                                                    placeholder='Write a review'
+                                                    placeholder='Leave your review here...'
                                                     required
                                                     maxLength={200}
                                                 />
@@ -289,9 +315,9 @@ export default function SpotId() {
                                                 />
                                                 <button type='submit'>Submit</button>
                                             </form>
+                                        </div>
+                                    )}
                                 </div>
-                            )}
-                            </div>
                             )
                         })}
                     </div>
