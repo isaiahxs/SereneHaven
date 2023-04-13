@@ -25,4 +25,5 @@
     /* border-radius: 20px; */
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
     border: 2px solid black;
+    min-width: 350px;
 }

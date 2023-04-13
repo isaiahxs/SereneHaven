@@ -142,34 +142,34 @@ function LoginFormModal() {
 
         <label className='form-label'>
           Username or Email
-          <input
-          className='credential-input'
-            type="text"
-            value={credential}
-            // onChange={(e) => setCredential(e.target.value)}
-            onChange={handleCredentialChange}
-            required
-            minLength={4}
-            // pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
-            title="Please enter a valid email address or username (minimum 4 characters)"
-            placeholder='Please enter at least 4 characters'
-          />
         </label>
+        <input
+          className='credential-input'
+          type="text"
+          value={credential}
+          // onChange={(e) => setCredential(e.target.value)}
+          onChange={handleCredentialChange}
+          required
+          minLength={4}
+          // pattern="^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$"
+          title="Please enter a valid email address or username (minimum 4 characters)"
+          placeholder='Please enter at least 4 characters'
+        />
 
         <label className='form-label'>
           Password
-          <input
-          className='credential-input'
-            type="password"
-            value={password}
-            // onChange={(e) => setPassword(e.target.value)}
-            onChange={handlePasswordChange}
-            required
-            minLength={6}
-            title="Please enter a valid password (minimum 6 characters)"
-            placeholder='Please enter at least 6 characters'
-          />
         </label>
+        <input
+          className='credential-input'
+          type="password"
+          value={password}
+          // onChange={(e) => setPassword(e.target.value)}
+          onChange={handlePasswordChange}
+          required
+          minLength={6}
+          title="Please enter a valid password (minimum 6 characters)"
+          placeholder='Please enter at least 6 characters'
+        />
 
         <div className='log-in-button-container'>
         <button className='log-in-button' type="submit" disabled={buttonDisabled}>Log In</button>

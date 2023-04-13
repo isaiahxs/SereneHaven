@@ -37,8 +37,9 @@ Use high-quality photos to showcase the property and add to the overall visual a
     color: #222;
     /* margin: 10px; */
     max-width: 1000px;
+    /* margin-top: 10px; */
     margin: 0 auto;
-    padding: 20px;
+    padding: 0px 20px 20px 20px;
   }
 
   /* .inner-container {

@@ -18,20 +18,22 @@
 
 .form-label {
   display: block;
+  margin-bottom: 3px;
 }
 
-.credential-input {
+/* .credential-input {
   width: 50%;
-}
+} */
 
 .demo-user {
-  padding-top: 20px;
+  padding-top: 15px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .log-in-button-container {
+  margin-top: 5px;
   display: flex;
   justify-content: center;
   align-items: center;
