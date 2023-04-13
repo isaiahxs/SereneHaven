@@ -95,8 +95,9 @@ Use high-quality photos to showcase the property and add to the overall visual a
     height: 100%;
     max-height: 496px;
     border: 2px solid black;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     /* max-height: 100% */
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
   }
 
   .small-images {
@@ -105,12 +106,14 @@ Use high-quality photos to showcase the property and add to the overall visual a
     box-sizing: border-box;
     object-fit: cover;
     border: 2px solid black;
-    border-radius: 10px;
+    /* border-radius: 10px; */
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
   }
 
   .spot-image {
     border: 2px solid #222;
-    box-shadow: 0px 8px 8px 0px rgba(0, 0, 0, 0.3);
+    box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
+    border-radius: 0px;
   }
 
   .name {
@@ -122,8 +125,9 @@ Use high-quality photos to showcase the property and add to the overall visual a
   .heading {
     display: flex;
     /* justify-content: space-between; */
-    margin-top: 10px;
-    font-size: 18px;
+    margin-top: -20px;
+    font-size: 1.3rem;
+    margin-bottom: 8px;
   }
 
   /* .detail-image {
@@ -162,9 +166,11 @@ Use high-quality photos to showcase the property and add to the overall visual a
   .review-container {
     margin-top: 20px;
     border: 3px solid black;
-    border-radius: 10px;
+    /* border-radius: 10px; */
     padding: 15px;
     font-size: 1.1rem;
+    background-color: white;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
   }
 
   .review-question {
@@ -200,6 +206,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
 
   .reviewer-name {
     font-weight: bold;
+    /* color: #f8b00c; */
   }
 
   .new-rev {
@@ -242,8 +249,10 @@ Use high-quality photos to showcase the property and add to the overall visual a
     max-width: 370px;
     height: auto;
     border: 3px solid black;
-    border-radius: 12px;
+    /* border-radius: 12px; */
     padding: 10px;
+    background-color: white;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
   }
 
   .prices-and-stars {

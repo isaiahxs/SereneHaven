@@ -7,6 +7,7 @@ import { reviewThunk, addReviewThunk, updateReviewThunk, deleteReviewThunk } fro
 import { useParams } from 'react-router-dom';
 import {ReactComponent as Star} from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
+import ReviewModal from '../Review/ReviewModal';
 import './SpotId.css'
 
 
@@ -197,7 +198,7 @@ export default function SpotId() {
             <div className='outer-container'>
                 <div className='inner-container'>
 
-                    <div className='name'>{detailState.name}</div>
+                    <h1 className='name'>{detailState.name}</h1>
 
                     <h2 className='heading'>
                         <div>{detailState.city}, {detailState.state}, {detailState.country}</div>
@@ -271,6 +272,7 @@ export default function SpotId() {
                             {/* {reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"} */}
                             {/* {showReviewButton() && (reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review")}
                         </div> */}
+                        {/* <ReviewModal/> */}
 
                         {
                             showReviewButton() && (
