@@ -178,9 +178,21 @@ export default function SpotId() {
         setReviewCount(reviewCount - 1);
     }
 
+
+
     // console.log('DETAIL STATE PREVIEW IMAGEEEEEEEEEE', reviewArray[1])
 
     if(detailState && reviewState) {
+        const isOwner = sessionUser?.id === detailState.Owner.id;
+
+        const showReviewButton = () => {
+            if (!sessionUser) return false; //current user is not logged in
+            if (isOwner) return false; //current user is the owner of the spot
+            const hasPostedReview = reviewArray.some(review => review.userId === sessionUser.id);
+            if (hasPostedReview) return false; //current user has already posted a review
+            return true; //show the "Post Your Review" button
+        }
+
         return (
             <div className='outer-container'>
                 <div className='inner-container'>
@@ -192,7 +204,6 @@ export default function SpotId() {
                     </h2>
                     <div className='images-container'>
                         <div className='large-image-container'>
-
                             <img className='preview-image' src={prevImg.url} alt={`${detailState.name}`}/>
                         </div>
                         <div className='small-image-container'>
@@ -206,7 +217,7 @@ export default function SpotId() {
                     <div className='details-bottom-container'>
                         <div className='owner-info'>
                             <h2 className='host-name'>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
-                            <h3>{detailState.description}</h3>
+                            <h3 className='detail-description'>{detailState.description}</h3>
                         </div>
                         <div className='reservation-container'>
                             <div className='prices-and-stars'>
@@ -229,7 +240,7 @@ export default function SpotId() {
                                 </div>
                             </div>
                             {/* need to say that this feature is coming soon */}
-                            <button className='reserve-button'>Reserve</button>
+                            <button className='reserve-button' onClick={() => window.alert('Feature coming soon!')}>Reserve</button>
                         </div>
                     </div>
 
@@ -251,10 +262,28 @@ export default function SpotId() {
                                     </div>
                             )}
                         </div>
-                        <div className='add-review' onClick={addingReview}>Post Your Review</div>
+                        {/* ------------------------------------ */}
+                        {/* the things below work, it's just that they can be slightly improved */}
+                        {/* <div className='add-review' onClick={addingReview}>Post Your Review</div> */}
+
+
+                        {/* <div className='add-review' onClick={addingReview}> */}
+                            {/* {reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"} */}
+                            {/* {showReviewButton() && (reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review")}
+                        </div> */}
+
+                        {
+                            showReviewButton() && (
+                                <div className='add-review' onClick={addingReview}>
+                                {reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
+                                </div>
+                            )
+                        }
+                        {/* ----------------------------------- */}
                         {addReview && (
                             <div className='review-form'>
                                 <form onSubmit={submitHandler}>
+                                    <h2 className='review-question'>How was your stay?</h2>
                                     <textarea
                                         value={review}
                                         onChange={(e) => setReview(e.target.value)}
@@ -263,6 +292,7 @@ export default function SpotId() {
                                         maxLength={200}
                                     />
                                     <input
+                                    className='review-input'
                                     type='number'
                                     value={stars}
                                     onChange={(e) => setStars(e.target.value)}
@@ -271,7 +301,7 @@ export default function SpotId() {
                                     required
                                     placeholder='Rating'
                                     />
-                                    <button type='submit'>Submit</button>
+                                    <button type='submit'>Submit Your Review</button>
                                 </form>
                             </div>
                         )}
@@ -280,16 +310,16 @@ export default function SpotId() {
                             // console.log('Review:', review)
                             return (
                                 <div key={review.id}>
-                                    <div>{review.User?.firstName}</div>
+                                    <div className='reviewer-name'>{review.User?.firstName}</div>
                                     <div>{review.createdAt}</div>
-                                    <div>Star rating: {review.stars}</div>
-                                    <div>Review: {review.review}</div>
+                                    {/* <div>Star rating: {review.stars}</div> */}
+                                    <div className='new-rev'>{review.review}</div>
                                     {/* need to create a button / area that the user can click and submit to edit their review */}
                                     {/* {sessionUser && sessionUser.id === review.userId && ( */}
                                     {sessionUser && sessionUser.id === review.userId && (
                                         <div>
-                                            <button onClick={() => editReview(review)}>Edit Review</button>
-                                            <button onClick={() => deleteHandler(review.id)}>Delete</button>
+                                            <button class='detail-edit-button' type='submit' onClick={() => editReview(review)}>Edit Review</button>
+                                            <button type='submit' onClick={() => deleteHandler(review.id)}>Delete</button>
                                         </div>
                                     )}
                                     {sessionUser && sessionUser.id === review.userId && showEdit && (

@@ -60,7 +60,7 @@ export default function Spots() {
                                 {/* in real BnB site, they sometimes have ratings show two decimal places */}
                             ★ {Number(landingSpot.avgRating)
                                 ? Number(landingSpot.avgRating).toFixed(1)
-                                : '0'}
+                                : 'New'}
                             </span>
                         </p>
 

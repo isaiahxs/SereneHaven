@@ -14,9 +14,7 @@ if user is not logged in, hide "Post Your Review" */
     width: 400px;
 }
 
-.add-review {
-    background-color: red;
-} */
+
 
 /*
 Use a large background image of the property as the header.
@@ -54,7 +52,8 @@ Use high-quality photos to showcase the property and add to the overall visual a
   .images-container {
     display: flex;
     justify-content: space-between;
-    width: 100%;
+    /* width: 100%; */
+    max-width: 1000px;
     height: 500px;
     margin-inline: auto;
     /* margin-top: 30px; */
@@ -63,7 +62,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   }
 
   .large-image-container {
-    width: 400px;
+    width: 60%;
     height: 100%;
     /* margin-top: 30px; */
     /* position: relative; */
@@ -71,7 +70,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   }
 
   .small-image-container {
-    width: 400px;
+    width: 40%;
     height: 100%;
     /* margin-top: 30px; */
     display: flex;
@@ -88,6 +87,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     /* position: absolute; */
     /* top: 0;
     left: 0; */
+    /* max-height: 500px; */
   }
 
   .preview-image {
@@ -95,6 +95,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     height: 100%;
     border: 2px solid black;
     border-radius: 10px;
+    /* max-height: 100% */
   }
 
   .small-images {
@@ -162,6 +163,16 @@ Use high-quality photos to showcase the property and add to the overall visual a
     border: 3px solid black;
     border-radius: 10px;
     padding: 15px;
+    font-size: 1.1rem;
+  }
+
+  .review-question {
+    margin-top: 0px;
+  }
+
+  .review-input {
+    margin-top: 5px;
+    margin-bottom: 10px;
   }
 
   .add-review {
@@ -170,17 +181,28 @@ Use high-quality photos to showcase the property and add to the overall visual a
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    width: 150px;
+    width: 100%;
+    max-width: 240px;
     border: 2px solid black;
     border-radius: 12px;
-    padding: 3px;
-    padding-left: 8px;
+    /* padding: 3px;
+    padding-left: 8px; */
+    padding: 5px 10px;
     background-color: #FF385C;
     transition: all 0.3s ease-in-out;
   }
 
   .add-review:hover {
-    color: #FF385C;
+    background-color: #ff9fb1;
+    /* margin-top: 2px; */
+  }
+
+  .reviewer-name {
+    font-weight: bold;
+  }
+
+  .new-rev {
+    margin-bottom: 8px;
   }
 
   .review-form {
@@ -198,6 +220,10 @@ Use high-quality photos to showcase the property and add to the overall visual a
     margin-inline: auto;
     margin-top: 18px;
     padding: 20px 0px;
+  }
+
+  .detail-description {
+    margin-top: -15px;
   }
 
   .owner-info {
@@ -239,7 +265,17 @@ Use high-quality photos to showcase the property and add to the overall visual a
     flex-direction: row;
     font-size: 1.4rem;
     font-weight: bold;
+    margin-top: -15px;
     /* justify-content: space-between; */
+  }
+
+  .detail-edit-button {
+    margin-bottom: 8px;
+    margin-top: 12px;
+  }
+
+  .star-icon {
+    font-size: 1.7rem;
   }
 
   .reserve-button {
@@ -249,12 +285,13 @@ Use high-quality photos to showcase the property and add to the overall visual a
     align-items: center; */
     padding: 5px;
     margin: 5px;
+    margin-left: -1px;
     background-color: #FF385C;
     border: 2px solid black;
   }
 
   .reserve-button:hover {
-    background-color: #FFE5E5;
+    background-color: #FF5A5F;
     border: 2px solid black;
     transition: all 0.3s ease-in-out;
   }
