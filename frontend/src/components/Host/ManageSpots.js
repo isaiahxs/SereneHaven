@@ -93,11 +93,29 @@ export default function ManageSpots() {
     const spotsState = useSelector((state) => state.spot);
     console.log('SPOTSSTATE', spotsState)
 
+    //when i get the error of Spots undefined, i can comment this useEffect out to get the page to load. however, it is empty aside from the header, buttonn, and nav bar.
+    //when i uncomment this, the page loads with the correct spots, after x time or inputs, the page crashes with the error of Spots undefined... what is going on?
+    //a: i think it is because the useEffect is running before the spots are fetched, so the spots are undefined. i need to figure out how to wait for the spots to be fetched before running the useEffect
+
+    //original quick fix
+    // useEffect(() => {
+    //     const userSpots = spotsState.userSpots.Spots
+    //     console.log('USER SPOTS', userSpots)
+    //     if (userSpots) {
+    //         setCurrUserSpots(userSpots)
+    //     }
+    //     setIsLoaded(true)
+    // }, [spotsState])
+
+    //i believe the problem might have been that the useEffect was trying to acces the spotsState.userSpots.Spots before it had been fetched. i added a conditional to check if the spots had been fetched before trying to access the spots
+    //this will hopefull ensure that the useEffect doesn't try to access the spots before they have been fetched which is what results in an undefined error
     useEffect(() => {
-        const userSpots = spotsState.userSpots.Spots
-        console.log('USER SPOTS', userSpots)
-        if (userSpots) {
-            setCurrUserSpots(userSpots)
+        if(spotsState.userSpots) {
+            const userSpots = spotsState.userSpots.Spots
+            console.log('USER SPOTS', userSpots)
+            if (userSpots) {
+                setCurrUserSpots(userSpots)
+            }
         }
         setIsLoaded(true)
     }, [spotsState])
@@ -146,8 +164,8 @@ export default function ManageSpots() {
         <div className='landing-container'>
             {usersSpots.map((spot) => {
                 return (
-                    <div key={spot.id} className="spot-card">
-                        <div className='spot-card-img' onClick={(e) => {spotDetails(e, spot.id)}}>
+                    <div key={spot.id} className="spot-card" onClick={(e) => {spotDetails(e, spot.id)}}>
+                        <div className='spot-card-img'>
                             <img className="spot-img" src={spot.previewImage} alt={spot.name} />
                         </div>
                         <div className="spot-info">

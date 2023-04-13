@@ -35,14 +35,11 @@
     margin: 1rem;
     width: 100%;
     max-width: 20rem;
+    cursor: pointer;
   }
 
   .spot-card:hover {
     box-shadow: 0px 0px 5px #ccc;
-  }
-
-  .spot-card-img {
-    cursor: pointer;
   }
 
   .spot-img {
