@@ -11,9 +11,7 @@ export default function EditSpot({initialSpot}) {
     const history = useHistory();
     const { spotId } = useParams();
     const { closeModal } = useModal();
-
     const sessionUser = useSelector(state => state.session.user);
-
     // Replace useState initial values with the fetched data
     const [name, setName] = useState(initialSpot.name);
     const [description, setDescription] = useState(initialSpot.description);
@@ -30,19 +28,15 @@ export default function EditSpot({initialSpot}) {
     const [image2, setImage2] = useState(initialSpot.image2);
     const [image3, setImage3] = useState(initialSpot.image3);
     const [image4, setImage4] = useState(initialSpot.image4);
-
     if (!sessionUser) return <Redirect to={'/'}/>
-
     //update handleSubmit function to use updateSpotThunk instead of createSpotThunk
     const handleSubmit = async (e) => {
         e.preventDefault();
-
         let errorsArr = [];
         const images = [image1, image2, image3, image4].filter(Boolean).map((url) => ({
           url,
           preview: false,
       }));
-
         // Add some checks to ensure that the user has entered valid data for the inputs
         if (!country) {
           errorsArr.push('Please enter a valid country.');
@@ -86,11 +80,8 @@ export default function EditSpot({initialSpot}) {
         if (image4 && !image4.endsWith('.jpg') && !image4.endsWith('.png') && !image4.endsWith('.jpeg')) {
           errorsArr.push('Invalid image4 url.');
         }
-
-
         //display validation errors to the user
         setErrors(errorsArr);
-
         if (errorsArr.length === 0) {
           dispatch(
             spotActions.updateSpotThunk(
@@ -122,7 +113,6 @@ export default function EditSpot({initialSpot}) {
         });
         };
     };
-
     return (
         <div className="host-container">
           <h1>Edit listing for this location?</h1>

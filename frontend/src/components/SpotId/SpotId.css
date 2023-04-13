@@ -302,9 +302,9 @@ Use high-quality photos to showcase the property and add to the overall visual a
     margin-bottom: 10px;
   }
 
-  .star {
+  /* .star {
     width: 25px;
-  }
+  } */
 
   @media (max-width: 750px) {
     .images-container {

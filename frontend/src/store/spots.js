@@ -323,6 +323,13 @@ const spotReducer = (state=initialState, action) => {
             console.log('this is get user spots')
             newState['userSpots'] = action.spots
             return newState;
+            // const userSpots = {};
+            // console.log('this is get user spots')
+            // action.spots.Spots.forEach((spot) => (
+            //     userSpots[spot.id] = spot
+            // ))
+            // newState['userSpots'] = userSpots;
+            // return newState;
 
         case CLEAR_DETAILS:
             console.log('now clearing details');
