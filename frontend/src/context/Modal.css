@@ -16,11 +16,13 @@
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 #modal-content {
     position: absolute;
     background-color: white;
-    border-radius: 20px;
+    /* border-radius: 20px; */
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    border: 2px solid black;
 }

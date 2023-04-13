@@ -1,10 +1,11 @@
-.fas {
+/* .fas {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 44px;
     width: 30px;
-}
+    background-color: red;
+} */
 
 .fa-user-circle {
     color: #222;
@@ -12,6 +13,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    /* background-color: white; */
     /* margin-right: 1rem; */
 }
 
@@ -22,8 +24,9 @@
     align-items: center;
     position: absolute;
     top: 89px;
-    right: 10px;
+    right: -1px;
     background-color: white;
+    border: 2px solid black;
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
     z-index: 1;
     padding: 15px;
@@ -33,9 +36,28 @@
     /* color: black; */
 }
 
+.pfp {
+    background-color: white;
+    /* border-width: 0px; */
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.pfp:hover {
+    border-radius: 0px;
+    /* background-color: black; */
+    transition: all 0.3s ease-in-out;
+    /* background-color: #FF385C; */
+    /* border-width: 0px; */
+}
+
 .manage-spots {
     margin-bottom: 10px;
 }
+/*
+.log-in {
+    background-color: red;
+    color: red;
+} */
 
 .log-out {
     border: 2px solid black;
@@ -47,6 +69,15 @@
 }
 
 .menu {
-    border: 2px solid black;
+    /* border: 2px solid black; */
     /* border-radius: 5px; */
+    transition: none;
+    background-color: white;
+    color: white;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+
+}
+
+.menu:hover {
+    transition: none;
 }

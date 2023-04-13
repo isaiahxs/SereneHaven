@@ -301,11 +301,11 @@ Use high-quality photos to showcase the property and add to the overall visual a
     border: 2px solid black;
   }
 
-  .reserve-button:hover {
+  /* .reserve-button:hover {
     background-color: #FF5A5F;
     border: 2px solid black;
     transition: all 0.3s ease-in-out;
-  }
+  } */
 
   .review {
     margin-top: 20px;
