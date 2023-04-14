@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import {ReactComponent as Star} from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
 import ReviewModal from '../Review/ReviewModal';
+import OpenModalButton from '../../components/OpenModalButton';
 import './SpotId.css'
 
 
