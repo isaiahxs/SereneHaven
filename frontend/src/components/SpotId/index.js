@@ -43,7 +43,7 @@ export default function SpotId() {
         //return null if spotDetails is falsy and render nothing
     const detailState = useSelector(state => state.spot.spotDetails);
     let detailArray = [];
-    console.log('detailStateeeeeeeeee', detailState)
+    // console.log('detailStateeeeeeeeee', detailState)
     if (detailState) detailArray = Object.values(detailState);
 
 
@@ -164,6 +164,7 @@ export default function SpotId() {
         setReviewChanged(true);
     }
 
+//--------------------GOING TO WORK ON REVIEW MODAL BELOW --------------------
 //firstName and lastName issue is a timing issue. need to figure out how to get the firstName and lastName to appear immediately after posting a review think i need to add something else to the if statement
     const addingReview = () => {
         //loop through the reviewArray and check if the userId of the current review matches the userId of the current sessionUser
@@ -181,6 +182,16 @@ export default function SpotId() {
             alert('Please sign in to add a review.');
         }
     }
+
+    // const checkUserBeforeAddingReview = () => {
+    //     if (!sessionUser) {
+    //         alert('Please sign in to add a review.');
+    //         return;
+    //     }
+    // }
+
+//--------------------GOING TO WORK ON REVIEW MODAL ABOVE --------------------
+
 
     const editReview = (review) => {
         setShowEdit(!showEdit);
@@ -333,11 +344,21 @@ export default function SpotId() {
                         </div> */}
                         {/* <ReviewModal/> */}
 
-                        {
+                        {/* {
                             showReviewButton() && (
                                 <button className='add-review' onClick={addingReview}>
                                 {reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
                                 </button>
+                            )
+                        } */}
+                        {/* {console.log('SpotId:', spotId)} */}
+                        {
+                        showReviewButton() && (
+                            <OpenModalButton
+                            modalComponent={<ReviewModal spotId={spotId}/>}
+                            buttonText={reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
+                            onButtonClick={addingReview}
+                            />
                             )
                         }
                         {/* ----------------------------------- */}
