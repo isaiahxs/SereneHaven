@@ -6,6 +6,8 @@ import * as spotActions from "../../store/spots";
 import { Redirect } from "react-router-dom";
 import './EditSpot.css';
 
+//hiii
+
 export default function EditSpot({initialSpot}) {
     const dispatch = useDispatch();
     const history = useHistory();
