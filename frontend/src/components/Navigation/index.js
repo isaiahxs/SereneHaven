@@ -19,8 +19,10 @@ function Navigation({ isLoaded }){
       </div>
       <div className='top-right'>
         {sessionUser && (
-          <div>
-            <NavLink to="/host" className='create-spot'>Create a New Spot</NavLink>
+          <div className='create-spot-container'>
+            <NavLink to="/host" className='create-spot'>
+              Create a New Spot
+              </NavLink>
           </div>
         )}
       </div>

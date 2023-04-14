@@ -48,7 +48,7 @@ const updateSpot = (updatedSpot) => ({
     updatedSpot
 })
 
-const deleteSpot = (deletedSpot) => ({
+export const deleteSpot = (deletedSpot) => ({
     type: DELETE_SPOT,
     deletedSpot
 })
@@ -75,6 +75,19 @@ export const userSpotsThunk = () => async (dispatch) => {
     dispatch(getUserSpots(data));
     return data;
 }
+
+// other attempt
+// export const userSpotsThunk = () => async (dispatch) => {
+//     const response = await csrfFetch('/api/spots/current');
+
+//     if (response.ok) {
+//         const data = await response.json();
+//         dispatch(getUserSpots(data));
+//         return data;
+//     } else {
+//         return {};
+//     }
+// }
 
 //additional notes: when you make a request to the server using csrfFetch, it returns a response object that contains information such as the response status code, headers, and the body of the response as a string
 //in order to work with the data returned by the server, we need to parse the response body as JSON

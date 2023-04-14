@@ -60,12 +60,12 @@ export default function Spots() {
                                 {/* in real BnB site, they sometimes have ratings show two decimal places */}
                             ★ {Number(landingSpot.avgRating)
                                 ? Number(landingSpot.avgRating).toFixed(1)
-                                : '0'}
+                                : 'New'}
                             </span>
                         </p>
 
                         {/* in wireframes, they would rather have us show name in tooltip, but in real BnB site, they have `x Views`, but we don't have that in our backend so i'll have the spot's name for right now*/}
-                        <p className='location-name'>{landingSpot.name}</p>
+                        {/* <p className='location-name'>{landingSpot.name}</p> */}
                         <p className='price'>
                             <span className='location-price'>${landingSpot.price}</span> night
                         </p>

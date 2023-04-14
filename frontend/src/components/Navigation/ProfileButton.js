@@ -8,6 +8,7 @@ import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from "../SignupFormModal";
 import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
@@ -48,7 +49,7 @@ function ProfileButton({ user }) {
 
   return (
     <>
-      <button onClick={openMenu}>
+      <button onClick={openMenu} className="pfp">
         <i className="fas fa-user-circle" />
       </button>
       <ul className={ulClassName} ref={ulRef}>
@@ -56,14 +57,14 @@ function ProfileButton({ user }) {
           <>
             <div>Hello, {user.firstName}</div>
             <div>{user.email}</div>
-            <Link to='/manage'>Manage Spots</Link>
+            <Link to='/manage' className="manage-spots">Manage Spots</Link>
             <div>
               <button onClick={logout} className="log-out">Log Out</button>
             </div>
           </>
         ) : (
           <>
-            <div>
+            <div >
               <OpenModalButton
                 buttonText="Log In"
               // <OpenModalMenuItem
