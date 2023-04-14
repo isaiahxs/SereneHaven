@@ -12,20 +12,37 @@ export default function EditSpot() {
   const history = useHistory();
 
   const sessionUser = useSelector(state => state.session.user);
-  console.log('session from edit page', sessionUser)
+  console.log('SESSION USER FROM EDIT PAGE', sessionUser)
 
-  const detailState = useSelector((state) => state.spot.spotDetails);
+  const detailState = useSelector(state => state.spot.spotDetails);
+  console.log('DETAIL STATE IN EDIT PAGE', detailState);
+
   const {spotId} = useParams();
 
-  const preview = detailState.SpotImages.find(image => image.preview);
-  console.log(preview);
-  const previewUrl = preview.url;
+  const preview = detailState?.SpotImages?.find(image => image.preview);
+  const previewURL = preview?.url;
+  console.log('PREVIEW IMAGE URL', preview);
+
+  const [name, setName] = useState(detailState?.name);
+  const [description, setDescription] = useState(detailState?.description);
+  const [price, setPrice] = useState(detailState?.price);
+  const [address, setAddress] = useState(detailState?.address);
+  const [city, setCity] = useState(detailState?.city);
+  const [state, setState] = useState(detailState?.state);
+  const [country, setCountry] = useState(detailState?.country);
+  const [lat, setLat] = useState(detailState?.lat);
+  const [lng, setLng] = useState(detailState?.lng);
+  const [errors, setErrors] = useState([]);
+  const [imageURL, setImageURL] = useState(previewURL);
+  const [image1, setImage1] = useState('');
+  const [image2, setImage2] = useState('');
+  const [image3, setImage3] = useState('');
+  const [image4, setImage4] = useState('');
+
 
   useEffect(() => {
     dispatch(spotDetails(spotId));
   }, [dispatch, spotId])
-
-  console.log('DETAIL STATE IN EDIT PAGE', detailState);
 
   if (!detailState) {
     console.log("we're loading here :c")
@@ -35,9 +52,36 @@ export default function EditSpot() {
   };
 
   return (
-    <div>hello from edit spot</div>
+    <>
+      <div>hello from edit spot</div>
+      <div>{detailState.name}</div>
+    </>
   )
 }
+
+
+//code i cut out to reuse later
+  // const previewUrl = preview.url;
+
+  // const [name, setName] = useState(detailState.name);
+  // // console.log(name);
+  // const [description, setDescription] = useState(detailState.description);
+  // const [price, setPrice] = useState(detailState.price);
+  // const [address, setAddress] = useState(detailState.address);
+  // const [city, setCity] = useState(detailState.city);
+  // const [state, setState] = useState(detailState.state);
+  // const [country, setCountry] = useState(detailState.country);
+  // const [lat, setLat] = useState(detailState.lat);
+  // const [lng, setLng] = useState(detailState.lng);
+  // const [errors, setErrors] = useState([]);
+  // const [imageURL, setImageURL] = useState(previewUrl);
+  // const [image1, setImage1] = useState('');
+  // const [image2, setImage2] = useState('');
+  // const [image3, setImage3] = useState('');
+  // const [image4, setImage4] = useState('');
+
+  // if (!sessionUser) return <Redirect to={'/'}/>;
+
 
 //hiii
 
