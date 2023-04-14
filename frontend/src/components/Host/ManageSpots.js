@@ -93,7 +93,7 @@ export default function ManageSpots() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [currUserSpots, setCurrUserSpots] = useState({});
     const spotsState = useSelector((state) => state.spot);
-    console.log('SPOTSSTATE', spotsState)
+    console.log('MANAGE SPOTS STATE', spotsState)
 
     //when i get the error of Spots undefined, i can comment this useEffect out to get the page to load. however, it is empty aside from the header, buttonn, and nav bar.
     //when i uncomment this, the page loads with the correct spots, after x time or inputs, the page crashes with the error of Spots undefined... what is going on?
