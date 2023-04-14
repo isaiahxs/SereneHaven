@@ -48,7 +48,7 @@ const updateSpot = (updatedSpot) => ({
     updatedSpot
 })
 
-const deleteSpot = (deletedSpot) => ({
+export const deleteSpot = (deletedSpot) => ({
     type: DELETE_SPOT,
     deletedSpot
 })

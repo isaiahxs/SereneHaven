@@ -121,3 +121,7 @@
 .manage-buttons button:hover {
     background-color: #ff5d7b;
 }
+
+.modal-button {
+    z-index: 100;
+}

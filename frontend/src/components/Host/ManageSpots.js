@@ -5,6 +5,8 @@ import { userSpotsThunk, updateSpotThunk } from "../../store/spots";
 import AddSpot from "./AddSpot";
 import EditSpot from "./EditSpot";
 import {ReactComponent as Star} from '../../assets/star.svg'
+import OpenModalButton from "../OpenModalButton";
+import DeleteSpot from "./DeleteSpot";
 import "./ManageSpots.css";
 
 // export default function ManageSpots() {
@@ -184,7 +186,12 @@ export default function ManageSpots() {
                         </div>
                         <div className="manage-buttons">
                             <button onClick={(e) => editSpot(e, spot.id)}>Update</button>
-                            <button>Delete</button>
+                            {/* <button>Delete</button> */}
+                            <OpenModalButton
+                            className='modal-button'
+                                itemText='Delete'
+                                modalComponent={<DeleteSpot spot={spot}/>}
+                            />
                         </div>
                     </div>
                 )

@@ -24,6 +24,10 @@ export default function SpotId() {
     const [showEdit, setShowEdit] = useState(false);
     const [reviewChanged, setReviewChanged] = useState(false);
 
+    //following are for immediate renders of reviews
+    const [avgStarRating, setAvgStarRating] = useState(null);
+    const [numReviews, setNumReviews] = useState(0);
+
     const [reviewCount, setReviewCount] = useState(0);
 
 
@@ -77,7 +81,17 @@ export default function SpotId() {
     useEffect(() => {
         dispatch(reviewThunk(spotId));
         setReviewChanged(false);
-    }, [dispatch, spotId, reviewChanged, reviewCount])
+
+        if(reviewArray.length > 0) {
+            const totalStars = reviewArray.reduce((acc, review) => acc + review.stars, 0);
+            const avgStars = totalStars / reviewArray.length;
+            setAvgStarRating(avgStars);
+            setNumReviews(reviewArray.length);
+        } else {
+            setAvgStarRating(null);
+            setNumReviews(0);
+        }
+    }, [dispatch, spotId, reviewChanged, reviewCount, avgStarRating, numReviews])
     //going to take it out of here for right now
 
     //KIND OF SOLVED THE PROBLEM OF FIRST NAME AND LAST NAME NOT APPEARING INSTANTLY AFTER POSTING A REVIEW. HOWEVER THIS INTRODUCES A BUG THAT OCCURS SOMETIMES WHERE THE USER'S REVIEW RENDERS, THEN GOES AWAY, THEN RE-RENDERS AGAIN. I THINK IT HAS SOMETHING TO DO WITH THE REVIEW ARRAY BEING UPDATED AFTER THE REVIEW IS POSTED, BUT BEFORE THE REVIEW IS RENDERED. I THINK I NEED TO FIGURE OUT A WAY TO MAKE THE REVIEW ARRAY UPDATE AFTER THE REVIEW IS RENDERED.
@@ -124,6 +138,10 @@ export default function SpotId() {
         setAddReview(false);
         setReview('');
         setStars(1);
+        const newNumReviews = numReviews + 1;
+        const newAvgStarRating = (avgStarRating * numReviews + stars) / newNumReviews;
+        setNumReviews(newNumReviews);
+        setAvgStarRating(newAvgStarRating);
     }
 
     const editSubmitHandler = (e, reviewId) => {
@@ -137,7 +155,8 @@ export default function SpotId() {
         }
         dispatch(updateReviewThunk(payload));
 
-        setReviewCount(reviewCount + 1);
+        //doesn't really make sense to increase reviewCount off of just an edit
+        // setReviewCount(reviewCount + 1);
         setReviewEdit(reviewEdit);
         setRatingEdit(ratingEdit);
         setShowEdit(false);
@@ -226,7 +245,7 @@ export default function SpotId() {
                                     <span className='amount'>${detailState.price}</span>
                                     night
                                     </div>
-
+                                {/* ----------------------------------------- */}
                                 <div className='total-reviews-container'>
                                     {Number(detailState.avgStarRating) ? (
                                         <div className='stars'>
@@ -242,6 +261,23 @@ export default function SpotId() {
                                         </div>
                                     )}
                                 </div>
+                                {/* ----------------------------------------- */}
+                                {/* EXPERIMENTING TO TRY TO IMMEDIATELY RENDER NEW AVGSTARRATING AND NEWNUMREVIEW COUNT */}
+                                {/* <div className='total-reviews-container'>
+                                    {Number(avgStarRating) ? (
+                                        <div className='stars'>
+                                            <Star className='star-icon' alt='little-star'/>
+                                            {Number(avgStarRating).toFixed(1)}
+                                            <span className='dot'>•</span>
+                                            <p>{numReviews === 1 ? '1 Review' : `${numReviews} Reviews`}</p>
+                                        </div>
+                                    ) : (
+                                        <div className='stars'>
+                                            <Star alt='little-star'/>
+                                            New
+                                        </div>
+                                    )}
+                                </div> */}
                             </div>
                             {/* need to say that this feature is coming soon */}
                             <button className='reserve-button' onClick={() => window.alert('Feature coming soon!')}>Reserve</button>
@@ -251,6 +287,8 @@ export default function SpotId() {
 
                     <div className='review-container'>
                         {/* <div>Reviews</div> */}
+
+                        {/* ------------------------------------ */}
                         <div className='review-summary'>
                             {Number(detailState.avgStarRating) ? (
                                 <div className='stars'>
@@ -266,6 +304,23 @@ export default function SpotId() {
                                     </div>
                             )}
                         </div>
+                        {/* ------------------------------------ */}
+                        {/* EXPERIMENTING TO TRY TO IMMEDIATELY RENDER NEW AVGSTARRATING AND NEWNUMREVIEW COUNT */}
+                        {/* <div className='review-summary'>
+                            {Number(avgStarRating) ? (
+                                <div className='stars'>
+                                    <Star className='star-icon' alt='little-star'/>
+                                    {Number(avgStarRating).toFixed(1)}
+                                    <span className='dot'>•</span>
+                                    <p>{numReviews === 1 ? '1 Review' : `${numReviews} Reviews`}</p>
+                                </div>
+                            ) : (
+                                <div className='stars'>
+                                    <Star alt='little-star'/>
+                                    New
+                                    </div>
+                            )}
+                        </div> */}
                         {/* ------------------------------------ */}
                         {/* the things below work, it's just that they can be slightly improved */}
                         {/* <div className='add-review' onClick={addingReview}>Post Your Review</div> */}
@@ -323,7 +378,7 @@ export default function SpotId() {
                                     {/* {sessionUser && sessionUser.id === review.userId && ( */}
                                     {sessionUser && sessionUser.id === review.userId && (
                                         <div>
-                                            <button class='detail-edit-button' type='submit' onClick={() => editReview(review)}>Edit Review</button>
+                                            <button className='detail-edit-button' type='submit' onClick={() => editReview(review)}>Edit Review</button>
                                             <button type='submit' onClick={() => deleteHandler(review.id)}>Delete</button>
                                         </div>
                                     )}
@@ -359,7 +414,7 @@ export default function SpotId() {
         )
     } else {
         return (
-            <div class='loading'>Loading...</div>
+            <div className='loading'>Loading...</div>
         )
     }
 }
