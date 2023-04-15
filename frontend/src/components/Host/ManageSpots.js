@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {NavLink, useHistory } from "react-router-dom";
-import { userSpotsThunk, updateSpotThunk } from "../../store/spots";
+import {NavLink, useHistory, Link } from "react-router-dom";
+import { userSpotsThunk, updateSpotThunk, spotDetails } from "../../store/spots";
 // import AddSpot from "./AddSpot";
 // import EditSpot from "./EditSpot";
 import {ReactComponent as Star} from '../../assets/star.svg'
@@ -63,8 +63,11 @@ export default function ManageSpots() {
 
     //upon clicking the update button, redirect to the edit spot page
     const editSpot = async (e, id) => {
+        console.log(e);
         e.preventDefault();
-        await dispatch(updateSpotThunk(id)).then(() => history.push(`/spots/${id}/edit`))
+        // e.stopImmediatePropagation();
+        // e.stopPropagation();
+        await dispatch(spotDetails(id)).then(() => history.push(`/spots/${id}/edit`))
     }
 
     //if there is no session user, redirect to the home page, otherwise, get the current user's spots
@@ -106,7 +109,8 @@ export default function ManageSpots() {
         <div className='landing-container'>
             {usersSpots.map((spot) => {
                 return (
-                    <div key={spot.id} className="spot-card" onClick={(e) => {spotDetails(e, spot.id)}}>
+                    <div key={spot.id} className="spot-card">
+                        <div onClick={(e) => {spotDetails(e, spot.id)}}>
                         <div className='spot-card-img'>
                             <img className="spot-img" src={spot.previewImage} alt={spot.name} />
                         </div>
@@ -123,9 +127,13 @@ export default function ManageSpots() {
                             <div className="price">
                                 <span className="amount">${spot.price}</span>night
                             </div>
+
+                        </div>
                         </div>
                         <div className="manage-buttons">
-                            <button onClick={(e) => editSpot(e, spot.id)}>Update</button>
+                            <Link to={`/spots/${spot.id}/edit`}>
+                            <button type='button'>Update</button>
+                            </Link>
                             <OpenModalButton
                             className='modal-button'
                                 buttonText='Delete'
