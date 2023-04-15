@@ -165,6 +165,11 @@ button:hover {
   background-color: #f65472;
 } */
 
+button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
 button[type="submit"]:disabled {
   background-color: #DDDDDD;
   color: #AAAAAA;

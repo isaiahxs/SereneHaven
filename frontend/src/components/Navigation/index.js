@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import {ReactComponent as Logo} from '../../assets/bnb-with-text.svg';
-import AddSpot from '../Host/AddSpot';
+// import AddSpot from '../Host/AddSpot';
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
@@ -22,7 +22,7 @@ function Navigation({ isLoaded }){
           <div className='create-spot-container'>
             <NavLink to="/host" className='create-spot'>
               Create a New Spot
-              </NavLink>
+            </NavLink>
           </div>
         )}
       </div>

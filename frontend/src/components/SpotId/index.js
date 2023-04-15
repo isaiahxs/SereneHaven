@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import {ReactComponent as Star} from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
 import ReviewModal from '../Review/ReviewModal';
+import OpenModalButton from '../../components/OpenModalButton';
 import './SpotId.css'
 
 
@@ -42,7 +43,7 @@ export default function SpotId() {
         //return null if spotDetails is falsy and render nothing
     const detailState = useSelector(state => state.spot.spotDetails);
     let detailArray = [];
-    console.log('detailStateeeeeeeeee', detailState)
+    // console.log('detailStateeeeeeeeee', detailState)
     if (detailState) detailArray = Object.values(detailState);
 
 
@@ -163,6 +164,7 @@ export default function SpotId() {
         setReviewChanged(true);
     }
 
+//--------------------GOING TO WORK ON REVIEW MODAL BELOW --------------------
 //firstName and lastName issue is a timing issue. need to figure out how to get the firstName and lastName to appear immediately after posting a review think i need to add something else to the if statement
     const addingReview = () => {
         //loop through the reviewArray and check if the userId of the current review matches the userId of the current sessionUser
@@ -180,6 +182,16 @@ export default function SpotId() {
             alert('Please sign in to add a review.');
         }
     }
+
+    // const checkUserBeforeAddingReview = () => {
+    //     if (!sessionUser) {
+    //         alert('Please sign in to add a review.');
+    //         return;
+    //     }
+    // }
+
+//--------------------GOING TO WORK ON REVIEW MODAL ABOVE --------------------
+
 
     const editReview = (review) => {
         setShowEdit(!showEdit);
@@ -332,15 +344,25 @@ export default function SpotId() {
                         </div> */}
                         {/* <ReviewModal/> */}
 
-                        {
+                        {/* {
                             showReviewButton() && (
                                 <button className='add-review' onClick={addingReview}>
                                 {reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
                                 </button>
                             )
+                        } */}
+                        {/* {console.log('SpotId:', spotId)} */}
+                        {
+                        showReviewButton() && (
+                            <OpenModalButton
+                            modalComponent={<ReviewModal spotId={spotId}/>}
+                            buttonText={reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
+                            onButtonClick={addingReview}
+                            />
+                            )
                         }
                         {/* ----------------------------------- */}
-                        {addReview && (
+                        {/* {addReview && (
                             <div className='review-form'>
                                 <form onSubmit={submitHandler}>
                                     <h2 className='review-question'>How was your stay?</h2>
@@ -364,14 +386,15 @@ export default function SpotId() {
                                     <button type='submit'>Submit Your Review</button>
                                 </form>
                             </div>
-                        )}
+                        )} */}
                         {/* need to put a check here to render only after the data is available to avoid the firstName and lastName bug */}
                         {reviewArray.map((review) => {
                             // console.log('Review:', review)
                             return (
                                 <div key={review.id}>
                                     <div className='reviewer-name'>{review.User?.firstName}</div>
-                                    <div>{review.createdAt}</div>
+                                    {/* <div>{review.createdAt}</div> */}
+                                    <div>{new Date(review.createdAt).toLocaleDateString()}</div>
                                     {/* <div>Star rating: {review.stars}</div> */}
                                     <div className='new-rev'>{review.review}</div>
                                     {/* need to create a button / area that the user can click and submit to edit their review */}

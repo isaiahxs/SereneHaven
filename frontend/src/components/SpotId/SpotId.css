@@ -1,21 +1,5 @@
 /* contents of page should fill to a max of 1000px
 
-if user is not logged in, hide "Post Your Review" */
-/* .spot-details {
-    background-color: red;
-    padding: 20px;
-    color: black;
-    height: 20px;
-    width: 500px;
-}
-
-.detail-image {
-    height: 400px;
-    width: 400px;
-}
-
-
-
 /*
 Use a large background image of the property as the header.
 Use a clean and simple typography for the spot's name, location, and host information.
@@ -41,14 +25,6 @@ Use high-quality photos to showcase the property and add to the overall visual a
     margin: 0 auto;
     padding: 0px 20px 20px 20px;
   }
-
-  /* .inner-container {
-    width: 80%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    max-width: 1000px;
-  } */
 
   .images-container {
     display: flex;
@@ -130,21 +106,6 @@ Use high-quality photos to showcase the property and add to the overall visual a
     font-size: 1.3rem;
     margin-bottom: 8px;
   }
-
-  /* .detail-image {
-    width: 100%;
-    height: 500px;
-    margin-top: 30px;
-    object-fit: cover;
-  } */
-/*
-  .upper {
-    width: 100%;
-    height: 50px;
-    background-color: #f1f1f1;
-  } */
-
-
 
   .button {
     width: 100%;
