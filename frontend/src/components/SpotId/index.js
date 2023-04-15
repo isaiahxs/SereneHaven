@@ -362,7 +362,7 @@ export default function SpotId() {
                             )
                         }
                         {/* ----------------------------------- */}
-                        {addReview && (
+                        {/* {addReview && (
                             <div className='review-form'>
                                 <form onSubmit={submitHandler}>
                                     <h2 className='review-question'>How was your stay?</h2>
@@ -386,7 +386,7 @@ export default function SpotId() {
                                     <button type='submit'>Submit Your Review</button>
                                 </form>
                             </div>
-                        )}
+                        )} */}
                         {/* need to put a check here to render only after the data is available to avoid the firstName and lastName bug */}
                         {reviewArray.map((review) => {
                             // console.log('Review:', review)
