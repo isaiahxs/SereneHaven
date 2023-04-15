@@ -163,7 +163,7 @@ const deleteHandler = (reviewId) => {
   //   // Submit your review
   // };
 
-  const isSubmitDisabled = comment.length < 10 || !rating;
+  const isSubmitDisabled = review.length < 10 || !stars;
 
   if (detailState && reviewState) {
   return (
@@ -178,17 +178,33 @@ const deleteHandler = (reviewId) => {
                   required
                   maxLength={200}
               />
-              <input
+              {/* <input
               className='review-input'
               type='number'
               value={stars}
               onChange={(e) => setStars(e.target.value)}
               min={1}
               max={5}
+              // name='rating'
               required
               placeholder='Rating'
-              />
-              <button type='submit'>Submit Your Review</button>
+              /> */}
+
+              {[...Array(5)].map((_, index) => {
+                const starValue = index + 1;
+                return (
+                  <label key={starValue}>
+                    <input
+                      type="radio"
+                      name="rating"
+                      value={starValue}
+                      onClick={() => setStars(starValue)}
+                    />
+                    <span className="star">&#9733;</span>
+                  </label>
+                );
+              })}
+              <button disabled={isSubmitDisabled} type='submit'>Submit Your Review</button>
           </form>
       </div>
 

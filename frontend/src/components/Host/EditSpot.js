@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from "react-router-dom";
 import { useModal } from "../../context/Modal";
-// import * as spotActions from "../../store/spots";
+import * as spotActions from "../../store/spots";
 import { spotDetails, updateSpotThunk } from "../../store/spots";
 import { Redirect } from "react-router-dom";
 import './EditSpot.css';
@@ -10,6 +10,7 @@ import './EditSpot.css';
 export default function EditSpot() {
   const dispatch = useDispatch();
   const history = useHistory();
+  const {closeModal} = useModal();
 
   const sessionUser = useSelector(state => state.session.user);
   console.log('SESSION USER FROM EDIT PAGE', sessionUser)

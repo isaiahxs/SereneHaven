@@ -48,6 +48,15 @@ const updateSpot = (updatedSpot) => ({
     updatedSpot
 })
 
+//second attempt
+// const updateSpot = (updatedSpot, spotId) => ({
+//     type: UPDATE_SPOT,
+//     spot: {
+//         id: spotId,
+//         ...updatedSpot
+//     }
+// })
+
 export const deleteSpot = (deletedSpot) => ({
     type: DELETE_SPOT,
     deletedSpot
@@ -250,9 +259,12 @@ export const createSpotThunk = (newSpot, prevImage, images) => async (dispatch) 
 //     //spotId: data.spotId because the response from the server is the data that we want to use to update the state
 //     }
 
-
+//WORK IN PROGRESS FOR UPDATE SPOT
 export const updateSpotThunk = (updatedSpot, spotId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/spots/${spotId}`, {
+    //what is it that we are fetching here?
+
+
+    const response = await csrfFetch(`/api/spots/${spotId}/id`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -260,10 +272,15 @@ export const updateSpotThunk = (updatedSpot, spotId) => async (dispatch) => {
         body: JSON.stringify(updatedSpot)
     })
     const improvedSpot = await response.json();
-    const spot = {...updatedSpot, id: spotId}
-    dispatch(updateSpot(spot));
+    // const spot = {...updatedSpot, id: spotId}
+    dispatch(updateSpot(improvedSpot, spotId));
+
     return improvedSpot;
 }
+
+//I NEED TO MAKE MY UPDATE SPOT THUNK TAKE IN FOUR ARGUMENTS IF I WANT TO ALLOW THE USER TO UPDATE THEIR IMAGES AS WELL. ALSO I WILL NEED TO ADD AN ADDITIONAL ARGUMENT INTO THE DISPATCHER FUNCTION AND ALSO MAKE SURE THAT ALL MY ARUGMENTS ARE IN THE RIGHT ORDER
+
+
 
 export const deleteSpotThunk = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
@@ -320,9 +337,12 @@ const spotReducer = (state=initialState, action) => {
 
 
         case UPDATE_SPOT:
-            console.log('this is update spot')
-            newState['spotDetails'] = action.updatedSpot;
-            return newState;
+            // console.log('this is update spot')
+            // newState['spotDetails'] = action.updatedSpot;
+            // return newState;
+            const updatedSpot = action.spot
+            const newAllSpots = {...state.allSpots, [updatedSpot.id]: updatedSpot};
+            return {...state, allSpots: newAllSpots};
 
             //in the UPDATE_SPOT case, we need to assign the updatedSpot to the spotDetails key of the newState object because we want to update the spotDetails key in the Redux store with the updated spot details
 
