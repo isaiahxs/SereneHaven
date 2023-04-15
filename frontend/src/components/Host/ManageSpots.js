@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, NavLink, useHistory } from "react-router-dom";
+import {NavLink, useHistory } from "react-router-dom";
 import { userSpotsThunk, updateSpotThunk } from "../../store/spots";
-import AddSpot from "./AddSpot";
-import EditSpot from "./EditSpot";
+// import AddSpot from "./AddSpot";
+// import EditSpot from "./EditSpot";
 import {ReactComponent as Star} from '../../assets/star.svg'
 import OpenModalButton from "../OpenModalButton";
 import DeleteSpot from "./DeleteSpot";
@@ -76,6 +76,10 @@ export default function ManageSpots() {
         }
     }, [dispatch])
 
+    const handleSpotDeleted = (deletedSpotId) => {
+        setCurrUserSpots(usersSpots.filter((spot) => spot.id !== deletedSpotId))
+    }
+
     //display user's spots after they are fetched
     return isLoaded && (
         <>
@@ -125,7 +129,10 @@ export default function ManageSpots() {
                             <OpenModalButton
                             className='modal-button'
                                 buttonText='Delete'
-                                modalComponent={<DeleteSpot spot={spot}/>}
+                                modalComponent={<DeleteSpot
+                                    spot={spot}
+                                    onSpotDeleted={handleSpotDeleted}
+                                    />}
                             />
                         </div>
                     </div>

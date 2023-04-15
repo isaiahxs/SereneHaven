@@ -1,22 +1,40 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect, useHistory } from 'react-router-dom';
+import React from 'react';
+import { useDispatch } from 'react-redux';
+// import { useHistory } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 import { deleteSpotThunk } from '../../store/spots';
 
 
 import './DeleteSpot.css';
 
-export default function DeleteSpot({spot}) {
+export default function DeleteSpot({spot, onSpotDeleted}) {
     const dispatch = useDispatch();
-    const history = useHistory();
+    // const history = useHistory();
     const {closeModal} = useModal();
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        await dispatch(deleteSpotThunk(spot.id));
-        closeModal();
-        history.push('/manage');
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     await dispatch(deleteSpotThunk(spot.id));
+    //     closeModal();
+    //     history.push('/manage');
+    // }
+
+    const handleSubmit = async () => {
+        try {
+            // const deletedSpot = await dispatch(deleteSpotThunk(spot.id));
+            // if (deletedSpot) {
+            //     if(onSpotDeleted) {
+            //         onSpotDeleted(spot.id);
+            //     }
+            // } else {
+            //     console.error('Failed to delete spot');
+            // }
+            await dispatch(deleteSpotThunk(spot.id));
+            closeModal();
+            onSpotDeleted(spot.id);
+        } catch (e) {
+            console.error(e);
+        }
     }
 
     return (

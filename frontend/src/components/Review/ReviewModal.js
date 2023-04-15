@@ -220,35 +220,3 @@ const deleteHandler = (reviewId) => {
 }
 
 export default ReviewModal;
-
-
-//this is what i will want it to look like:
-{/* <form onSubmit={submitHandler} className="review-form">
-      <div className="rating-container">
-        <h1>How was your stay?</h1>
-        {[...Array(5)].map((_, index) => {
-          const starValue = index + 1;
-          return (
-            <label key={starValue}>
-              <input
-                type="radio"
-                name="rating"
-                value={starValue}
-                onClick={() => setRating(starValue)}
-              />
-              <span className="star">&#9733;</span>
-            </label>
-          );
-        })}
-        <label htmlFor="rating">Stars</label>
-      </div>
-      <textarea
-        className="comment-textarea"
-        value={comment}
-        onChange={handleCommentChange}
-        placeholder="Leave your review here..."
-      />
-      <button type="submit" disabled={isSubmitDisabled}>
-        Submit Your Review
-      </button>
-    </form> */}
