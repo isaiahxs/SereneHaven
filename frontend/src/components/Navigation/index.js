@@ -22,7 +22,7 @@ function Navigation({ isLoaded }){
           <div className='create-spot-container'>
             <NavLink to="/host" className='create-spot'>
               Create a New Spot
-              </NavLink>
+            </NavLink>
           </div>
         )}
       </div>

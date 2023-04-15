@@ -31,8 +31,3 @@
     margin-top: 10px;
     margin-bottom: 10px;
   }
-
-  button[disabled] {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
