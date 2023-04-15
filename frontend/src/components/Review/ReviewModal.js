@@ -20,7 +20,7 @@ function ReviewModal({spotId}) {
   //----------------------SIMILAR TO SPOT ID----------------------
   //consts below are from SpotId transfer
   const [review, setReview] = useState('');
-  const [stars, setStars] = useState(1);
+  const [stars, setStars] = useState(null);
   const [addReview, setAddReview] = useState(false);
   const [ratingEdit, setRatingEdit] = useState(1);
   const [reviewEdit, setReviewEdit] = useState('');
@@ -163,7 +163,7 @@ const deleteHandler = (reviewId) => {
   //   // Submit your review
   // };
 
-  const isSubmitDisabled = review.length < 10 || !stars;
+  const isSubmitDisabled = review.length < 10 || stars === null;
 
   if (detailState && reviewState) {
   return (
@@ -178,6 +178,7 @@ const deleteHandler = (reviewId) => {
                   required
                   maxLength={200}
               />
+              <div className='rating-container'>
               {/* <input
               className='review-input'
               type='number'
@@ -204,6 +205,8 @@ const deleteHandler = (reviewId) => {
                   </label>
                 );
               })}
+              <label htmlFor="rating">Stars</label>
+              </div>
               <button disabled={isSubmitDisabled} type='submit'>Submit Your Review</button>
           </form>
       </div>
