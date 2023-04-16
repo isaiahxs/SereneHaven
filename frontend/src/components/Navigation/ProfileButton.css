@@ -5,6 +5,7 @@
     height: 30px;
     width: 30px;
     /* background-color: red; */
+    /* margin-right: 50px; */
 }
 
 .fa-user-circle {
@@ -46,6 +47,8 @@
      but does it look like i mismatched the theme on accident*/
     /* border-width: 0px; */
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    /* margin: 10px 10px; */
+    /* padding: 10px 10px; */
 }
 
 .pfp:hover {
@@ -86,4 +89,5 @@
 
 .menu:hover {
     transition: none;
+    /* border-radius: 5px; */
 }
