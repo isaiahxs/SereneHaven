@@ -369,7 +369,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     /* padding-right: 20px; */
   }
 
-  @media (min-width: 900px) {
+  @media (min-width: 910px) {
     .price-reviews-wrapper {
       flex-direction: row;
       justify-content: space-between;
