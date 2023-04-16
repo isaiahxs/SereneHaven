@@ -132,9 +132,9 @@ export default function EditSpot() {
   }, [dispatch, spotId])
 
   if (!detailState) {
-    console.log("we're loading here :c")
+    // console.log("we're loading here :c")
     return (
-      <div>loading...</div>
+      <div className="loading">Loading...</div>
     )
   };
 

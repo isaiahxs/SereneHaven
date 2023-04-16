@@ -5,14 +5,14 @@
     margin-bottom: 1rem;
 }
 
-.manage-header h1 {
+/* .manage-header h1 {
     font-size: 2rem;
     font-weight: bold;
     color: #222;
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
+} */
 
-.manage-header button {
+/* .manage-header button {
     background-color: #FF385C;
     color: #fff;
     border: none;
@@ -21,7 +21,7 @@
     font-weight: bold;
     padding: 0.75rem 1.5rem;
     cursor: pointer;
-}
+} */
 
 .landing-container {
     display: flex;
@@ -38,16 +38,9 @@
     cursor: pointer;
 }
 
-.spot-card:hover {
+/* .spot-card:hover {
     box-shadow: 0px 0px 5px #ccc;
-}
-
-.spot-img {
-    width: 100%;
-    height: 16rem;
-    object-fit: cover;
-    border-radius: 5%;
-}
+} */
 
 .location-stars {
     display: flex;
@@ -77,13 +70,6 @@
 }
 
 
-.price {
-    font-size: 1.1rem;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    font-weight: 400;
-}
-
-
 
 /* .amount {
     font-weight: bold;
@@ -96,7 +82,7 @@
     justify-content: space-around;
     align-items: center;
     margin: 1.2rem;
-    z-index: 500;
+    /* z-index: 500; */
 }
 
 #manage-header .manage-create {

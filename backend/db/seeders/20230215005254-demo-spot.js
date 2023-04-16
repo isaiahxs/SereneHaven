@@ -21,7 +21,7 @@ module.exports = {
       lat: 25.7841,
       lng: -80.1314,
       name: 'Oceanfront Oasis',
-      description: 'Luxury condo with stunning ocean views',
+      description: 'Luxury condo with stunning ocean views.',
       price: 300.00
     },
     {
@@ -33,7 +33,7 @@ module.exports = {
       lat: 40.7648,
       lng: -73.9742,
       name: 'Park Avenue Penthouse',
-      description: 'Sprawling duplex with panoramic city views',
+      description: 'Sprawling duplex with panoramic city views.',
       price: 400.00
     },
     {
@@ -45,7 +45,7 @@ module.exports = {
       lat: 34.0502,
       lng: -118.2562,
       name: 'Downtown Dream',
-      description: 'Chic loft in the heart of the city',
+      description: 'Chic loft in the heart of the city.',
       price: 300.00
     },
     {
@@ -57,7 +57,7 @@ module.exports = {
       lat: 29.7604,
       lng: -95.3698,
       name: 'Space City',
-      description: 'Experience NASA and Space Center Houston',
+      description: 'Experience NASA and Space Center Houston.',
       price: 250.00
     },
     {
@@ -69,7 +69,7 @@ module.exports = {
       lat: 47.6062,
       lng: -122.3321,
       name: 'Emerald City',
-      description: 'Visit the Space Needle and Pike Place Market',
+      description: 'Visit the Space Needle and Pike Place Market.',
       price: 400.00
     },
     {
@@ -81,7 +81,7 @@ module.exports = {
       lat: 36.1627,
       lng: -86.7816,
       name: 'Music City',
-      description: 'Experience country music and southern hospitality',
+      description: 'Experience country music and southern hospitality.',
       price: 300.00
     },
     {
@@ -93,7 +93,7 @@ module.exports = {
       lat: 25.7617,
       lng: -80.1918,
       name: 'Magic City',
-      description: 'Enjoy beaches, nightlife, and Cuban food',
+      description: 'Enjoy beaches, nightlife, and Cuban food.',
       price: 250.00
     },
     {
@@ -105,7 +105,7 @@ module.exports = {
       lat: 42.3601,
       lng: -71.0589,
       name: 'Beantown',
-      description: 'Discover history, culture, and seafood',
+      description: 'Discover history, culture, and seafood.',
       price: 280.00
     },
     {
@@ -117,7 +117,7 @@ module.exports = {
       lat: 29.9511,
       lng: -90.0715,
       name: 'The Big Easy',
-      description: 'Experience jazz, Cajun cuisine, and Mardi Gras',
+      description: 'Experience jazz, Cajun cuisine, and Mardi Gras.',
       price: 220.00
     },
     {
@@ -129,8 +129,32 @@ module.exports = {
       lat: 37.7749,
       lng: -122.4194,
       name: 'The City by the Bay',
-      description: 'Visit the Golden Gate Bridge and Alcatraz Island',
+      description: 'Visit the Golden Gate Bridge and Alcatraz Island.',
       price: 280.00
+    },
+    {
+      ownerId: 1,
+      address: '123 N Michigan Ave',
+      city: 'Chicago',
+      state: 'Illinois',
+      country: 'USA',
+      lat: 41.8825,
+      lng: -87.6243,
+      name: 'The Windy City Escape',
+      description: 'Experience the vibrant culture of the Windy City with a stay at this downtown Chicago escape.',
+      price: 200.00
+    },
+    {
+      ownerId: 1,
+      address: '456 Ocean Blvd',
+      city: 'Santa Monica',
+      state: 'California',
+      country: 'USA',
+      lat: 34.0094,
+      lng: -118.4975,
+      name: 'Beachfront Retreat',
+      description: 'Escape to the sunny shores of Santa Monica with a stay at this beachfront retreat.',
+      price: 250.00
     }
    ], {}) //REMEMBER TO PASS IN OPTION OBJECT
   },
@@ -140,7 +164,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Oceanfront Oasis', 'Park Avenue Penthouse', 'Downtown Dream', 'Space City', 'Emerald City', 'Music City', 'Magic City', 'Beantown', 'The Big Easy', 'The City by the Bay']}
+      name: { [Op.in]: ['Oceanfront Oasis', 'Park Avenue Penthouse', 'Downtown Dream', 'Space City', 'Emerald City', 'Music City', 'Magic City', 'Beantown', 'The Big Easy', 'The City by the Bay', 'The Windy City Escape', 'Beachfront Retreat']}
     }, {}) //REMEMBER TO PASS IN OPTION OBJECT
   }
 };

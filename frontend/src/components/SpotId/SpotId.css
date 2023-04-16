@@ -96,7 +96,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   .name {
     font-size: 36px;
     font-weight: bold;
-    margin-top: 30px;
+    margin-top: -15px;
   }
 
   .heading {
@@ -133,6 +133,10 @@ Use high-quality photos to showcase the property and add to the overall visual a
     font-size: 1.1rem;
     background-color: white;
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  }
+
+  .review-container .stars {
+    margin-top: -15px;
   }
 
   .review-question {
@@ -204,7 +208,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
   }
 
   .host-name {
-    margin-top: 0px;
+    margin-top: -7px;
   }
 
   .reservation-container {
@@ -223,6 +227,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     flex-direction: row;
     /* justify-content: space-around; */
     align-items: center;
+    flex-grow: 1;
   }
 
   .total-reviews-container {
@@ -231,6 +236,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     justify-content: space-between;
     font-size: 1.1rem;
     align-items: center;
+    flex-grow: 1;
   }
 
   .stars {
@@ -239,7 +245,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     flex-direction: row;
     font-size: 1.4rem;
     font-weight: bold;
-    margin-top: -10px;
+    /* margin-top: -10px; */
     /* justify-content: space-between; */
   }
 
@@ -310,7 +316,7 @@ Use high-quality photos to showcase the property and add to the overall visual a
     font-size: 1.4rem;
     /* margin: 5px; */
     margin-right: 7px;
-    margin-bottom: 10px;
+    /* margin-bottom: 10px; */
   }
 
   .review-date {
@@ -343,10 +349,68 @@ Use high-quality photos to showcase the property and add to the overall visual a
       height: auto;
       flex-wrap: nowrap;
       overflow: auto;
+      /* position: relative; */
+      /* box-shadow: 4px 0px 0px 0px rgba(0, 0, 0, 1); */
     }
 
     .small-images {
       width: 80%;
       height: auto;
+      /* box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1); */
+      margin-bottom: 5px;
+      /* position: relative; */
     }
+  }
+
+  .price-reviews-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    /* padding-right: 20px; */
+  }
+
+  @media (min-width: 910px) {
+    .price-reviews-wrapper {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+
+    .reservation-container {
+      font-size: 1.0rem;
+    }
+  }
+
+  .reviews {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .review-count {
+    margin-left: 5px;
+    font-size: 1.4rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  @media (max-width: 511px) {
+    .reviews {
+      flex-direction: column;
+    }
+
+    .review-count {
+      margin-left: 0;
+      /* font-size: 1.4rem;
+      font-weight: bold; */
+    }
+
+    .reservation-container .dot {
+      display: none;
+    }
+
+    /* .dot {
+      display: none;
+    } */
   }
