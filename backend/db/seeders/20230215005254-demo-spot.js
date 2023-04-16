@@ -131,6 +131,30 @@ module.exports = {
       name: 'The City by the Bay',
       description: 'Visit the Golden Gate Bridge and Alcatraz Island.',
       price: 280.00
+    },
+    {
+      ownerId: 1,
+      address: '123 N Michigan Ave',
+      city: 'Chicago',
+      state: 'Illinois',
+      country: 'USA',
+      lat: 41.8825,
+      lng: -87.6243,
+      name: 'The Windy City Escape',
+      description: 'Experience the vibrant culture of the Windy City with a stay at this downtown Chicago escape.',
+      price: 200.00
+    },
+    {
+      ownerId: 1,
+      address: '456 Ocean Blvd',
+      city: 'Santa Monica',
+      state: 'California',
+      country: 'USA',
+      lat: 34.0094,
+      lng: -118.4975,
+      name: 'Beachfront Retreat',
+      description: 'Escape to the sunny shores of Santa Monica with a stay at this beachfront retreat.',
+      price: 250.00
     }
    ], {}) //REMEMBER TO PASS IN OPTION OBJECT
   },
@@ -140,7 +164,7 @@ module.exports = {
     options.tableName = 'Spots';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      name: { [Op.in]: ['Oceanfront Oasis', 'Park Avenue Penthouse', 'Downtown Dream', 'Space City', 'Emerald City', 'Music City', 'Magic City', 'Beantown', 'The Big Easy', 'The City by the Bay']}
+      name: { [Op.in]: ['Oceanfront Oasis', 'Park Avenue Penthouse', 'Downtown Dream', 'Space City', 'Emerald City', 'Music City', 'Magic City', 'Beantown', 'The Big Easy', 'The City by the Bay', 'The Windy City Escape', 'Beachfront Retreat']}
     }, {}) //REMEMBER TO PASS IN OPTION OBJECT
   }
 };

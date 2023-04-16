@@ -214,7 +214,7 @@ module.exports = {
       },
       {
         spotId: 8,
-        url: "https://a0.muscache.com/im/pictures/684e83da-b97b-4bc4-946b-b3224f6fbdef.jpg?im_w=1200",
+        url: "https://a0.muscache.com/im/pictures/4f32a721-a4ba-4ff5-8679-eaa012d484d2.jpg?im_w=1200",
         preview: false
       },
       //https://www.airbnb.com/rooms/750089121447866329?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-16&check_out=2023-04-21&federated_search_id=f7c0fe06-3221-413a-a06e-f425f911b8a0&source_impression_id=p3_1681659292_VC4G60P9LhPY0k4q
@@ -240,7 +240,7 @@ module.exports = {
       },
       {
         spotId: 9,
-        url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-750089121447866329/original/9d193550-a53d-410f-8956-e029abbfbba0.jpeg?im_w=1200",
+        url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-750089121447866329/original/3eac1b85-d34a-446c-a745-c7565b240db9.jpeg?im_w=1200",
         preview: false
       },
       //https://www.airbnb.com/rooms/51564352?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-28&check_out=2023-05-03&federated_search_id=23c66ca8-5b5a-4c08-b2d2-ca81dbbfef96&source_impression_id=p3_1681659425_XSnXF4e1zJJcIsn6
@@ -269,6 +269,57 @@ module.exports = {
         url: "https://a0.muscache.com/im/pictures/b6017d67-eb3b-4bb0-bcae-f697de4fb5a2.jpg?im_w=1200",
         preview: false
       },
+      //https://www.airbnb.com/rooms/770973493232809347?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-24&check_out=2023-04-30&federated_search_id=0da6551c-e3c5-4560-88aa-73b37bb001f2&source_impression_id=p3_1681663847_YBRdKJM%2FIQtXwlu8
+      {
+        spotId: 11,
+        url: "https://a0.muscache.com/im/pictures/miso/Hosting-770973493232809347/original/0b6714ab-69e3-4af1-80c1-e0926f6bc9a4.jpeg?im_w=1200",
+        preview: true
+      },
+      {
+        spotId: 11,
+        url: "https://a0.muscache.com/im/pictures/miso/Hosting-770973493232809347/original/45aa3858-9f35-4a4b-af84-e727082521e4.jpeg?im_w=1200",
+        preview: false
+      },
+      {
+        spotId: 11,
+        url: "https://a0.muscache.com/im/pictures/91205299-ed08-4aac-95a2-978d54617572.jpg?im_w=1200",
+        preview: false
+      },
+      {
+        spotId: 11,
+        url: "https://a0.muscache.com/im/pictures/e282e036-afb9-4888-ba4c-5d1cd0fcef0f.jpg?im_w=1200",
+        preview: false
+      },
+      {
+        spotId: 11,
+        url: "https://a0.muscache.com/im/pictures/65c14384-60bf-47e9-be19-452c62e75304.jpg?im_w=1200",
+        preview: false
+      },
+      {
+        spotId: 12,
+        url: "https://a0.muscache.com/im/pictures/miso/Hosting-868466610221935716/original/34f6b1a4-0110-4a84-a82c-43983054ed48.jpeg?im_w=1200",
+        preview: true
+      },
+      {
+        spotId: 12,
+        url: "https://a0.muscache.com/im/pictures/miso/Hosting-868466610221935716/original/8c4082e0-c971-4921-a548-924f4dcaef95.jpeg?im_w=1200",
+        preview: false
+      },
+      {
+        spotId: 12,
+        url: "https://a0.muscache.com/im/pictures/miso/Hosting-868466610221935716/original/b0e046f5-811f-47b4-a26f-c1c4709aa9db.jpeg?im_w=1200",
+        preview: false
+      },
+      {
+        spotId: 12,
+        url: "https://a0.muscache.com/im/pictures/miso/Hosting-868466610221935716/original/2c5188ca-91c8-40f6-a6c1-0b51bee22a8b.png?im_w=1200",
+        preview: false
+      },
+      {
+        spotId: 12,
+        url: "https://a0.muscache.com/im/pictures/miso/Hosting-868466610221935716/original/e7594850-3b29-4b63-9bf0-0fcc503f95bd.jpeg?im_w=1200",
+        preview: false
+      },
     ], {}) //DON'T FORGET TO PASS IN THE OPTIONS OBJECT
   },
 
@@ -276,7 +327,7 @@ module.exports = {
     options.tableName = 'SpotImages';
     const Op = Sequelize.Op;
     return queryInterface.bulkDelete(options, {
-      spotId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+      spotId: { [Op.in]: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
     }, {}) //DON'T FORGET TO PASS IN THE OPTIONS OBJECT
   }
 };

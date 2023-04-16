@@ -12,61 +12,61 @@ module.exports = {
     options.tableName = 'Bookings';
     return queryInterface.bulkInsert(options, [
       {
-        spotId: 1,
+        spotId: 2,
         userId: 1,
         startDate: '2025-01-01',
         endDate: '2025-01-02'
       },
       {
-        spotId: 2,
+        spotId: 3,
         userId: 2,
         startDate: '2025-02-02',
         endDate: '2025-02-03'
       },
       {
-        spotId: 3,
+        spotId: 4,
         userId: 3,
         startDate: '2025-03-03',
         endDate: '2025-03-04'
       },
       {
-        spotId: 4,
+        spotId: 5,
         userId: 4,
         startDate: '2025-04-04',
         endDate: '2025-04-05'
       },
       {
-        spotId: 5,
+        spotId: 6,
         userId: 5,
         startDate: '2025-05-05',
         endDate: '2025-05-06'
       },
       {
-        spotId: 6,
+        spotId: 7,
         userId: 1,
         startDate: '2025-06-06',
         endDate: '2025-06-07'
       },
       {
-        spotId: 7,
+        spotId: 8,
         userId: 2,
         startDate: '2025-07-07',
         endDate: '20025-07-08'
       },
       {
-        spotId: 8,
+        spotId: 9,
         userId: 3,
         startDate: '2025-08-08',
         endDate: '2025-08-09'
       },
       {
-        spotId: 9,
+        spotId: 10,
         userId: 4,
         startDate: '2025-09-09',
         endDate: '2025-09-10'
       },
       {
-        spotId: 10,
+        spotId: 1,
         userId: 5,
         startDate: '2025-10-10',
         endDate: '2025-10-11'
