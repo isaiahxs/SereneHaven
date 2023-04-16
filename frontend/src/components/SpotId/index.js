@@ -394,7 +394,11 @@ export default function SpotId() {
                                 <div key={review.id}>
                                     <div className='reviewer-name'>{review.User?.firstName}</div>
                                     {/* <div>{review.createdAt}</div> */}
-                                    <div>{new Date(review.createdAt).toLocaleDateString()}</div>
+                                    {/* my preferred method of showing the review date below */}
+                                    {/* <div>{new Date(review.createdAt).toLocaleDateString()}</div> */}
+                                    <div>
+                                        {new Date(review.createdAt).toLocaleString('en-US', {month: 'long', year: 'numeric'})}
+                                    </div>
                                     {/* <div>Star rating: {review.stars}</div> */}
                                     <div className='new-rev'>{review.review}</div>
                                     {/* need to create a button / area that the user can click and submit to edit their review */}

@@ -5,6 +5,7 @@ import { clearDetails } from '../../store/spots';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import { useModal } from '../../context/Modal';
 
 import './ReviewModal.css';
 
@@ -32,6 +33,9 @@ function ReviewModal({spotId}) {
   const [numReviews, setNumReviews] = useState(0);
 
   const [reviewCount, setReviewCount] = useState(0);
+
+  const [uploadError, setUploadError] = useState('');
+  const {closeModal} = useModal();
 
   const detailState = useSelector(state => state.spot.spotDetails);
   const reviewState = useSelector(state => state.review.currSpotReviews);
@@ -74,6 +78,32 @@ function ReviewModal({spotId}) {
     }
   }, [dispatch, reviewArray.length, reviewState, spotId]);
 
+  //ORIGINAL
+  // const submitHandler = (e) => {
+  //   e.preventDefault();
+  //   console.log('SUBMIT HANDLER CALLED')
+  //   const payload = {
+  //       //userId: sessionUser.id instead of just userId
+  //       //because the userId is a foreign key in the Review table
+  //       review,
+  //       stars,
+  //       spotId,
+  //       userId: sessionUser?.id,
+
+  //       //i think the problem might be here.
+  //   }
+  //   dispatch(addReviewThunk(payload));
+
+  //   setReviewCount(reviewCount + 1);
+  //   setAddReview(false);
+  //   setReview('');
+  //   setStars(1);
+  //   const newNumReviews = numReviews + 1;
+  //   const newAvgStarRating = (avgStarRating * numReviews + stars) / newNumReviews;
+  //   setNumReviews(newNumReviews);
+  //   setAvgStarRating(newAvgStarRating);
+  // }
+
   const submitHandler = (e) => {
     e.preventDefault();
     console.log('SUBMIT HANDLER CALLED')
@@ -87,16 +117,22 @@ function ReviewModal({spotId}) {
 
         //i think the problem might be here.
     }
-    dispatch(addReviewThunk(payload));
-
-    setReviewCount(reviewCount + 1);
-    setAddReview(false);
-    setReview('');
-    setStars(1);
-    const newNumReviews = numReviews + 1;
-    const newAvgStarRating = (avgStarRating * numReviews + stars) / newNumReviews;
-    setNumReviews(newNumReviews);
-    setAvgStarRating(newAvgStarRating);
+    dispatch(addReviewThunk(payload))
+      .then(() => {
+        setUploadError('');
+        setReviewCount(reviewCount + 1);
+        setAddReview(false);
+        setReview('');
+        setStars(1);
+        const newNumReviews = numReviews + 1;
+        const newAvgStarRating = (avgStarRating * numReviews + stars) / newNumReviews;
+        setNumReviews(newNumReviews);
+        setAvgStarRating(newAvgStarRating);
+        closeModal();
+      })
+      .catch(() => {
+        setUploadError('Sorry, seems we were unable to upload your review. Please try again.')
+      });
   }
 
   const editSubmitHandler = (e, reviewId) => {
@@ -171,6 +207,9 @@ const deleteHandler = (reviewId) => {
       <div className='review-form'>
           <form onSubmit={submitHandler}>
               <h2 className='review-question'>How was your stay?</h2>
+              {uploadError && (
+                <div className='error-message'>{uploadError}</div>
+              )}
               <textarea
                   value={review}
                   onChange={(e) => setReview(e.target.value)}
@@ -214,7 +253,7 @@ const deleteHandler = (reviewId) => {
   );
   } else {
     return (
-      <div>loading</div>
+      <div className='loading'>Loading...</div>
     )
   }
 }

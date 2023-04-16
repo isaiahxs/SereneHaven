@@ -112,7 +112,7 @@ export default function ManageSpots() {
                     <div key={spot.id} className="spot-card">
                         <div onClick={(e) => {spotDetails(e, spot.id)}}>
                         <div className='spot-card-img'>
-                            <img className="spot-img" src={spot.previewImage} alt={spot.name} />
+                            <img className="spot-image" src={spot.previewImage} alt={spot.name} />
                         </div>
                         <div className="spot-info">
                             <div className='location-stars'>
@@ -124,23 +124,22 @@ export default function ManageSpots() {
                                     {Number(spot.avgRating).toFixed(1) ? Number(spot.avgRating).toFixed(1) : "New"}
                                 </div>
                             </div>
-                            <div className="price">
-                                <span className="amount">${spot.price}</span>night
+                                <div className="price">
+                                    <span className="location-price">${spot.price}</span>night
+                                </div>
                             </div>
-
-                        </div>
                         </div>
                         <div className="manage-buttons">
                             <Link to={`/spots/${spot.id}/edit`}>
-                            <button type='button'>Update</button>
+                                <button type='button'>Update</button>
                             </Link>
                             <OpenModalButton
-                            className='modal-button'
+                                className='modal-button'
                                 buttonText='Delete'
                                 modalComponent={<DeleteSpot
                                     spot={spot}
                                     onSpotDeleted={handleSpotDeleted}
-                                    />}
+                                />}
                             />
                         </div>
                     </div>

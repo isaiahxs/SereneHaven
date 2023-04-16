@@ -151,6 +151,7 @@ function SignupFormModal() {
         !lastName ||
         !password ||
         !confirmPassword ||
+        password.length < 6 ||
         password !== confirmPassword ||
         username.length < 4
       ) {
