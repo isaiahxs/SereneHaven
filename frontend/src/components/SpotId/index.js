@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import {ReactComponent as Star} from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
 import ReviewModal from '../Review/ReviewModal';
+import DeleteReviewModal from '../Review/DeleteReviewModal';
 import OpenModalButton from '../../components/OpenModalButton';
 import './SpotId.css'
 
@@ -115,6 +116,12 @@ export default function SpotId() {
       //i'm getting status 200 from backend
       //not sure if this actually helped anything. need to check it again.
 
+    useEffect(() => {
+        if(reviewToDelete !== null) {
+            setShowDeleteModal(true);
+        }
+    }, [reviewToDelete])
+
     const submitHandler = (e) => {
         e.preventDefault();
         const payload = {
@@ -203,13 +210,24 @@ export default function SpotId() {
         // setReviewCount(reviewCount - 1);
     }
 
-    const confirmDeleteHandler = () => {
-        dispatch(deleteReviewThunk(reviewToDelete));
+    const confirmDeleteHandler = (reviewId) => {
+        dispatch(deleteReviewThunk(reviewId));
         setReviewChanged(true);
         setReviewCount(reviewCount - 1);
         setShowDeleteModal(false);
     };
 
+    const deleteConfirmationModal = () => {
+        return (
+            <div className='delete-confirmation-modal'>
+                <h3>Are you sure you want to delete this review?</h3>
+                <div>
+                    <button onClick={confirmDeleteHandler}>Yes (Delete Review)</button>
+                    <button onClick={() => setShowDeleteModal(false)}>No (Keep Review)</button>
+                </div>
+            </div>
+        )
+    }
 
 
     // console.log('DETAIL STATE PREVIEW IMAGEEEEEEEEEE', reviewArray[1])
@@ -366,7 +384,28 @@ export default function SpotId() {
                                         <div>
                                             <button className='detail-edit-button' type='submit' onClick={() => editReview(review)}>Edit Review</button>
 
-                                            <button type='submit' onClick={() => deleteHandler(review.id)}>Delete</button>
+                                            {/* <OpenModalButton
+                                                modalComponent={deleteConfirmationModal()}
+                                                buttonText='Delete'
+                                                onButtonClick={() => setReviewToDelete(review.id)}
+                                            /> */}
+
+
+                                            <OpenModalButton
+                                                modalComponent={
+                                                    <DeleteReviewModal
+                                                    reviewId={review.id}
+                                                    onDelete={confirmDeleteHandler}
+                                                    onCancel={() =>setShowDeleteModal(false)}
+                                                    />
+                                                }
+                                                buttonText='Delete'
+                                                // onButtonClick={() => setReviewToDelete(review.id)}
+                                                onButtonClick={() => setShowDeleteModal(true)}
+                                            />
+
+
+                                            {/* <button type='submit' onClick={() => deleteHandler(review.id)}>Delete</button>
 
                                             {showDeleteModal && (
                                                 <div className="delete-confirmation-modal">
@@ -376,7 +415,7 @@ export default function SpotId() {
                                                         <button onClick={() => setShowDeleteModal(false)}>No (Keep Review)</button>
                                                     </div>
                                                 </div>
-                                            )}
+                                            )} */}
                                         </div>
                                     )}
                                     {sessionUser && sessionUser.id === review.userId && showEdit && (

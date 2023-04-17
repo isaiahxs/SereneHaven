@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { reviewThunk, addReviewThunk, updateReviewThunk, deleteReviewThunk } from '../../store/reviews';
-import { spotDetails } from '../../store/spots';
-import { clearDetails } from '../../store/spots';
+import { reviewThunk, addReviewThunk } from '../../store/reviews';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
-import { useHistory } from 'react-router-dom';
 import { useModal } from '../../context/Modal';
 
 import './ReviewModal.css';
@@ -23,9 +19,6 @@ function ReviewModal({spotId}) {
   const [review, setReview] = useState('');
   const [stars, setStars] = useState(null);
   const [addReview, setAddReview] = useState(false);
-  const [ratingEdit, setRatingEdit] = useState(1);
-  const [reviewEdit, setReviewEdit] = useState('');
-  const [showEdit, setShowEdit] = useState(false);
   const [reviewChanged, setReviewChanged] = useState(false);
 
   //following are for immediate renders of reviews
@@ -45,14 +38,6 @@ function ReviewModal({spotId}) {
   let reviewArray = [];
   if (reviewState) reviewArray = Object.values(reviewState);
 
-  // useEffect(() => {
-  //   dispatch(spotDetails(spotId));
-
-  //   // clear the spot details when the component unmounts
-  //   return () => {
-  //       dispatch(clearDetails())
-  //   }
-  // }, [dispatch, spotId])
 
   useEffect(() => {
     dispatch(reviewThunk(spotId));
@@ -109,70 +94,6 @@ function ReviewModal({spotId}) {
         setUploadError('Sorry, seems we were unable to upload your review. Please try again.')
       });
   }
-
-  const editSubmitHandler = (e, reviewId) => {
-    e.preventDefault();
-    const payload = {
-        review: reviewEdit,
-        stars: ratingEdit,
-        spotId,
-        userId: sessionUser?.id,
-        reviewId
-    }
-    dispatch(updateReviewThunk(payload));
-
-    //doesn't really make sense to increase reviewCount off of just an edit
-    // setReviewCount(reviewCount + 1);
-    setReviewEdit(reviewEdit);
-    setRatingEdit(ratingEdit);
-    setShowEdit(false);
-    setReviewChanged(true);
-}
-
-const addingReview = () => {
-  //loop through the reviewArray and check if the userId of the current review matches the userId of the current sessionUser
-  //if it does, then alert the user that they have already reviewed this location
-  //if it does not, then set the addReview state to the opposite of what it currently is
-  if (sessionUser) {
-      for (let i = 0; i < reviewArray.length; i++) {
-          if (reviewArray[i].userId === sessionUser.id) {
-              alert('You have already reviewed this location');
-              return;
-          }
-      }
-      setAddReview(!addReview);
-  } else {
-      alert('Please sign in to add a review.');
-  }
-}
-
-const editReview = (review) => {
-  setShowEdit(!showEdit);
-  //going to try both
-  // setReviewEdit(reviewState[reviewId].review);
-  // setRatingEdit(reviewState[reviewId].stars);
-
-  setRatingEdit(review.stars)
-  setReviewEdit(review.review)
-}
-
-const deleteHandler = (reviewId) => {
-  dispatch(deleteReviewThunk(reviewId));
-  //i might need the following line so that it causes the immediate re-rendering of the component
-  setReviewChanged(true);
-  setReviewCount(reviewCount - 1);
-}
-
-
-
-  const handleCommentChange = (e) => {
-    setComment(e.target.value);
-  };
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   // Submit your review
-  // };
 
   const isSubmitDisabled = review.length < 10 || stars === null;
 
