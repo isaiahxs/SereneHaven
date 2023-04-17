@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import {ReactComponent as Star} from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
 import ReviewModal from '../Review/ReviewModal';
+import DeleteReviewModal from '../Review/DeleteReviewModal';
 import OpenModalButton from '../../components/OpenModalButton';
 import './SpotId.css'
 
@@ -30,6 +31,9 @@ export default function SpotId() {
     const [numReviews, setNumReviews] = useState(0);
 
     const [reviewCount, setReviewCount] = useState(0);
+
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [reviewToDelete, setReviewToDelete] = useState(null);
 
 
 
@@ -112,14 +116,11 @@ export default function SpotId() {
       //i'm getting status 200 from backend
       //not sure if this actually helped anything. need to check it again.
 
-
-// IMPORTANT: IS THIS SOMETHING I'M GOING TO HAVE TO CHECK FOR LATER?
-    // if (!detailState) return null;
-
-    //noticed this one was not appearing so i realized it was the line above that was making it not appear
-    // console.log('5+5');
-
-// IMPORTANT: GOING TO HAVE TO MAKE SMALL EDITS DEPENDING ON WHETHER OR NOT THERE IS A USER
+    useEffect(() => {
+        if(reviewToDelete !== null) {
+            setShowDeleteModal(true);
+        }
+    }, [reviewToDelete])
 
     const submitHandler = (e) => {
         e.preventDefault();
@@ -183,13 +184,6 @@ export default function SpotId() {
         }
     }
 
-    // const checkUserBeforeAddingReview = () => {
-    //     if (!sessionUser) {
-    //         alert('Please sign in to add a review.');
-    //         return;
-    //     }
-    // }
-
 //--------------------GOING TO WORK ON REVIEW MODAL ABOVE --------------------
 
 
@@ -204,12 +198,36 @@ export default function SpotId() {
     }
 
     const deleteHandler = (reviewId) => {
-        dispatch(deleteReviewThunk(reviewId));
-        //i might need the following line so that it causes the immediate re-rendering of the component
-        setReviewChanged(true);
-        setReviewCount(reviewCount - 1);
+        setReviewToDelete(reviewId);
+        setShowDeleteModal(true);
+
+
+//BELOW ARE FOR BEFORE I IMPLEMENTED DELETE MODAL
+        // commenting this out so it doesn't immediately delete the review
+            // dispatch(deleteReviewThunk(reviewId));
+        //i might need the following lines so that it causes the immediate re-rendering of the component
+        // setReviewChanged(true);
+        // setReviewCount(reviewCount - 1);
     }
 
+    const confirmDeleteHandler = (reviewId) => {
+        dispatch(deleteReviewThunk(reviewId));
+        setReviewChanged(true);
+        setReviewCount(reviewCount - 1);
+        setShowDeleteModal(false);
+    };
+
+    const deleteConfirmationModal = () => {
+        return (
+            <div className='delete-confirmation-modal'>
+                <h3>Are you sure you want to delete this review?</h3>
+                <div>
+                    <button onClick={confirmDeleteHandler}>Yes (Delete Review)</button>
+                    <button onClick={() => setShowDeleteModal(false)}>No (Keep Review)</button>
+                </div>
+            </div>
+        )
+    }
 
 
     // console.log('DETAIL STATE PREVIEW IMAGEEEEEEEEEE', reviewArray[1])
@@ -259,8 +277,6 @@ export default function SpotId() {
                                     night
                                     </div>
                                 {/* ----------------------------------------- */}
-
-                                {/* ----------------------------------------- */}
                                 {/* EXPERIMENTING TO TRY TO IMMEDIATELY RENDER NEW AVGSTARRATING AND NEWNUMREVIEW COUNT */}
                                 {/* <div className='total-reviews-container'>
                                     {Number(avgStarRating) ? (
@@ -304,8 +320,6 @@ export default function SpotId() {
 
 
                     <div className='review-container'>
-                        {/* <div>Reviews</div> */}
-
                         {/* ------------------------------------ */}
                         <div className='review-summary'>
                             {Number(detailState.avgStarRating) ? (
@@ -340,24 +354,6 @@ export default function SpotId() {
                             )}
                         </div> */}
                         {/* ------------------------------------ */}
-                        {/* the things below work, it's just that they can be slightly improved */}
-                        {/* <div className='add-review' onClick={addingReview}>Post Your Review</div> */}
-
-
-                        {/* <div className='add-review' onClick={addingReview}> */}
-                            {/* {reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"} */}
-                            {/* {showReviewButton() && (reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review")}
-                        </div> */}
-                        {/* <ReviewModal/> */}
-
-                        {/* {
-                            showReviewButton() && (
-                                <button className='add-review' onClick={addingReview}>
-                                {reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
-                                </button>
-                            )
-                        } */}
-                        {/* {console.log('SpotId:', spotId)} */}
                         {
                         showReviewButton() && (
                             <OpenModalButton
@@ -368,31 +364,6 @@ export default function SpotId() {
                             )
                         }
                         {/* ----------------------------------- */}
-                        {/* {addReview && (
-                            <div className='review-form'>
-                                <form onSubmit={submitHandler}>
-                                    <h2 className='review-question'>How was your stay?</h2>
-                                    <textarea
-                                        value={review}
-                                        onChange={(e) => setReview(e.target.value)}
-                                        placeholder='Leave your review here...'
-                                        required
-                                        maxLength={200}
-                                    />
-                                    <input
-                                    className='review-input'
-                                    type='number'
-                                    value={stars}
-                                    onChange={(e) => setStars(e.target.value)}
-                                    min={1}
-                                    max={5}
-                                    required
-                                    placeholder='Rating'
-                                    />
-                                    <button type='submit'>Submit Your Review</button>
-                                </form>
-                            </div>
-                        )} */}
                         {/* need to put a check here to render only after the data is available to avoid the firstName and lastName bug */}
                         {reviewArray.map((review) => {
                             // console.log('Review:', review)
@@ -412,7 +383,39 @@ export default function SpotId() {
                                     {sessionUser && sessionUser.id === review.userId && (
                                         <div>
                                             <button className='detail-edit-button' type='submit' onClick={() => editReview(review)}>Edit Review</button>
-                                            <button type='submit' onClick={() => deleteHandler(review.id)}>Delete</button>
+
+                                            {/* <OpenModalButton
+                                                modalComponent={deleteConfirmationModal()}
+                                                buttonText='Delete'
+                                                onButtonClick={() => setReviewToDelete(review.id)}
+                                            /> */}
+
+
+                                            <OpenModalButton
+                                                modalComponent={
+                                                    <DeleteReviewModal
+                                                    reviewId={review.id}
+                                                    onDelete={confirmDeleteHandler}
+                                                    onCancel={() =>setShowDeleteModal(false)}
+                                                    />
+                                                }
+                                                buttonText='Delete'
+                                                // onButtonClick={() => setReviewToDelete(review.id)}
+                                                onButtonClick={() => setShowDeleteModal(true)}
+                                            />
+
+
+                                            {/* <button type='submit' onClick={() => deleteHandler(review.id)}>Delete</button>
+
+                                            {showDeleteModal && (
+                                                <div className="delete-confirmation-modal">
+                                                <h3>Are you sure you want to delete this review?</h3>
+                                                    <div>
+                                                        <button onClick={confirmDeleteHandler}>Yes (Delete Review)</button>
+                                                        <button onClick={() => setShowDeleteModal(false)}>No (Keep Review)</button>
+                                                    </div>
+                                                </div>
+                                            )} */}
                                         </div>
                                     )}
                                     {sessionUser && sessionUser.id === review.userId && showEdit && (
@@ -454,29 +457,3 @@ export default function SpotId() {
 
 //q: when i'm signed in and go to a spot where i have not made a review already, then i click on submit, i get an error saying "cannot read properties of firtName" of undefined. why is this happening? i thought i was passing in the userId as a foreign key in the review table
     //i think i resolved this. put a question mark after review.User in the divs
-
-//----------------------- NEW ITERATION -----------------------
-
-
-//----------------------- OLD ITERATION -----------------------
-
-// my old return before i reorganized it:
-    // return (
-    //     <div className='spot-details'>
-    //     {/* render detailed view of a spot. use data from Redux store through useSelector hook to display spot's name, avg rating, number of reviews, city, state, country*/}
-    //     {/* render images of the location through the spotImages*/}
-    //     {/* have a section for the reviews */}
-    //     {/* <h1>{detailState.name}</h1>
-    //         <p>Rating: {detailState.avgRating}</p>
-    //         <p>City: {detailState.city}</p>
-    //         <p>State: {detailState.state}</p>
-    //         <p>Country: {detailState.country}</p> */}
-    //     {detailState && (
-    //         <>
-    //             <div>hiiii</div>
-    //             <div>{detailState.name}</div>
-    //             {/* <div>{detailState.city}</div> */}
-    //         </>
-    //     )}
-    //     </div>
-    // )
