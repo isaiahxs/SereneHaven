@@ -78,31 +78,6 @@ function ReviewModal({spotId}) {
     }
   }, [dispatch, reviewArray.length, reviewState, spotId]);
 
-  //ORIGINAL
-  // const submitHandler = (e) => {
-  //   e.preventDefault();
-  //   console.log('SUBMIT HANDLER CALLED')
-  //   const payload = {
-  //       //userId: sessionUser.id instead of just userId
-  //       //because the userId is a foreign key in the Review table
-  //       review,
-  //       stars,
-  //       spotId,
-  //       userId: sessionUser?.id,
-
-  //       //i think the problem might be here.
-  //   }
-  //   dispatch(addReviewThunk(payload));
-
-  //   setReviewCount(reviewCount + 1);
-  //   setAddReview(false);
-  //   setReview('');
-  //   setStars(1);
-  //   const newNumReviews = numReviews + 1;
-  //   const newAvgStarRating = (avgStarRating * numReviews + stars) / newNumReviews;
-  //   setNumReviews(newNumReviews);
-  //   setAvgStarRating(newAvgStarRating);
-  // }
 
   const submitHandler = (e) => {
     e.preventDefault();
