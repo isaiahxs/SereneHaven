@@ -17,7 +17,7 @@ export default function ManageSpots() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [currUserSpots, setCurrUserSpots] = useState({});
     const spotsState = useSelector((state) => state.spot);
-    console.log('MANAGE SPOTS STATE', spotsState)
+    // console.log('MANAGE SPOTS STATE', spotsState)
 
     //when i get the error of Spots undefined, i can comment this useEffect out to get the page to load. however, it is empty aside from the header, buttonn, and nav bar.
     //when i uncomment this, the page loads with the correct spots, after x time or inputs, the page crashes with the error of Spots undefined... what is going on?
@@ -38,7 +38,7 @@ export default function ManageSpots() {
     useEffect(() => {
         if(spotsState.userSpots) {
             const userSpots = spotsState.userSpots.Spots
-            console.log('USER SPOTS', userSpots)
+            // console.log('USER SPOTS', userSpots)
             if (userSpots) {
                 setCurrUserSpots(userSpots)
             }
@@ -63,7 +63,7 @@ export default function ManageSpots() {
 
     //upon clicking the update button, redirect to the edit spot page
     const editSpot = async (e, id) => {
-        console.log(e);
+        // console.log(e);
         e.preventDefault();
         // e.stopImmediatePropagation();
         // e.stopPropagation();
@@ -121,7 +121,8 @@ export default function ManageSpots() {
                                 </p>
                                 <div className='stars'>
                                     <Star alt='little-star'/>
-                                    {Number(spot.avgRating).toFixed(1) ? Number(spot.avgRating).toFixed(1) : "New"}
+                                    {/* {Number(spot.avgRating).toFixed(1) ? Number(spot.avgRating).toFixed(1) : "New"} */}
+                                    {spot.avgRating > 0 ? Number(spot.avgRating).toFixed(1) : "New"}
                                 </div>
                             </div>
                                 <div className="price">
