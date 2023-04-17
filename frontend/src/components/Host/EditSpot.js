@@ -13,16 +13,16 @@ export default function EditSpot() {
   const {closeModal} = useModal();
 
   const sessionUser = useSelector(state => state.session.user);
-  console.log('SESSION USER FROM EDIT PAGE', sessionUser)
+  // console.log('SESSION USER FROM EDIT PAGE', sessionUser)
 
   const detailState = useSelector(state => state.spot.spotDetails);
-  console.log('DETAIL STATE IN EDIT PAGE', detailState);
+  // console.log('DETAIL STATE IN EDIT PAGE', detailState);
 
   const {spotId} = useParams();
 
   const preview = detailState?.SpotImages?.find(image => image.preview);
   const previewURL = preview?.url;
-  console.log('PREVIEW IMAGE URL', preview);
+  // console.log('PREVIEW IMAGE URL', preview);
 
   const [name, setName] = useState(detailState?.name);
   const [description, setDescription] = useState(detailState?.description);

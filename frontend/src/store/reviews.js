@@ -42,7 +42,7 @@ export const reviewThunk = (review) => async (dispatch) => {
 
 //thunk action creator for posting a review
 export const addReviewThunk = ({userId, spotId, stars, review}) => async (dispatch) => {
-    console.log('addReviewThunk CALLED')
+    // console.log('addReviewThunk CALLED')
     //destructure the passed object to get the userId, spotId, stars, and review
     const postingObject = {
         userId,

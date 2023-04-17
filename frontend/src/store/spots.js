@@ -308,7 +308,7 @@ const spotReducer = (state=initialState, action) => {
     switch (action.type) {
         //with GET_SPOTS, update the spots property in the state object with the payload of the retrieved spots
         case GET_SPOTS:
-            console.log('hiii')
+            // console.log('hiii')
             // newState.spots = action.payload;
             // return newState;
             const allSpots = {};
@@ -320,17 +320,17 @@ const spotReducer = (state=initialState, action) => {
             //assign the action's 'spot' payload to the spotDetails key of the newState object
             //we'll do this so the spotDetails key in the Redux store holds the details of a single spot, as opposed to an array of spots, which would be held by the allSpots key
         case GET_DETAILS:
-            console.log('hello this is get details')
+            // console.log('hello this is get details')
             newState['spotDetails'] = action.spots;
             return newState;
 
         case ADD_SPOT:
-            console.log('this is add spot')
+            // console.log('this is add spot')
             const addSpot = action.newSpot;
             return addSpot;
 
         case ADD_IMG_TO_SPOT:
-            console.log('this is add img to spot')
+            // console.log('this is add img to spot')
             newState['spotDetails'] = action.spot;
             return newState;
             //this seems like it would override the spotDetails key in the Redux store with the spot object that we're passing in as the payload of the action object
@@ -347,13 +347,13 @@ const spotReducer = (state=initialState, action) => {
             //in the UPDATE_SPOT case, we need to assign the updatedSpot to the spotDetails key of the newState object because we want to update the spotDetails key in the Redux store with the updated spot details
 
         case DELETE_SPOT:
-            console.log('this is delete spot')
+            // console.log('this is delete spot')
             const deleted = action.spotId;
             delete newState.userSpots[deleted];
             return newState;
 
         case GET_USER_SPOTS:
-            console.log('this is get user spots')
+            // console.log('this is get user spots')
             newState['userSpots'] = action.spots
             return newState;
             // const userSpots = {};
@@ -365,7 +365,7 @@ const spotReducer = (state=initialState, action) => {
             // return newState;
 
         case CLEAR_DETAILS:
-            console.log('now clearing details');
+            // console.log('now clearing details');
             newState['spotDetails'] = null;
             return newState;
 

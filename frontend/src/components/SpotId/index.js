@@ -10,11 +10,12 @@ import { clearDetails } from '../../store/spots';
 import ReviewModal from '../Review/ReviewModal';
 import DeleteReviewModal from '../Review/DeleteReviewModal';
 import OpenModalButton from '../../components/OpenModalButton';
+import { useModal } from '../../context/Modal';
 import './SpotId.css'
 
 
 export default function SpotId() {
-    console.log('yooo');
+    // console.log('yooo');
 
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(1);
@@ -34,6 +35,8 @@ export default function SpotId() {
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [reviewToDelete, setReviewToDelete] = useState(null);
+
+    const {closeModal} = useModal();
 
 
 
@@ -215,6 +218,7 @@ export default function SpotId() {
         setReviewChanged(true);
         setReviewCount(reviewCount - 1);
         setShowDeleteModal(false);
+        closeModal();
     };
 
     const deleteConfirmationModal = () => {
