@@ -1,7 +1,4 @@
-This is the beginning of the AirBnB project.
-
-API Docs and KB Cards:
-https://github.com/appacademy/assessment-for-sprint-13-api-documentation-airbnb
+This is the beginning of the SereneStay project.
 
 ROADMAP BELOW:
 https://open.appacademy.io/learn/js-py---pt-aug-2022-online/week-23---project-planning--security--authentication/roadmap
@@ -176,7 +173,7 @@ think i need to add columns to Users of 'credential, password'
 
 
 ------------------------------------------------------
-airbnb spot links - andres and blake recommended stock photo urls since they won't change as frequently. so what i can do, is find a unique external house picture. then find multiple indoor pictures that will go with that house. doesn't necessarily have to perfectly match, but it will result in the least maintenance over time and it still gets the message across.
+spot links - andres and blake recommended stock photo urls since they won't change as frequently. so what i can do, is find a unique external house picture. then find multiple indoor pictures that will go with that house. doesn't necessarily have to perfectly match, but it will result in the least maintenance over time and it still gets the message across.
 
 going to have to create a lot of seed data.
 
@@ -184,9 +181,3 @@ use unsplash for the stock photos:
 https://unsplash.com/s/photos/indoor-house
 https://unsplash.com/s/photos/houses
 
-Miami: https://www.airbnb.com/rooms/549139249395273435?source_impression_id=p3_1680667756_LtgHhNzypFF0vHKH
-
-NY:
-
-
-LA
