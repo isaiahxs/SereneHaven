@@ -1,4 +1,4 @@
-This is the beginning of the SereneStay project.
+This is the beginning of the SereneHaven project.
 
 ROADMAP BELOW:
 https://open.appacademy.io/learn/js-py---pt-aug-2022-online/week-23---project-planning--security--authentication/roadmap

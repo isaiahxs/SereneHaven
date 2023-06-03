@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import {ReactComponent as Logo} from '../../assets/bnb-with-text.svg';
+import {ReactComponent as Logo} from '../../assets/ser.svg';
 // import AddSpot from '../Host/AddSpot';
 import './Navigation.css';
 

@@ -36,7 +36,6 @@ module.exports = {
         url: 'https://a0.muscache.com/im/pictures/prohost-api/Hosting-549139249395273435/original/5a0ccf68-6421-46eb-a85d-644e8489fb9b.jpeg?im_w=1200',
         preview: false
       },
-      //https://www.airbnb.com/rooms/683194252577702880?adults=1&category_tag=Tag%3A8536&children=0&enable_m3_private_room=false&infants=0&pets=0&search_mode=flex_destinations_search&check_in=2023-04-16&check_out=2023-04-22&federated_search_id=54f8551e-e2bf-44b4-95ce-531c7231f00f&source_impression_id=p3_1680697164_Cq3OAZ0437bhvMbl
       {
         spotId: 2,
         url: 'https://a0.muscache.com/im/pictures/miso/Hosting-683194252577702880/original/c3cc9e96-c34d-42db-9ffe-c5d2b0738f7e.jpeg?im_w=1200',
@@ -87,7 +86,6 @@ module.exports = {
         url: 'https://a0.muscache.com/im/pictures/miso/Hosting-639959331064027836/original/1a27f1b9-f9b5-4f07-a486-aa973b862a08.jpeg?im_w=1200',
         preview: false
       },
-      //https://www.airbnb.com/rooms/593627159555355698?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-16&check_out=2023-04-21&federated_search_id=2ea576c3-1572-407e-ac70-6640475eeb48&source_impression_id=p3_1681658214_Sxh8KgFshHUpJ9ud&modal=PHOTO_TOUR_SCROLLABLE
       {
         spotId: 4,
         url: "https://a0.muscache.com/im/pictures/miso/Hosting-593627159555355698/original/3f1d5a52-d09a-41fa-9084-90612a44e217.jpeg?im_w=1200",
@@ -113,7 +111,6 @@ module.exports = {
         url: "https://a0.muscache.com/im/pictures/miso/Hosting-593627159555355698/original/b59a8e44-a251-4562-8bb3-ae44561e4915.jpeg?im_w=1200",
         preview: false
       },
-      //https://www.airbnb.com/rooms/37889645?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-24&check_out=2023-04-29&federated_search_id=765e3cef-a09c-4f89-8574-cb7da7ca4108&source_impression_id=p3_1681658516_4rpgYyzSVaKtZlwt
       {
         spotId: 5,
         url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-37889645/original/a1204fd9-a5ea-46f4-b198-fc769406b99d.jpeg?im_w=1200",
@@ -139,7 +136,6 @@ module.exports = {
         url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-37889645/original/945cb53d-6876-49ce-92b6-561593f8eecd.jpeg?im_w=1200",
         preview: false
       },
-      //https://www.airbnb.com/rooms/54227245?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-23&check_out=2023-04-28&federated_search_id=401b2dc9-5e50-401d-b9ed-fa7a35bd3d2f&source_impression_id=p3_1681658837_qyn%2BRp8Lc6U3MYVz
       {
         spotId: 6,
         url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-54227245/original/e13f3295-6e3d-489c-b705-e268e81a37ab.jpeg?im_w=1200",
@@ -165,7 +161,6 @@ module.exports = {
         url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-54227245/original/1b03b6f6-08af-452a-8e28-859e425786b5.jpeg?im_w=1200",
         preview: false
       },
-      //https://www.airbnb.com/rooms/789106883669530972?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-05-22&check_out=2023-05-27&federated_search_id=a59cceb8-ef52-4d79-8b8d-b17a13da4421&source_impression_id=p3_1681658979_DtF3D4y6VWTPrMZN
       {
         spotId: 7,
         url: "https://a0.muscache.com/im/pictures/miso/Hosting-789106883669530972/original/369a6c84-a0f5-4a7e-a8be-4a3653c0dda2.jpeg?im_w=1200",
@@ -191,7 +186,6 @@ module.exports = {
         url: "https://a0.muscache.com/im/pictures/miso/Hosting-789106883669530972/original/54c0a8cd-dd4f-464c-bc10-9d0cfbcbb2ea.jpeg?im_w=1200",
         preview: false
       },
-      //https://www.airbnb.com/rooms/30694789?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-23&check_out=2023-04-28&federated_search_id=ff306a49-575b-4106-8900-bfc893d444b3&source_impression_id=p3_1681659199_H8PUsznX8t2H0S%2BD
       {
         spotId: 8,
         url: "https://a0.muscache.com/im/pictures/beaf189e-8645-4b71-9456-8436cc73bb09.jpg?im_w=1200",
@@ -217,7 +211,6 @@ module.exports = {
         url: "https://a0.muscache.com/im/pictures/4f32a721-a4ba-4ff5-8679-eaa012d484d2.jpg?im_w=1200",
         preview: false
       },
-      //https://www.airbnb.com/rooms/750089121447866329?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-16&check_out=2023-04-21&federated_search_id=f7c0fe06-3221-413a-a06e-f425f911b8a0&source_impression_id=p3_1681659292_VC4G60P9LhPY0k4q
       {
         spotId: 9,
         url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-750089121447866329/original/8915b146-d2fd-4317-bc8e-a278f4ed4ed6.jpeg?im_w=1200",
@@ -243,7 +236,6 @@ module.exports = {
         url: "https://a0.muscache.com/im/pictures/prohost-api/Hosting-750089121447866329/original/3eac1b85-d34a-446c-a745-c7565b240db9.jpeg?im_w=1200",
         preview: false
       },
-      //https://www.airbnb.com/rooms/51564352?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-28&check_out=2023-05-03&federated_search_id=23c66ca8-5b5a-4c08-b2d2-ca81dbbfef96&source_impression_id=p3_1681659425_XSnXF4e1zJJcIsn6
       {
         spotId: 10,
         url: "https://a0.muscache.com/im/pictures/7db0c6fb-cb92-4c44-bae6-c6f4facbf9fe.jpg?im_w=1200",
@@ -269,7 +261,6 @@ module.exports = {
         url: "https://a0.muscache.com/im/pictures/b6017d67-eb3b-4bb0-bcae-f697de4fb5a2.jpg?im_w=1200",
         preview: false
       },
-      //https://www.airbnb.com/rooms/770973493232809347?adults=1&children=0&enable_m3_private_room=false&infants=0&pets=0&check_in=2023-04-24&check_out=2023-04-30&federated_search_id=0da6551c-e3c5-4560-88aa-73b37bb001f2&source_impression_id=p3_1681663847_YBRdKJM%2FIQtXwlu8
       {
         spotId: 11,
         url: "https://a0.muscache.com/im/pictures/miso/Hosting-770973493232809347/original/0b6714ab-69e3-4af1-80c1-e0926f6bc9a4.jpeg?im_w=1200",

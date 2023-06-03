@@ -2,7 +2,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3"
   },
-  "name": "airbnb-project",
+  "name": "serene-haven-project",
   "description": "## Database Schema Design",
   "version": "1.0.0",
   "main": "index.js",
@@ -18,13 +18,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/isaiahxs/AirBnB.git"
+    "url": "git+https://github.com/isaiahxs/SereneHaven.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/isaiahxs/AirBnB/issues"
+    "url": "https://github.com/isaiahxs/SereneHaven/issues"
   },
-  "homepage": "https://github.com/isaiahxs/AirBnB#readme"
+  "homepage": "https://github.com/isaiahxs/SereneHaven#readme"
 }

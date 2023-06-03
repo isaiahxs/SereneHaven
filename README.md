@@ -1,4 +1,4 @@
-# AirBnB Clone
+# SereneHaven
 
 ## Database Schema Design
 
