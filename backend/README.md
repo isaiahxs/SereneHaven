@@ -1,10 +1,10 @@
-# AirBnB Clone
+# SereneHaven
 
 ## Database Schema Design
 
-![airbnb-dbdiagram]
+![serene-haven-dbdiagram]
 
-[airbnb-dbdiagram]: ../assets/airbnb_dbdiagram.png
+[serene-haven-dbdiagram]: ../assets/serene-haven_dbdiagram.png
 
 ## API Documentation
 

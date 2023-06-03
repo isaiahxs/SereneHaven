@@ -12,15 +12,15 @@ module.exports = {
     options.tableName = 'ReviewImages';
     return queryInterface.bulkInsert(options, [
       {
-        url: 'www.abnb/review-images/miami.com',
+        url: 'www.serene-haven/review-images/miami.com',
         reviewId: 1
       },
       {
-        url: 'www.abnb/review-images/nyc.com',
+        url: 'www.serene-haven/review-images/nyc.com',
         reviewId: 2
       },
       {
-        url: 'www.abnb/review-images/la.com',
+        url: 'www.serene-haven/review-images/la.com',
         reviewId: 3
       }
     ], {}) //DON'T FORGET TO PASS IN THE OPTIONS OBJECT
