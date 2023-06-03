@@ -1,4 +1,4 @@
-# AirBnB Clone
+# SereneStay Diagram
 
 ## Database Schema Design
 
