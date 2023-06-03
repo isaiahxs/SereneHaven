@@ -1,4 +1,4 @@
-# SereneStay Diagram
+# SereneHaven Diagram
 
 ## Database Schema Design
 
