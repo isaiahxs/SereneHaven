@@ -2,19 +2,17 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
-import {ReactComponent as Logo} from '../../assets/ser.svg';
-// import AddSpot from '../Host/AddSpot';
+import { ReactComponent as Logo } from '../../assets/ser.svg';
 import './Navigation.css';
 
-function Navigation({ isLoaded }){
+function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
 
   return (
     <ul id='nav-container' className='nav-container'>
       <div>
-        {/* <NavLink exact to="/" className={'home-button'}>Home</NavLink> */}
         <NavLink exact to='/'>
-          <Logo className='logo' alt='brand-logo'/>
+          <Logo className='logo' alt='brand-logo' />
         </NavLink>
       </div>
       <div className='top-right'>

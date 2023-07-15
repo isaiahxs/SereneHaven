@@ -2,13 +2,10 @@ import React, { useState, useEffect, useRef } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import OpenModalButton from "../OpenModalButton";
-//below is if i want log in and sign up to not appear as buttons
-// import OpenModalMenuItem from "./OpenModalMenuItem";
 import LoginFormModal from '../LoginFormModal';
 import SignupFormModal from "../SignupFormModal";
 import { useHistory } from 'react-router-dom';
 import { Link } from "react-router-dom";
-import { NavLink } from "react-router-dom";
 import './ProfileButton.css'
 
 function ProfileButton({ user }) {
@@ -67,8 +64,6 @@ function ProfileButton({ user }) {
             <div >
               <OpenModalButton
                 buttonText="Log In"
-              // <OpenModalMenuItem
-              //   itemText="Log In"
                 onButtonClick={closeMenu}
                 modalComponent={<LoginFormModal />}
               />
@@ -76,8 +71,6 @@ function ProfileButton({ user }) {
             <div>
               <OpenModalButton
                 buttonText="Sign Up"
-              // <OpenModalMenuItem
-              //   itemText="Sign Up"
                 onButtonClick={closeMenu}
                 modalComponent={<SignupFormModal />}
               />

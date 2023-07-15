@@ -1,33 +1,33 @@
 .review-form {
-    display: flex;
-    flex-direction: column;
-  }
+  display: flex;
+  flex-direction: column;
+}
 
-  .rating-container {
-    display: flex;
-    align-items: center;
-  }
+.rating-container {
+  display: flex;
+  align-items: center;
+}
 
-  .rating-container input[type='radio'] {
-    display: none;
-  }
+.rating-container input[type='radio'] {
+  display: none;
+}
 
-  .rating-container .star {
-    font-size: 24px;
-    color: lightgray;
-    cursor: pointer;
-  }
+.rating-container .star {
+  font-size: 24px;
+  color: lightgray;
+  cursor: pointer;
+}
 
-  .rating-container input[type='radio']:checked ~ .star {
-    color: gold;
-  }
+.rating-container input[type='radio']:checked~.star {
+  color: gold;
+}
 
-  .rating-container input[type='radio']:hover ~ .star {
-    color: gold;
-  }
+.rating-container input[type='radio']:hover~.star {
+  color: gold;
+}
 
-  .comment-textarea {
-    resize: none;
-    margin-top: 10px;
-    margin-bottom: 10px;
-  }
+.comment-textarea {
+  resize: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
