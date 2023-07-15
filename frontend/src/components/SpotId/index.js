@@ -20,6 +20,12 @@ export default function SpotId() {
     const [reviewChanged, setReviewChanged] = useState(false);
 
     //following are for immediate renders of reviews
+    const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
+    console.log('currentSpotReviews', currentSpotReviews)
+    const currentSpotReviewsArray = Object.values(currentSpotReviews);
+    console.log('currentSpotReviewsArray', currentSpotReviewsArray)
+    console.log(currentSpotReviewsArray.length)
+
     const [avgStarRating, setAvgStarRating] = useState(null);
     const [numReviews, setNumReviews] = useState(0);
     const [reviewCount, setReviewCount] = useState(0);
@@ -142,7 +148,7 @@ export default function SpotId() {
                                                 <span className='dot'>•</span>
                                             </div>
                                             <div className='review-count'>
-                                                {detailState.numReviews === 1 ? '1 Review' : `${detailState.numReviews} Reviews`}
+                                                {currentSpotReviewsArray.length === 1 ? '1 Review' : `${currentSpotReviewsArray.length} Reviews`}
                                             </div>
                                         </div>
                                     ) : (

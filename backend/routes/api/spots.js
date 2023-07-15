@@ -13,7 +13,6 @@ const router = express.Router();
 //ADDED OP IN REQUIRE
 const { Model, Sequelize, Op, DataTypes } = require('sequelize');
 const booking = require('../../db/models/booking');
-// const spot = require('../../db/models/spot');
 
 //spot validations
 const validateSpot = [

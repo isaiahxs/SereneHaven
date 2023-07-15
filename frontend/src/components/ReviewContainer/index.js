@@ -14,6 +14,12 @@ import { useModal } from '../../context/Modal';
 import './ReviewContainer.css';
 
 export default function ReviewContainer() {
+    const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
+    console.log('currentSpotReviews', currentSpotReviews)
+    const currentSpotReviewsArray = Object.values(currentSpotReviews);
+    console.log('currentSpotReviewsArray', currentSpotReviewsArray)
+    console.log(currentSpotReviewsArray.length)
+
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(1);
     const [addReview, setAddReview] = useState(false);
@@ -197,7 +203,7 @@ export default function ReviewContainer() {
                             <Star className='star-icon' alt='little-star' />
                             {Number(detailState.avgStarRating).toFixed(1)}
                             <span className='dot'>•</span>
-                            <p>{detailState.numReviews === 1 ? '1 Review' : `${detailState.numReviews} Reviews`}</p>
+                            <p>{currentSpotReviewsArray.length === 1 ? '1 Review' : `${currentSpotReviewsArray.length} Reviews`}</p>
                         </div>
                     ) : (
                         <div className='stars'>
