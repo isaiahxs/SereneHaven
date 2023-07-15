@@ -1,14 +1,12 @@
-// backend/routes/api/index.js
 const router = require('express').Router();
 const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
-//NEED TO ADD THIS TOO
 const spotsRouter = require('./spots.js')
-const reviewsRouter = require ('./reviews.js')
-const bookingsRouter = require ('./bookings.js')
-const spotImagesRouter = require ('./spot-images')
-const reviewImagesRouter = require ('./review-images')
-const {restoreUser} = require('../../utils/auth')
+const reviewsRouter = require('./reviews.js')
+const bookingsRouter = require('./bookings.js')
+const spotImagesRouter = require('./spot-images')
+const reviewImagesRouter = require('./review-images')
+const { restoreUser } = require('../../utils/auth')
 
 // GET /api/restore-user
 router.use(restoreUser);
@@ -17,7 +15,6 @@ router.use('/session', sessionRouter);
 
 router.use('/users', usersRouter);
 
-//now working on kanban objectives
 router.use('/spots', spotsRouter);
 
 router.use('/reviews', reviewsRouter);
@@ -30,16 +27,12 @@ router.use('/review-images', reviewImagesRouter);
 
 //this line is from First Steps after authme (get all spots)
 // router.use('/spots', spotsRouter);
-  //for our spot related route handlers and we would have a spots.js in our api
-
+//for our spot related route handlers and we would have a spots.js in our api
 
 //end of phase 0 tells us that we no longer need this
 // router.post('/test', (req, res) => {
 //   res.json({ requestBody: req.body });
 // });
-
-
-
 
 module.exports = router;
 
