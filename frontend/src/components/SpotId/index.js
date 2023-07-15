@@ -22,7 +22,6 @@ export default function SpotId() {
     //following are for immediate renders of reviews
     const [avgStarRating, setAvgStarRating] = useState(null);
     const [numReviews, setNumReviews] = useState(0);
-
     const [reviewCount, setReviewCount] = useState(0);
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
