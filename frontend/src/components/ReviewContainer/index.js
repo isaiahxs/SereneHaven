@@ -20,6 +20,12 @@ export default function ReviewContainer() {
     console.log('currentSpotReviewsArray', currentSpotReviewsArray)
     console.log(currentSpotReviewsArray.length)
 
+    const totalStars = currentSpotReviewsArray.reduce((total, review) => total + review.stars, 0);
+    console.log('totalStars', totalStars)
+    const averageStars = totalStars / currentSpotReviewsArray.length;
+    console.log('averageStars', averageStars)
+
+
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(1);
     const [addReview, setAddReview] = useState(false);
@@ -198,10 +204,10 @@ export default function ReviewContainer() {
         return (
             <div className='review-container'>
                 <div className='review-summary'>
-                    {Number(detailState.avgStarRating) ? (
+                    {Number(averageStars) ? (
                         <div className='stars'>
                             <Star className='star-icon' alt='little-star' />
-                            {Number(detailState.avgStarRating).toFixed(1)}
+                            {Number(averageStars).toFixed(1)}
                             <span className='dot'>•</span>
                             <p>{currentSpotReviewsArray.length === 1 ? '1 Review' : `${currentSpotReviewsArray.length} Reviews`}</p>
                         </div>

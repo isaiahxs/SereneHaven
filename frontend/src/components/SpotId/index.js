@@ -26,6 +26,11 @@ export default function SpotId() {
     console.log('currentSpotReviewsArray', currentSpotReviewsArray)
     console.log(currentSpotReviewsArray.length)
 
+    const totalStars = currentSpotReviewsArray.reduce((total, review) => total + review.stars, 0);
+    console.log('totalStars', totalStars)
+    const averageStars = totalStars / currentSpotReviewsArray.length;
+    console.log('averageStars', averageStars)
+
     const [avgStarRating, setAvgStarRating] = useState(null);
     const [numReviews, setNumReviews] = useState(0);
     const [reviewCount, setReviewCount] = useState(0);
@@ -140,11 +145,11 @@ export default function SpotId() {
                                     </div>
                                 </div>
                                 <div className='total-reviews-container'>
-                                    {Number(detailState.avgStarRating) ? (
+                                    {Number(averageStars) ? (
                                         <div className='reviews'>
                                             <div className='stars'>
                                                 <Star className='star-icon' alt='little-star' />
-                                                {Number(detailState.avgStarRating).toFixed(1)}
+                                                {Number(averageStars).toFixed(1)}
                                                 <span className='dot'>•</span>
                                             </div>
                                             <div className='review-count'>
