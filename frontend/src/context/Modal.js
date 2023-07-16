@@ -1,4 +1,4 @@
-import React, {useRef, useState, useContext} from 'react';
+import React, { useRef, useState, useContext } from 'react';
 import ReactDOM from 'react-dom';
 import './Modal.css';
 
@@ -9,8 +9,8 @@ export const useModalContext = () => useContext(ModalContext);
 
 
 //create and export a functional comp called ModalProvider that renders the ModalContext.Provider comp with all the children from the props as a child
-    //make sure it is a named export and not a  default
-export function ModalProvider({children}) {
+//make sure it is a named export and not a  default
+export function ModalProvider({ children }) {
     //create a React ref
     const modalRef = useRef();
     const [modalContent, setModalContent] = useState(null);
@@ -40,24 +40,24 @@ export function ModalProvider({children}) {
 
     return (
         <>
-        <ModalContext.Provider value={contextValue}>
-            {children}
-        </ModalContext.Provider>
-        {/* set the ref prop on the rendered div to this modalRef */}
-        <div ref={modalRef}/>
+            <ModalContext.Provider value={contextValue}>
+                {children}
+            </ModalContext.Provider>
+            {/* set the ref prop on the rendered div to this modalRef */}
+            <div ref={modalRef} />
         </>
     )
 }
 
 export function Modal() {
-    const {modalRef, modalContent, closeModal} = useContext(ModalContext);
+    const { modalRef, modalContent, closeModal } = useContext(ModalContext);
     //if there is no div referenced by the modalRef or modalContent is not a truthy value, render nothing:
     if (!modalRef || !modalRef.current || !modalContent) return null;
 
     //render the following component to the div referenced by the modalRef
     return ReactDOM.createPortal(
         <div id='modal'>
-            <div id='modal-background' onClick={closeModal}/>
+            <div id='modal-background' onClick={closeModal} />
             <div id='modal-content'>
                 {modalContent}
             </div>

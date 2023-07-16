@@ -3,29 +3,28 @@ const express = require('express')
 const { setTokenCookie, requireAuth, restoreUser } = require('../../utils/auth');
 const { Spot, User, SpotImage, Review, Booking, ReviewImage } = require('../../db/models');
 
-
 //following two lines are from phase 5
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 //in case we need these models
-    //ADDED OP IN REQUIRE
-const {Model, Sequelize, Op} = require('sequelize');
+//ADDED OP IN REQUIRE
+const { Model, Sequelize, Op } = require('sequelize');
 const booking = require('../../db/models/booking');
 // const spot = require('../../db/models/spot');
 
 //Delete an existing image for a review
-    //REQUIRE AUTH: TRUE
-    //REVIEW MUST BELONG TO CURRENT USER
+//REQUIRE AUTH: TRUE
+//REVIEW MUST BELONG TO CURRENT USER
 router.delete('/:imageId', requireAuth, async (req, res) => {
     //extract imageId from params
     const imageId = req.params.imageId;
 
     //see if there is a review-image at this id
     const image = await ReviewImage.findOne({
-        where: {id: imageId},
-        include: [{model: Review}]
+        where: { id: imageId },
+        include: [{ model: Review }]
     })
 
     //if there is not, return a 404 with message
@@ -47,7 +46,6 @@ router.delete('/:imageId', requireAuth, async (req, res) => {
         message: "Successfully deleted",
         statusCode: 200
     })
-
 })
 
 module.exports = router;

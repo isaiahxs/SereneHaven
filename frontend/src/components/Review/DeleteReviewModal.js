@@ -1,8 +1,7 @@
-import { deleteReviewThunk } from "../../store/reviews";
 import { useModal } from "../../context/Modal";
 
-const DeleteReviewModal = ({reviewId, onDelete, onCancel}) => {
-    const {closeModal} = useModal();
+const DeleteReviewModal = ({ reviewId, onDelete, onCancel }) => {
+    const { closeModal } = useModal();
 
     return (
         <div className="delete-confirmation-modal">
@@ -10,8 +9,8 @@ const DeleteReviewModal = ({reviewId, onDelete, onCancel}) => {
             <div>
                 <button onClick={() => onDelete(reviewId)}>Yes (Delete Review)</button>
                 <button onClick={() => {
-                onCancel();
-                closeModal();
+                    onCancel();
+                    closeModal();
                 }}>No (Keep Review)</button>
             </div>
         </div>
