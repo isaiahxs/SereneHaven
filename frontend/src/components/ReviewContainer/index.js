@@ -15,16 +15,15 @@ import './ReviewContainer.css';
 
 export default function ReviewContainer() {
     const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
-    console.log('currentSpotReviews', currentSpotReviews)
+    // console.log('currentSpotReviews', currentSpotReviews)
     const currentSpotReviewsArray = Object.values(currentSpotReviews);
-    console.log('currentSpotReviewsArray', currentSpotReviewsArray)
-    console.log(currentSpotReviewsArray.length)
+    // console.log('currentSpotReviewsArray', currentSpotReviewsArray)
+    // console.log(currentSpotReviewsArray.length)
 
     const totalStars = currentSpotReviewsArray.reduce((total, review) => total + review.stars, 0);
-    console.log('totalStars', totalStars)
+    // console.log('totalStars', totalStars)
     const averageStars = totalStars / currentSpotReviewsArray.length;
-    console.log('averageStars', averageStars)
-
+    // console.log('averageStars', averageStars)
 
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(1);
@@ -58,28 +57,11 @@ export default function ReviewContainer() {
     // console.log('detailStateeeeeeeeee', detailState)
     if (detailState) detailArray = Object.values(detailState);
 
-
-    //need to show small images ONLY if they exist in SpotDetails
-    const prevImg = detailState?.SpotImages?.find(img => img.preview);
-    const smallImages = detailState?.SpotImages?.filter(img => !img.preview);
-
-
-    //original
-    const reviewState = useSelector(state => state.review.currSpotReviews);
-
-    //using singular review instead of reviews because the currSpotReviews property is an object with the review objects as the values, and the review id as the key
-
     const sessionUser = useSelector(state => state.session.user);
-    // const allSpots = useSelector(state => state.spot.allSpots);
 
-    let reviewArray = [];
-    if (reviewState) reviewArray = Object.values(reviewState);
-
-
-    //dispatch two thunks to fetch the spot details and reviews using dispatch and the thunks for getting the location's details as well as the thunk for getting the reviews
-    //use useEffect which run on mount and update whenever the dispatch or spotId dependencies change
     useEffect(() => {
         dispatch(spotDetails(spotId));
+        // dispatch(reviewThunk(spotId));
 
         // clear the spot details when the component unmounts
         return () => {
@@ -91,24 +73,16 @@ export default function ReviewContainer() {
         dispatch(reviewThunk(spotId));
         setReviewChanged(false);
 
-        if (reviewArray.length > 0) {
-            const totalStars = reviewArray.reduce((acc, review) => acc + review.stars, 0);
-            const avgStars = totalStars / reviewArray.length;
+        if (currentSpotReviewsArray.length > 0) {
+            const totalStars = currentSpotReviewsArray.reduce((acc, review) => acc + review.stars, 0);
+            const avgStars = totalStars / currentSpotReviewsArray.length;
             setAvgStarRating(avgStars);
-            setNumReviews(reviewArray.length);
+            setNumReviews(currentSpotReviewsArray.length);
         } else {
             setAvgStarRating(null);
             setNumReviews(0);
         }
     }, [dispatch, spotId, reviewChanged, reviewCount])
-
-    useEffect(() => {
-        if (!reviewState) return;
-        const numReviews = Object.keys(reviewState).length;
-        if (numReviews !== reviewArray.length) {
-            dispatch(reviewThunk(spotId));
-        }
-    }, [dispatch, reviewArray.length, reviewState, spotId]);
 
     useEffect(() => {
         if (reviewToDelete !== null) {
@@ -134,10 +108,6 @@ export default function ReviewContainer() {
         setAddReview(false);
         setReview('');
         setStars(1);
-        const newNumReviews = numReviews + 1;
-        const newAvgStarRating = (avgStarRating * numReviews + stars) / newNumReviews;
-        setNumReviews(newNumReviews);
-        setAvgStarRating(newAvgStarRating);
     }
 
     const editSubmitHandler = (e, reviewId) => {
@@ -157,12 +127,12 @@ export default function ReviewContainer() {
     }
 
     const addingReview = () => {
-        //loop through the reviewArray and check if the userId of the current review matches the userId of the current sessionUser
+        //loop through the currentSpotReviewsArray and check if the userId of the current review matches the userId of the current sessionUser
         //if it does, then alert the user that they have already reviewed this location
         //if it does not, then set the addReview state to the opposite of what it currently is
         if (sessionUser) {
-            for (let i = 0; i < reviewArray.length; i++) {
-                if (reviewArray[i].userId === sessionUser.id) {
+            for (let i = 0; i < currentSpotReviewsArray.length; i++) {
+                if (currentSpotReviewsArray[i].userId === sessionUser.id) {
                     alert('You have already reviewed this location');
                     return;
                 }
@@ -172,9 +142,6 @@ export default function ReviewContainer() {
             alert('Please sign in to add a review.');
         }
     }
-
-    //--------------------GOING TO WORK ON REVIEW MODAL ABOVE --------------------
-
 
     const editReview = (review) => {
         setShowEdit(!showEdit);
@@ -190,13 +157,13 @@ export default function ReviewContainer() {
         closeModal();
     };
 
-    if (detailState && reviewState) {
+    if (detailState && currentSpotReviews) {
         const isOwner = sessionUser?.id === detailState.Owner.id;
 
         const showReviewButton = () => {
             if (!sessionUser) return false; //current user is not logged in
             if (isOwner) return false; //current user is the owner of the spot
-            const hasPostedReview = reviewArray.some(review => review.userId === sessionUser.id);
+            const hasPostedReview = currentSpotReviewsArray.some(review => review.userId === sessionUser.id);
             if (hasPostedReview) return false; //current user has already posted a review
             return true; //show the "Post Your Review" button
         }
@@ -222,13 +189,13 @@ export default function ReviewContainer() {
                     showReviewButton() && (
                         <OpenModalButton
                             modalComponent={<ReviewModal spotId={spotId} />}
-                            buttonText={reviewArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
+                            buttonText={currentSpotReviewsArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
                             onButtonClick={addingReview}
                         />
                     )
                 }
                 {/* need to put a check here to render only after the data is available to avoid the firstName and lastName bug */}
-                {reviewArray.map((review) => {
+                {currentSpotReviewsArray.map((review) => {
                     // console.log('Review:', review)
                     return (
                         <div key={review.id}>
