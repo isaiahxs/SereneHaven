@@ -178,6 +178,7 @@ router.get("/", validateQueryParamaters, async (req, res, next) => {
         include: [
             {
                 model: SpotImage,
+                as: 'spotImages',
                 attributes: ["url"]
             },
             //as well as the star rating of any reviews associated with the spot
@@ -245,9 +246,9 @@ router.get("/", validateQueryParamaters, async (req, res, next) => {
             createdAt: loc.createdAt,
             updatedAt: loc.updatedAt,
             avgRating,
-            //previewImage property will be set to the url of the first image for the spot, which is retrieved from the SpotImages property of the spot object
+            //previewImage property will be set to the url of the first image for the spot, which is retrieved from the spotImages property of the spot object
             //if there are no images for the spot, set previewImage to null
-            previewImage: loc.SpotImages[0]?.url || null,
+            previewImage: loc.spotImages[0]?.url || null,
         };
     });
 
@@ -280,6 +281,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
             },
             {
                 model: SpotImage,
+                as: 'spotImages',
                 attributes: ["url"]
             }
         ],
@@ -321,7 +323,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 createdAt: spot.createdAt,
                 updatedAt: spot.updatedAt,
                 avgRating,
-                previewImage: spot.SpotImages[0]?.url || null
+                previewImage: spot.spotImages[0]?.url || null
             }
         })
         return res.status(200).json({ Spots: spots })
@@ -341,6 +343,7 @@ router.get('/:spotId', async (req, res, next) => {
                 },
                 {
                     model: SpotImage,
+                    as: 'spotImages',
                     attributes: ['id', 'url', 'preview']
                 },
                 {
@@ -384,7 +387,7 @@ router.get('/:spotId', async (req, res, next) => {
             updatedAt: spot.updatedAt,
             numReviews,
             avgStarRating,
-            SpotImages: spot.SpotImages,
+            spotImages: spot.spotImages,
             Owner: spot.Owner
         });
     } catch (error) {
@@ -493,12 +496,58 @@ router.post('/:spotId/images', requireAuth, async (req, res, next) => {
 
 //Edit a spot
 //REQUIRE AUTH: TRUE
+// router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
+//     //find spot by parameter passed in
+//     const specificSpot = await Spot.findByPk(req.params.spotId);
+
+//     //extract everything needed from the request body
+//     const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+//     const ownerId = req.user.id;
+
+//     //if there is no specific spot, immediately return 404 saying it couldn't be found
+//     if (!specificSpot) {
+//         return res.status(404).json({
+//             message: "Spot couldn't be found",
+//             statusCode: 404
+//         })
+//     }
+
+//     //if user is authorized, they can update, if not, send them a 403 with message of 'Forbidden'
+//     const authorized = await Spot.findOne({
+//         where: { id: req.params.spotId, ownerId }
+//     })
+
+//     if (!authorized) {
+//         return res.status(403).json({
+//             message: "Forbidden",
+//             statusCode: 403
+//         })
+//     }
+
+//     //if there is a specific spot, then update it
+//     const updatedSpot = await specificSpot.update({
+//         ownerId,
+//         address,
+//         city,
+//         state,
+//         country,
+//         lat,
+//         lng,
+//         name,
+//         description,
+//         price
+//     })
+
+//     if (updatedSpot) return res.status(200).json(updatedSpot);
+// })
+
 router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
     //find spot by parameter passed in
     const specificSpot = await Spot.findByPk(req.params.spotId);
 
     //extract everything needed from the request body
-    const { address, city, state, country, lat, lng, name, description, price } = req.body;
+    const { address, city, state, country, lat, lng, name, description, price, spotImage, images } = req.body;
 
     const ownerId = req.user.id;
 
@@ -507,19 +556,19 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
         return res.status(404).json({
             message: "Spot couldn't be found",
             statusCode: 404
-        })
+        });
     }
 
     //if user is authorized, they can update, if not, send them a 403 with message of 'Forbidden'
     const authorized = await Spot.findOne({
         where: { id: req.params.spotId, ownerId }
-    })
+    });
 
     if (!authorized) {
         return res.status(403).json({
             message: "Forbidden",
             statusCode: 403
-        })
+        });
     }
 
     //if there is a specific spot, then update it
@@ -534,10 +583,40 @@ router.put('/:spotId', requireAuth, validateSpot, async (req, res, next) => {
         name,
         description,
         price
-    })
+    });
 
-    if (updatedSpot) return res.status(200).json(updatedSpot);
-})
+    //if spotImage or images were sent in the request, delete all images associated with the spot and create new ones
+    if (spotImage || images) {
+        //const SpotImage = require('../../db/models/spotimage');  // Replace with actual path to SpotImage model
+
+        //delete all images associated with the spot
+        await SpotImage.destroy({ where: { spotId: specificSpot.id } });
+
+        //create new images.
+        if (spotImage) {
+            await SpotImage.create({
+                spotId: specificSpot.id,
+                url: spotImage.url,
+                preview: spotImage.preview
+            });
+        }
+
+        if (images) {
+            for (const image of images) {
+                await SpotImage.create({
+                    spotId: specificSpot.id,
+                    url: image.url,
+                    preview: image.preview
+                });
+            }
+        }
+    }
+
+    //fetch the updated spot with its associated images
+    const updatedSpotWithImages = await Spot.findByPk(req.params.spotId, { include: [{ model: SpotImage, as: 'spotImages' }] });
+
+    if (updatedSpotWithImages) return res.status(200).json(updatedSpotWithImages);
+});
 
 //Delete a spot
 //REQUIRE AUTH: TRUE

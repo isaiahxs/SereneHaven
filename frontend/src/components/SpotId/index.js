@@ -36,12 +36,18 @@ export default function SpotId() {
     const dispatch = useDispatch();
     const { spotId } = useParams();
 
+    const state = useSelector(state => state);
+    console.log('state in SpotId', state)
+
     //use useSelector hook to get spotDetails object from the spot slice of the Redux store
     //return null if spotDetails is falsy and render nothing
     const detailState = useSelector(state => state.spot.spotDetails);
+    console.log('detailState in SpotId', detailState)
 
-    const prevImg = detailState?.SpotImages?.find(img => img.preview);
-    const smallImages = detailState?.SpotImages?.filter(img => !img.preview);
+    const prevImg = detailState?.spotImages?.find(img => img.preview);
+    console.log('prevImg in SpotId', prevImg)
+    const smallImages = detailState?.spotImages?.filter(img => !img.preview);
+    console.log('smallImages in SpotId', smallImages)
 
     //dispatch two thunks to fetch the spot details and reviews using dispatch and the thunks for getting the location's details as well as the thunk for getting the reviews
     //use useEffect which run on mount and update whenever the dispatch or spotId dependencies change

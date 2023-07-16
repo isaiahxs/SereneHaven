@@ -41,6 +41,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
                 include: [
                     {
                         model: SpotImage,
+                        as: 'spotImages',
                         attributes: ['url'],
                     }
                 ]
@@ -65,12 +66,12 @@ router.get('/current', requireAuth, async (req, res, next) => {
 
             //use let instead of const since we will reassign it
             let previewImage = null;
-            if (Spot.SpotImages.length > 0) {
-                //if Spot.SpotImages has any items, set previewImage to url property of
-                //first item in Spot.SpotImages array
-                previewImage = Spot.SpotImages[0].url;
+            if (Spot.spotImages.length > 0) {
+                //if Spot.spotImages has any items, set previewImage to url property of
+                //first item in Spot.spotImages array
+                previewImage = Spot.spotImages[0].url;
             } else {
-                //if Spot.SpotImages is empty, set previewImage to null
+                //if Spot.spotImages is empty, set previewImage to null
                 previewImage = null;
             }
 

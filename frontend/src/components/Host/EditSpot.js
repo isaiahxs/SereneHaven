@@ -20,7 +20,7 @@ export default function EditSpot() {
   const { spotId } = useParams();
   console.log('SPOT ID FROM EDIT PAGE', spotId);
 
-  const preview = detailState?.SpotImages?.find(image => image.preview);
+  const preview = detailState?.spotImages?.find(image => image.preview);
   const previewURL = preview?.url;
   // console.log('PREVIEW IMAGE URL', preview);
 
@@ -118,12 +118,12 @@ export default function EditSpot() {
           images
         )
       ).then((spot) => {
-        console.log('SPOT after the .then', spot);
+        // console.log('SPOT after the .then', spot);
         closeModal();
         history.push(`/spots/${spot.id}`);
       })
         .catch(async (res) => {
-          console.log('RESSSSSS', res);
+          // console.log('RESSSSSS', res);
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
