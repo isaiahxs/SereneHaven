@@ -34,6 +34,7 @@ export const reviewThunk = (review) => async (dispatch) => {
     //after response from the AJAX call comes back, parse the JSON body of the response
     if (response.ok) {
         const data = await response.json();
+        console.log('Review data:', data);
         dispatch(getReviews(data));
         return data;
     }

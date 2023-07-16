@@ -1,76 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-//thunk for getting the location's details
 import { spotDetails } from '../../store/spots';
-//thunk for getting the location's reviews
-import { reviewThunk, addReviewThunk, updateReviewThunk, deleteReviewThunk } from '../../store/reviews';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as Star } from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
-import ReviewModal from '../Review/ReviewModal';
-import DeleteReviewModal from '../Review/DeleteReviewModal';
-import OpenModalButton from '../../components/OpenModalButton';
 import ReviewContainer from '../ReviewContainer';
-import { useModal } from '../../context/Modal';
+import { reviewThunk } from '../../store/reviews';
 import './SpotId.css'
 
-
 export default function SpotId() {
-
-    const [reviewChanged, setReviewChanged] = useState(false);
-
     //following are for immediate renders of reviews
+    const reviewSlice = useSelector(state => state.review);
+    // console.log('reviewSlice', reviewSlice)
     const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
-    console.log('currentSpotReviews', currentSpotReviews)
-    const currentSpotReviewsArray = Object.values(currentSpotReviews);
-    console.log('currentSpotReviewsArray', currentSpotReviewsArray)
-    console.log(currentSpotReviewsArray.length)
+    // console.log('currentSpotReviews', currentSpotReviews)
+    // const currentSpotReviewsArray = Object.values(currentSpotReviews);
+    // console.log('currentSpotReviewsArray', currentSpotReviewsArray)
+    // console.log(currentSpotReviewsArray.length)
+
+    let currentSpotReviewsArray = [];
+    if (currentSpotReviews) {
+        currentSpotReviewsArray = Object.values(currentSpotReviews);
+        const totalStars = currentSpotReviewsArray.reduce((total, review) => total + review.stars, 0);
+        const averageStars = currentSpotReviewsArray.length > 0 ? totalStars / currentSpotReviewsArray.length : 0;
+    }
 
     const totalStars = currentSpotReviewsArray.reduce((total, review) => total + review.stars, 0);
-    console.log('totalStars', totalStars)
+    // console.log('totalStars', totalStars)
     const averageStars = totalStars / currentSpotReviewsArray.length;
-    console.log('averageStars', averageStars)
-
-    const [avgStarRating, setAvgStarRating] = useState(null);
-    const [numReviews, setNumReviews] = useState(0);
-    const [reviewCount, setReviewCount] = useState(0);
+    // console.log('averageStars', averageStars)
 
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [reviewToDelete, setReviewToDelete] = useState(null);
 
-    const { closeModal } = useModal();
-
     const dispatch = useDispatch();
-    //retrieve spotId from parameter from URL
     const { spotId } = useParams();
 
     //use useSelector hook to get spotDetails object from the spot slice of the Redux store
     //return null if spotDetails is falsy and render nothing
     const detailState = useSelector(state => state.spot.spotDetails);
-    let detailArray = [];
-    // console.log('detailStateeeeeeeeee', detailState)
-    if (detailState) detailArray = Object.values(detailState);
 
-
-    //need to show small images ONLY if they exist in SpotDetails
     const prevImg = detailState?.SpotImages?.find(img => img.preview);
     const smallImages = detailState?.SpotImages?.filter(img => !img.preview);
-
-
-    //original
-    const reviewState = useSelector(state => state.review.currSpotReviews);
-
-    const sessionUser = useSelector(state => state.session.user);
-    // const allSpots = useSelector(state => state.spot.allSpots);
-
-    let reviewArray = [];
-    if (reviewState) reviewArray = Object.values(reviewState);
-
 
     //dispatch two thunks to fetch the spot details and reviews using dispatch and the thunks for getting the location's details as well as the thunk for getting the reviews
     //use useEffect which run on mount and update whenever the dispatch or spotId dependencies change
     useEffect(() => {
         dispatch(spotDetails(spotId));
+        dispatch(reviewThunk(spotId));
 
         // clear the spot details when the component unmounts
         return () => {
@@ -79,37 +56,12 @@ export default function SpotId() {
     }, [dispatch, spotId])
 
     useEffect(() => {
-        dispatch(reviewThunk(spotId));
-        setReviewChanged(false);
-
-        if (reviewArray.length > 0) {
-            const totalStars = reviewArray.reduce((acc, review) => acc + review.stars, 0);
-            const avgStars = totalStars / reviewArray.length;
-            setAvgStarRating(avgStars);
-            setNumReviews(reviewArray.length);
-        } else {
-            setAvgStarRating(null);
-            setNumReviews(0);
-        }
-    }, [dispatch, spotId, reviewChanged, reviewCount])
-
-    useEffect(() => {
-        if (!reviewState) return;
-        const numReviews = Object.keys(reviewState).length;
-        if (numReviews !== reviewArray.length) {
-            dispatch(reviewThunk(spotId));
-        }
-    }, [dispatch, reviewArray.length, reviewState, spotId]);
-
-    useEffect(() => {
         if (reviewToDelete !== null) {
             setShowDeleteModal(true);
         }
     }, [reviewToDelete])
 
-
-    if (detailState && reviewState) {
-
+    if (detailState && currentSpotReviews) {
         return (
             <div className='outer-container'>
                 <div className='inner-container'>
