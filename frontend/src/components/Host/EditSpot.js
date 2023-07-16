@@ -18,6 +18,7 @@ export default function EditSpot() {
   // console.log('DETAIL STATE IN EDIT PAGE', detailState);
 
   const { spotId } = useParams();
+  console.log('SPOT ID FROM EDIT PAGE', spotId);
 
   const preview = detailState?.SpotImages?.find(image => image.preview);
   const previewURL = preview?.url;
@@ -109,6 +110,7 @@ export default function EditSpot() {
           lat,
           lng,
         },
+          spotId,
           {
             url: imageURL,
             preview: true
@@ -116,10 +118,12 @@ export default function EditSpot() {
           images
         )
       ).then((spot) => {
+        console.log('SPOT after the .then', spot);
         closeModal();
         history.push(`/spots/${spot.id}`);
       })
         .catch(async (res) => {
+          console.log('RESSSSSS', res);
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });

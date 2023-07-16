@@ -32,9 +32,9 @@ const addSpot = (newSpot) => ({
     newSpot
 })
 
-const updateSpot = (updatedSpot) => ({
+const updateSpot = (improvedSpot) => ({
     type: UPDATE_SPOT,
-    updatedSpot
+    spot: improvedSpot
 })
 
 export const deleteSpot = (deletedSpot) => ({
@@ -129,8 +129,10 @@ export const createSpotThunk = (newSpot, prevImage, images) => async (dispatch) 
 
 //WORK IN PROGRESS FOR UPDATE SPOT
 export const updateSpotThunk = (updatedSpot, spotId) => async (dispatch) => {
+    console.log('UPDATED SPOT', updatedSpot)
+    console.log('SPOTIDDDDDD', spotId)
 
-    const response = await csrfFetch(`/api/spots/${spotId}/id`, {
+    const response = await csrfFetch(`/api/spots/${spotId}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json'
@@ -138,10 +140,39 @@ export const updateSpotThunk = (updatedSpot, spotId) => async (dispatch) => {
         body: JSON.stringify(updatedSpot)
     })
     const improvedSpot = await response.json();
-    dispatch(updateSpot(improvedSpot, spotId));
+    dispatch(updateSpot(improvedSpot));
+
+    // if (image) {
+    //     await csrfFetch(`/api/spots/${spotId}/image`, {
+    //         method: 'PUT',
+    //         headers: {
+    //             'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(image)
+    //     });
+    // }
 
     return improvedSpot;
 }
+
+// export const updateSpotThunk = (updatedSpot, spotId, spotImage, images) => async (dispatch) => {
+//     console.log('UPDATED SPOT', updatedSpot)
+//     console.log('SPOTIDDDDDD', spotId)
+//     // console.log('SPOTIMAGE', spotImage)
+//     // console.log('IMAGES', images)
+
+//     const response = await csrfFetch(`/api/spots/${spotId}`, {
+//         method: 'PUT',
+//         headers: {
+//             'Content-Type': 'application/json'
+//         },
+//         body: JSON.stringify({ ...updatedSpot, spotImage, images })
+//     })
+//     const improvedSpot = await response.json();
+//     dispatch(updateSpot(improvedSpot, spotId));
+
+//     return improvedSpot;
+// }
 
 export const deleteSpotThunk = (spotId) => async (dispatch) => {
     const response = await csrfFetch(`/api/spots/${spotId}`, {
@@ -185,6 +216,9 @@ const spotReducer = (state = initialState, action) => {
             const updatedSpot = action.spot
             const newAllSpots = { ...state.allSpots, [updatedSpot.id]: updatedSpot };
             return { ...state, allSpots: newAllSpots };
+        // const updatedSpot = action.improvedSpot
+        // const newAllSpots = { ...state.allSpots, [updatedSpot.id]: updatedSpot };
+        // return { ...state, allSpots: newAllSpots };
 
         case DELETE_SPOT:
             const deleted = action.spotId;
