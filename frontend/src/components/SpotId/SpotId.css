@@ -18,20 +18,6 @@
   margin-bottom: 8px;
 }
 
-.review-question {
-  margin-top: 0px;
-}
-
-.review-input {
-  margin-top: 5px;
-  margin-bottom: 10px;
-}
-
-.add-review {
-  margin-bottom: 10px;
-  margin-top: -8px;
-}
-
 .details-bottom-container {
   display: flex;
   justify-content: space-between;
@@ -54,6 +40,8 @@
   /* overflow-wrap: break-word; */
 }
 
+/* ----- */
+
 .reservation-container {
   width: 40%;
   height: auto;
@@ -63,39 +51,18 @@
   box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
+.price-reviews-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
 .prices-and-stars {
   display: flex;
   flex-direction: row;
   align-items: center;
   flex-grow: 1;
-}
-
-.total-reviews-container {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  font-size: 1.1rem;
-  align-items: center;
-  flex-grow: 1;
-}
-
-.reserve-button {
-  width: 100%;
-  padding: 5px;
-  margin: 5px;
-  margin-left: -1px;
-  background-color: #FF385C;
-  border: 2px solid black;
-}
-
-.review {
-  margin-top: 20px;
-}
-
-.review-user {
-  font-size: 18px;
-  font-weight: bold;
-  margin-bottom: 5px;
 }
 
 .detail-price {
@@ -114,31 +81,13 @@
   margin-right: 7px;
 }
 
-.review-date {
-  font-size: 14px;
-  margin-bottom: 5px;
-  color: #666;
-}
-
-.review-stars {
-  margin-bottom: 10px;
-}
-
-@media (max-width: 750px) {
-  .details-bottom-container {
-    flex-direction: column;
-  }
-
-  .reservation-container {
-    width: 100%;
-  }
-}
-
-.price-reviews-wrapper {
+.total-reviews-container {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: space-between;
+  font-size: 1.1rem;
   align-items: center;
+  flex-grow: 1;
 }
 
 .reviews {
@@ -153,6 +102,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.reserve-button {
+  width: 100%;
+  padding: 5px;
+  margin: 5px;
+  margin-left: -1px;
+  background-color: #FF385C;
+  border: 2px solid black;
+}
+
+/* ----- */
+
+@media (max-width: 750px) {
+  .details-bottom-container {
+    flex-direction: column;
+  }
+
+  .reservation-container {
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 
 @media (max-width: 511px) {

@@ -3,6 +3,10 @@
   flex-direction: column;
 }
 
+.review-question {
+  margin-top: 0px;
+}
+
 .rating-container {
   display: flex;
   align-items: center;

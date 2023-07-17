@@ -35,7 +35,7 @@
     object-fit: cover;
 }
 
-.single-small-image-container .small-images {
+.small-image-container .small-images {
     width: calc(50% - 5px);
     height: calc(50% - 5px);
     box-sizing: border-box;
@@ -63,8 +63,8 @@
     }
 
     .small-images {
-        width: 80%;
-        height: auto;
+        width: 100%;
+        height: 100%;
         margin-bottom: 5px;
     }
 

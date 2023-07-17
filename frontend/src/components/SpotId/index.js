@@ -10,7 +10,6 @@ import { reviewThunk } from '../../store/reviews';
 import './SpotId.css'
 
 export default function SpotId() {
-    const reviewSlice = useSelector(state => state.review);
     const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
 
     let currentSpotReviewsArray = [];
@@ -30,9 +29,6 @@ export default function SpotId() {
     const { spotId } = useParams();
 
     const detailState = useSelector(state => state.spot.spotDetails);
-
-    const prevImg = detailState?.spotImages?.find(img => img.preview);
-    const smallImages = detailState?.spotImages?.filter(img => !img.preview);
 
     //dispatch two thunks to fetch the spot details and reviews using dispatch and the thunks for getting the location's details as well as the thunk for getting the reviews
     //use useEffect which run on mount and update whenever the dispatch or spotId dependencies change
@@ -62,9 +58,7 @@ export default function SpotId() {
                     <h2 className='heading'>
                         <div>{detailState.city}, {detailState.state}, {detailState.country}</div>
                     </h2>
-                    {/* <div className='images-container'> */}
                     <SpotImages />
-                    {/* </div> */}
 
                     <div className='details-bottom-container'>
                         <div className='owner-info'>
