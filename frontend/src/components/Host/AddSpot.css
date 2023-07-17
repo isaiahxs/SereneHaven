@@ -15,12 +15,34 @@
 
 .create-form {
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    min-width: 280px;
 }
 
 .host-input {
     display: flex;
     flex-direction: column;
+    /* align-items: center; */
     margin-bottom: 0.5em;
+}
+
+.price-section {
+    flex-direction: row;
+    align-items: center;
+}
+
+.description-input {
+    /* max-width: 360px; */
+    /* width: auto; */
+    /* margin: auto; */
+}
+
+.dollar-sign {
+    margin-right: 5px;
+}
+
+.price-input {
+    margin-bottom: 0px;
+    max-width: 345px;
 }
 
 .error-message {

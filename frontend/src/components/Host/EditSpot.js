@@ -261,14 +261,15 @@ export default function EditSpot() {
           {/* <hr /> */}
           <h2>Set a base price for your spot</h2>
           <h3>Competitive pricing can help your listing stand out and rank higher in search results.</h3>
-          <div className="host-input">
-            <span>$</span>
+          <div className="host-input price-section">
+            <span className="dollar-sign">$</span>
             <input
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
               placeholder={detailState?.price}
+              className="price-input"
             />
             {errors.includes('Please enter a valid price for your spot.') && (
               <span className="error-message">Please enter a valid price.</span>
