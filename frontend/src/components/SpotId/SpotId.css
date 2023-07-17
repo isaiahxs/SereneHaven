@@ -5,6 +5,10 @@
   padding: 0px 20px 20px 20px;
 }
 
+/* .inner-container {
+  max-width: 100px;
+} */
+
 .name {
   font-size: 36px;
   font-weight: bold;
@@ -33,17 +37,23 @@
   margin-bottom: 0px;
 }
 
+.owner-info {
+  width: 55%;
+  box-sizing: border-box;
+}
+
 .detail-description {
   margin-top: 5px;
   width: 90%;
   word-wrap: break-word;
   /* overflow-wrap: break-word; */
+  box-sizing: border-box;
 }
 
 /* ----- */
 
 .reservation-container {
-  width: 40%;
+  width: 45%;
   height: auto;
   border: 3px solid black;
   padding: 10px;
@@ -120,18 +130,13 @@
     flex-direction: column;
   }
 
+  .owner-info {
+    width: 100%;
+    /* box-sizing: border-box; */
+  }
+
   .reservation-container {
     width: 100%;
     box-sizing: border-box;
-  }
-}
-
-@media (max-width: 511px) {
-  .reviews {
-    flex-direction: column;
-  }
-
-  .reservation-container .dot {
-    display: none;
   }
 }
