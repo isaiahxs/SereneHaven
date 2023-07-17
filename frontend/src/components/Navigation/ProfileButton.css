@@ -27,7 +27,6 @@
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
     z-index: 1;
     padding: 15px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     line-height: 30px;
     color: black;
 }
@@ -59,7 +58,6 @@
     transition: all 0.3s ease-in-out;
     background-color: white;
     color: white;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
     margin-right: 5px;
 }
 

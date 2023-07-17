@@ -7,9 +7,9 @@
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
-.review-container .stars {
+/* .review-container .stars {
     margin-top: -15px;
-}
+} */
 
 .stars {
     align-items: center;
@@ -25,7 +25,6 @@
     align-items: center;
     margin-top: 3px;
     margin-right: 3px;
-
 }
 
 .dot {

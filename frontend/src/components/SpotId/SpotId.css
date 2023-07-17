@@ -1,92 +1,21 @@
 .outer-container {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   color: #222;
   max-width: 1000px;
   margin: 0 auto;
   padding: 0px 20px 20px 20px;
 }
 
-.images-container {
-  display: flex;
-  justify-content: space-between;
-  max-width: 1000px;
-  height: 500px;
-  margin-inline: auto;
-  gap: 10px;
-  align-items: center;
-}
-
-.large-image-container {
-  width: 60%;
-  height: 100%;
-}
-
-.small-image-container {
-  width: 40%;
-  height: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  box-sizing: border-box;
-}
-
-.large-image-container img,
-.small-image-container img {
-  object-fit: cover;
-}
-
-.preview-image {
-  width: 100%;
-  height: 100%;
-  max-height: 496px;
-  border: 2px solid black;
-  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-}
-
-.small-images {
-  width: calc(50% - 5px);
-  height: calc(50% - 5px);
-  box-sizing: border-box;
-  object-fit: cover;
-  border: 2px solid black;
-  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-}
-
-.spot-image {
-  border: 2px solid #222;
-  box-shadow: 5px 5px 0px 0px rgba(0, 0, 0, 1);
-  border-radius: 0px;
-}
-
 .name {
   font-size: 36px;
   font-weight: bold;
-  margin-top: -15px;
+  margin-bottom: 5px;
 }
 
 .heading {
   display: flex;
-  margin-top: -20px;
+  margin-top: 0px;
   font-size: 1.3rem;
   margin-bottom: 8px;
-}
-
-.button {
-  width: 100%;
-  height: 50px;
-  background-color: #FF385C;
-  color: white;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.3s ease-in-out;
-}
-
-.button:hover {
-  background-color: #FF385C;
 }
 
 .review-question {
@@ -106,31 +35,27 @@
 .details-bottom-container {
   display: flex;
   justify-content: space-between;
-  width: auto;
-  box-sizing: border-box;
   height: auto;
-  margin-inline: auto;
   margin-top: 18px;
   padding: 20px 0px;
-}
-
-.detail-description {
-  margin-top: -15px;
-}
-
-.owner-info {
-  flex: 1;
-  padding-top: none;
-  margin-top: none;
+  width: 100%;
+  max-width: 1000px;
 }
 
 .host-name {
   margin-top: -7px;
+  margin-bottom: 0px;
+}
+
+.detail-description {
+  margin-top: 5px;
+  width: 90%;
+  word-wrap: break-word;
+  /* overflow-wrap: break-word; */
 }
 
 .reservation-container {
   width: 40%;
-  max-width: 370px;
   height: auto;
   border: 3px solid black;
   padding: 10px;
@@ -176,7 +101,6 @@
 .detail-price {
   display: flex;
   justify-content: center;
-  width: 160px;
   height: auto;
   font-size: 1.4rem;
   font-weight: bold;
@@ -201,45 +125,20 @@
 }
 
 @media (max-width: 750px) {
-  .images-container {
+  .details-bottom-container {
     flex-direction: column;
-    height: auto;
   }
 
-  .large-image-container {
+  .reservation-container {
     width: 100%;
-    height: auto;
-  }
-
-  .small-image-container {
-    width: 100%;
-    height: auto;
-    flex-wrap: nowrap;
-    overflow: auto;
-  }
-
-  .small-images {
-    width: 80%;
-    height: auto;
-    margin-bottom: 5px;
   }
 }
 
 .price-reviews-wrapper {
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-}
-
-@media (min-width: 910px) {
-  .price-reviews-wrapper {
-    flex-direction: row;
-    justify-content: space-between;
-  }
-
-  .reservation-container {
-    font-size: 1.0rem;
-  }
 }
 
 .reviews {
@@ -249,7 +148,6 @@
 }
 
 .review-count {
-  margin-left: 5px;
   font-size: 1.4rem;
   font-weight: bold;
   display: flex;
@@ -260,10 +158,6 @@
 @media (max-width: 511px) {
   .reviews {
     flex-direction: column;
-  }
-
-  .review-count {
-    margin-left: 0;
   }
 
   .reservation-container .dot {
