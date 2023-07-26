@@ -216,7 +216,8 @@ export default function AddSpot() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              placeholder="Please write at least 30 characters."
+              placeholder="Please write at least 30 characters"
+              className="description-input"
             ></textarea>
             {errors.includes('Please enter a description with at least 30 characters.') && (
               <span className="error-description">Please enter a description with at least 30 characters.</span>
@@ -240,14 +241,15 @@ export default function AddSpot() {
           {/* <hr /> */}
           <h2>Set a base price for your spot</h2>
           <h3>Competitive pricing can help your listing stand out and rank higher in search results.</h3>
-          <div className="host-input">
-            <span>$</span>
+          <div className="host-input price-section">
+            <span className="dollar-sign">$</span>
             <input
               type="number"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
               required
               placeholder="Price per night (USD)"
+              className="price-input"
             />
             {errors.includes('Please enter a valid price for your spot.') && (
               <span className="error-message">Please enter a valid price.</span>

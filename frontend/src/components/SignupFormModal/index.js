@@ -79,12 +79,12 @@ function SignupFormModal() {
 
   return (
     <>
-      <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <h1 className="signup-label">Sign Up</h1>
+      <form onSubmit={handleSubmit} className="signup-form">
         <ul className="error-message">
           {errors.map((error, idx) => <li key={idx}>{error}</li>)}
         </ul>
-        <label>
+        <label className="form-label">
           Email
           <input
             type="text"
@@ -99,7 +99,7 @@ function SignupFormModal() {
             placeholder="Email"
           />
         </label>
-        <label>
+        <label className="form-label">
           Username
           <input
             type="text"
@@ -113,7 +113,7 @@ function SignupFormModal() {
             placeholder="Username"
           />
         </label>
-        <label>
+        <label className="form-label">
           First Name
           <input
             type="text"
@@ -127,7 +127,7 @@ function SignupFormModal() {
             placeholder="First Name"
           />
         </label>
-        <label>
+        <label className="form-label">
           Last Name
           <input
             type="text"
@@ -141,7 +141,7 @@ function SignupFormModal() {
             placeholder="Last Name"
           />
         </label>
-        <label>
+        <label className="form-label">
           Password
           <input
             type="password"
@@ -155,7 +155,7 @@ function SignupFormModal() {
             placeholder="Password"
           />
         </label>
-        <label>
+        <label className="form-label">
           Confirm Password
           <input
             type="password"
@@ -169,7 +169,9 @@ function SignupFormModal() {
             placeholder="Confirm Password"
           />
         </label>
-        <button type="submit" disabled={buttonDisabled}>Sign Up</button>
+        <div className='signup-button-container'>
+          <button type="submit" className="signup-button" disabled={buttonDisabled}>Sign Up</button>
+        </div>
       </form>
     </>
   );

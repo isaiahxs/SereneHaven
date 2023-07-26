@@ -176,11 +176,11 @@ export default function ReviewContainer() {
                             <Star className='star-icon' alt='little-star' />
                             {Number(averageStars).toFixed(1)}
                             <span className='dot'>•</span>
-                            <p>{currentSpotReviewsArray.length === 1 ? '1 Review' : `${currentSpotReviewsArray.length} Reviews`}</p>
+                            <div className='review-count'>{currentSpotReviewsArray.length === 1 ? '1 Review' : `${currentSpotReviewsArray.length} Reviews`}</div>
                         </div>
                     ) : (
                         <div className='stars'>
-                            <Star alt='little-star' />
+                            <Star alt='little-star' className='star-icon' />
                             New
                         </div>
                     )}

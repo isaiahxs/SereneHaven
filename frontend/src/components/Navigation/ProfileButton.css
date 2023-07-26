@@ -7,18 +7,15 @@
 }
 
 .fa-user-circle {
-    color: black;
     font-size: 2.0rem;
     display: flex;
     justify-content: center;
-    align-items: center;
     background-color: white;
     border-radius: 30px;
 }
 
 .profile-dropdown {
     flex-direction: column;
-    align-items: center;
     position: absolute;
     top: 90px;
     right: 0px;
@@ -27,42 +24,20 @@
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
     z-index: 1;
     padding: 15px;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    line-height: 30px;
-    color: black;
 }
 
 .pfp {
     background-color: #ff8488;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
 .pfp:hover {
     border-radius: 0px;
-    transition: all 0.3s ease-in-out;
 }
 
 .manage-spots {
     margin-bottom: 10px;
 }
 
-.log-out {
-    border: 2px solid black;
-    background-color: #FF385C;
-}
-
 .hidden {
     display: none;
-}
-
-.menu {
-    transition: all 0.3s ease-in-out;
-    background-color: white;
-    color: white;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-    margin-right: 5px;
-}
-
-.menu:hover {
-    transition: none;
 }

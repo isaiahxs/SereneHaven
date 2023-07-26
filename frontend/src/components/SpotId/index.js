@@ -5,11 +5,11 @@ import { useParams } from 'react-router-dom';
 import { ReactComponent as Star } from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
 import ReviewContainer from '../ReviewContainer';
+import SpotImages from '../SpotImages';
 import { reviewThunk } from '../../store/reviews';
 import './SpotId.css'
 
 export default function SpotId() {
-    const reviewSlice = useSelector(state => state.review);
     const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
 
     let currentSpotReviewsArray = [];
@@ -29,9 +29,6 @@ export default function SpotId() {
     const { spotId } = useParams();
 
     const detailState = useSelector(state => state.spot.spotDetails);
-
-    const prevImg = detailState?.spotImages?.find(img => img.preview);
-    const smallImages = detailState?.spotImages?.filter(img => !img.preview);
 
     //dispatch two thunks to fetch the spot details and reviews using dispatch and the thunks for getting the location's details as well as the thunk for getting the reviews
     //use useEffect which run on mount and update whenever the dispatch or spotId dependencies change
@@ -61,17 +58,7 @@ export default function SpotId() {
                     <h2 className='heading'>
                         <div>{detailState.city}, {detailState.state}, {detailState.country}</div>
                     </h2>
-                    <div className='images-container'>
-                        <div className='large-image-container'>
-                            <img className='preview-image' src={prevImg.url} alt={`${detailState.name}`} />
-                        </div>
-                        <div className='small-image-container'>
-
-                            {smallImages.map((image, i) => (
-                                <img key={i} src={image.url} alt={detailState.name} className='small-images' />
-                            ))}
-                        </div>
-                    </div>
+                    <SpotImages />
 
                     <div className='details-bottom-container'>
                         <div className='owner-info'>
@@ -100,7 +87,7 @@ export default function SpotId() {
                                         </div>
                                     ) : (
                                         <div className='stars'>
-                                            <Star alt='little-star' />
+                                            <Star alt='little-star' className='star-icon' />
                                             New
                                         </div>
                                     )}
