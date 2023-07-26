@@ -21,8 +21,9 @@
 #modal-content {
     position: absolute;
     background-color: white;
-    /* border-radius: 20px; */
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
     border: 2px solid black;
-    min-width: 350px;
+    max-width: 325px;
+    max-height: 85vh;
+    overflow: auto;
 }

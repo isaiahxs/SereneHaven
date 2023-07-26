@@ -9,26 +9,32 @@
 
 .rating-container {
   display: flex;
+  justify-content: center;
   align-items: center;
+  margin-top: 10px;
 }
 
 .rating-container input[type='radio'] {
   display: none;
 }
 
-.rating-container .star {
+.star {
   font-size: 24px;
   color: lightgray;
   cursor: pointer;
 }
 
-.rating-container input[type='radio']:checked~.star {
+.active {
   color: gold;
 }
 
-.rating-container input[type='radio']:hover~.star {
+/* .rating-container input[type='radio']:checked~.star {
   color: gold;
-}
+} */
+
+/* .rating-container input[type='radio']:hover~.star {
+  color: gold;
+} */
 
 .comment-textarea {
   resize: none;

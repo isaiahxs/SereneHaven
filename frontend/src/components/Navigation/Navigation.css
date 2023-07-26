@@ -1,4 +1,4 @@
-#nav-container {
+.nav-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,11 +22,6 @@
   margin-top: -15px;
 }
 
-.top-right {
-  display: flex;
-  justify-content: flex-end;
-}
-
 NavLink {
   color: black;
   text-decoration: none;
@@ -38,8 +33,11 @@ NavLink {
 
 .logo {
   align-self: flex-start;
-  width: 150px;
-  height: 40px;
+  /* width: 150px; */
+  /* width: 63px; */
+  background-color: white;
+  color: white;
+  height: 60px;
   margin-top: 10px;
 }
 
@@ -62,8 +60,8 @@ NavLink {
   border-radius: 15px;
 }
 
-@media screen and (max-width: 580px) {
+/* @media screen and (max-width: 580px) {
   .create-spot-container {
     display: none;
   }
-}
+} */

@@ -1,0 +1,14 @@
+.signup-label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.6rem;
+    font-weight: bold;
+}
+
+.signup-button-container {
+    margin-top: 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

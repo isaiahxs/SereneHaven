@@ -10,7 +10,9 @@ function ReviewModal({ spotId }) {
   //----------------------SIMILAR TO SPOT ID----------------------
   //consts below are from SpotId transfer
   const [review, setReview] = useState('');
-  const [stars, setStars] = useState(null);
+  const [stars, setStars] = useState(0);
+  const [hoveredStars, setHoveredStars] = useState(0);
+
   const [addReview, setAddReview] = useState(false);
   const [reviewChanged, setReviewChanged] = useState(false);
 
@@ -117,8 +119,14 @@ function ReviewModal({ spotId }) {
                     name="rating"
                     value={starValue}
                     onClick={() => setStars(starValue)}
+                    onMouseOver={() => setHoveredStars(starValue)}
+                    onMouseOut={() => setHoveredStars(stars)}
+                  // onMouseOver={() => setHoveredStars(prevStars => prevStars)}
                   />
-                  <span className="star">&#9733;</span>
+                  <span
+                    className={`star ${hoveredStars >= starValue || stars >= starValue ? 'active' : ''}`}>
+                    &#9733;
+                  </span>
                 </label>
               );
             })}

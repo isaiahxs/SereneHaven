@@ -1,0 +1,30 @@
+.delete-spot-container {
+    padding: 10px;
+}
+
+.delete-header {
+    margin-top: 0px;
+    text-align: center;
+}
+
+.delete-text {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.delete-buttons-container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    /* margin-bottom: 20px; */
+}
+
+@media (max-width: 750px) {
+    .delete-spot-container {
+        padding: 10px;
+    }
+
+    .delete-buttons-container {
+        flex-direction: column;
+    }
+}

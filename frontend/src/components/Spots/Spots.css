@@ -84,8 +84,6 @@
     display: grid;
 }
 
-/* hide tool tip with visibility of hidden and opacity of 0.
-position it at the bottom of the parent .spot element and center it horizontally */
 .tooltip {
     visibility: hidden;
     opacity: 0;
@@ -103,7 +101,6 @@ position it at the bottom of the parent .spot element and center it horizontally
     /* margin-top: 20px; */
 }
 
-/* when user hovers over the .spot element, change visibility and opacity of tooltip */
 .spot:hover .tooltip {
     visibility: visible;
     opacity: 1;
