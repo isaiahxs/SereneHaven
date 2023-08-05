@@ -15,7 +15,7 @@ export default function ManageBookings() {
 
     // const spotDetails = useSelector((state) => state.booking.Bookings.Spot);
     const userBookings = useSelector((state) => state.booking.Bookings);
-    console.log(userBookings);
+    // console.log(userBookings);
 
     const handleBookingDeleted = () => {
         // thunk for deleting booking here
@@ -77,7 +77,7 @@ export default function ManageBookings() {
                                         className='modal-button'
                                         buttonText='Delete'
                                         modalComponent={<DeleteBooking
-                                            spot={booking.Spot}
+                                            booking={booking}
                                             onBookingDeleted={handleBookingDeleted}
                                         />
                                         }

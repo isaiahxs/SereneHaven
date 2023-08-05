@@ -1,19 +1,19 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { deleteSpotThunk } from '../../store/spots';
+import { deleteBookingThunk } from '../../store/bookings';
 
 import './DeleteSpot.css';
 
-export default function DeleteBooking({ spot, onBookingDeleted }) {
+export default function DeleteBooking({ booking, onBookingDeleted }) {
     const dispatch = useDispatch();
     const { closeModal } = useModal();
 
     const handleSubmit = async () => {
         try {
-            await dispatch(deleteSpotThunk(spot.id));
+            await dispatch(deleteBookingThunk(booking.id));
             closeModal();
-            onBookingDeleted(spot.id);
+            onBookingDeleted(booking.id);
         } catch (e) {
             console.error(e);
         }
