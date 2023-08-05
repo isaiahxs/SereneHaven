@@ -7,9 +7,9 @@ import HomePage from "./components/HomePage";
 import SpotId from "./components/SpotId";
 import ManageBookings from "./components/Bookings/ManageBookings";
 import Error404 from "./components/Error404";
-import AddSpot from "./components/Host/AddSpot";
-import EditSpot from "./components/Host/EditSpot";
-import ManageSpots from "./components/Host/ManageSpots";
+import AddSpot from "./components/Spots/AddSpot";
+import EditSpot from "./components/Spots/EditSpot";
+import ManageSpots from "./components/Spots/ManageSpots";
 
 function App() {
   const dispatch = useDispatch();

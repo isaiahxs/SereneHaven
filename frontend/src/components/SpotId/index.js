@@ -7,6 +7,7 @@ import { useParams } from 'react-router-dom';
 import { ReactComponent as Star } from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
 import ReviewContainer from '../ReviewContainer';
+import AddBooking from '../Bookings/AddBooking';
 import SpotImages from '../SpotImages';
 import './SpotId.css'
 
@@ -94,7 +95,8 @@ export default function SpotId() {
                                     )}
                                 </div>
                             </div>
-                            <button className='reserve-button' onClick={() => window.alert('Feature coming soon!')}>Reserve</button>
+                            <AddBooking />
+                            {/* <button className='reserve-button' onClick={() => window.alert('Feature coming soon!')}>Reserve</button> */}
                         </div>
                     </div>
                     <ReviewContainer />
