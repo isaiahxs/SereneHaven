@@ -7,13 +7,11 @@ import OpenModalButton from "../OpenModalButton";
 import DeleteBooking from "./DeleteBooking";
 import { deleteBookingThunk, userBookingsThunk } from "../../store/bookings";
 import "./ManageBookings.css";
-import "./ManageSpots.css";
 
 export default function ManageBookings() {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    // const spotDetails = useSelector((state) => state.booking.Bookings.Spot);
     const userBookings = useSelector((state) => state.booking.Bookings);
     // console.log(userBookings);
 
@@ -32,15 +30,19 @@ export default function ManageBookings() {
 
     return (
         <>
-            <h1>Manage Bookings</h1>
-            {userBookings?.length === 0 &&
-                <h2>Looks like you don't have any bookings yet! Once you have some, you can edit or delete them from here.</h2>
-            }
+            <div id='manage-header' className="manage-header">
+                <h1>Manage Bookings</h1>
+            </div>
 
-            {userBookings?.length > 0 &&
-                <>
-                    <h2>These are your upcoming bookings.</h2>
-                    <ul>
+            <div className="no-current-spots">
+                {userBookings?.length === 0 &&
+                    <h2>Looks like you don't have any bookings yet! Once you have some, you can edit or delete them from here.</h2>
+                }
+            </div>
+
+            <div className="landing-container">
+                {userBookings?.length > 0 &&
+                    <>
                         {userBookings.map((booking) => (
                             <div key={booking.id} className="spot-card">
                                 <>
@@ -72,6 +74,7 @@ export default function ManageBookings() {
 
                                 <div className="manage-buttons">
                                     {/* edit booking feature component here just like in SpotId page */}
+                                    <button className="edit-booking">Update</button>
 
                                     <OpenModalButton
                                         className='modal-button'
@@ -85,9 +88,9 @@ export default function ManageBookings() {
                                 </div>
                             </div>
                         ))}
-                    </ul>
-                </>
-            }
+                    </>
+                }
+            </div>
         </>
     )
 }

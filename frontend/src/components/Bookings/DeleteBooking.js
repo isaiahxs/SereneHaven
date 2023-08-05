@@ -1,9 +1,6 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useModal } from '../../context/Modal';
-import { deleteBookingThunk } from '../../store/bookings';
-
-import './DeleteSpot.css';
 
 export default function DeleteBooking({ booking, onBookingDeleted }) {
     const dispatch = useDispatch();

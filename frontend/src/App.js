@@ -3,9 +3,9 @@ import { useDispatch } from "react-redux";
 import { Route, Switch } from 'react-router-dom';
 import * as sessionActions from './store/session';
 import Navigation from "./components/Navigation";
-import Spots from "./components/Spots";
+import HomePage from "./components/HomePage";
 import SpotId from "./components/SpotId";
-import ManageBookings from "./components/Host/ManageBookings";
+import ManageBookings from "./components/Bookings/ManageBookings";
 import Error404 from "./components/Error404";
 import AddSpot from "./components/Host/AddSpot";
 import EditSpot from "./components/Host/EditSpot";
@@ -27,7 +27,7 @@ function App() {
       {isLoaded && (
         <Switch>
           <Route exact path={'/'}>
-            <Spots />
+            <HomePage />
           </Route>
 
           <Route path={'/spots/:spotId/edit'}>

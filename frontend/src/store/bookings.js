@@ -43,7 +43,6 @@ export const deleteBookingThunk = (bookingId) => async (dispatch) => {
 const initialState = {};
 
 const bookingReducer = (state = initialState, action) => {
-    // let bookings;
     let newState = { ...state };
 
     switch (action.type) {
