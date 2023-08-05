@@ -5,7 +5,7 @@ import * as sessionActions from './store/session';
 import Navigation from "./components/Navigation";
 import Spots from "./components/Spots";
 import SpotId from "./components/SpotId";
-import Manage from "./components/Host/Manage";
+import ManageBookings from "./components/Host/ManageBookings";
 import Error404 from "./components/Error404";
 import AddSpot from "./components/Host/AddSpot";
 import EditSpot from "./components/Host/EditSpot";
@@ -38,6 +38,10 @@ function App() {
             <ManageSpots />
           </Route>
 
+          <Route path={'/manage-bookings'}>
+            <ManageBookings />
+          </Route>
+
           <Route path={'/host'}>
             <AddSpot />
           </Route>
@@ -48,8 +52,9 @@ function App() {
 
           <Route component={Error404} />
 
-        </Switch>
-      )}
+        </Switch >
+      )
+      }
     </>
   );
 }

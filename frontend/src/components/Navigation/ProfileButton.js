@@ -55,6 +55,7 @@ function ProfileButton({ user }) {
             <div>Hello, {user.firstName}</div>
             <div>{user.email}</div>
             <Link to='/manage' className="manage-spots" onClick={closeMenu}>Manage Spots</Link>
+            <Link to='/manage-bookings' className="manage-bookings" onClick={closeMenu}>Manage Bookings</Link>
             <div>
               <button onClick={logout} className="log-out">Log Out</button>
             </div>
@@ -77,7 +78,7 @@ function ProfileButton({ user }) {
             </div>
           </>
         )}
-      </ul>
+      </ul >
     </>
   );
 }
