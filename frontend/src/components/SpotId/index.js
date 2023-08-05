@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { spotDetails } from '../../store/spots';
+import { reviewThunk } from '../../store/reviews';
+// import { getBookingThunk } from '../../store/bookings';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as Star } from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
 import ReviewContainer from '../ReviewContainer';
 import SpotImages from '../SpotImages';
-import { reviewThunk } from '../../store/reviews';
 import './SpotId.css'
 
 export default function SpotId() {
