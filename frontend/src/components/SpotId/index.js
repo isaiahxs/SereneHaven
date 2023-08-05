@@ -95,7 +95,7 @@ export default function SpotId() {
                                     )}
                                 </div>
                             </div>
-                            <AddBooking />
+                            <AddBooking spotId={spotId} />
                             {/* <button className='reserve-button' onClick={() => window.alert('Feature coming soon!')}>Reserve</button> */}
                         </div>
                     </div>

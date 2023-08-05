@@ -1,14 +1,67 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// import DatePicker from 'react-datepicker';
-import { addBookingThunk } from '../../store/bookings'
-// import 'react-datepicker/dist/react-datepicker.css';
-import './AddBooking.css'
+import { userBookingsThunk, addBookingThunk } from '../../store/bookings';
 
 export default function AddBooking({ spotId }) {
-    const [startDate, setStartDate] = useState(new Date());
+    const dispatch = useDispatch();
+    const [showBooking, setShowBooking] = useState(false);
+
+    const [startDate, setStartDate] = useState('');
+    const [endDate, setEndDate] = useState('');
+
+    const handleStartChange = (event) => {
+        setStartDate(event.target.value);
+    };
+
+    const handleEndChange = (event) => {
+        setEndDate(event.target.value);
+    }
+
+    const handleReserveClick = () => {
+        setShowBooking(true);
+    }
+
+    const handleConfirmClick = () => {
+        if (startDate && endDate) {
+            dispatch(addBookingThunk(spotId, startDate, endDate));
+            dispatch(userBookingsThunk())
+            setShowBooking(false);
+        } else {
+            alert('Please select both start and end dates.');
+        }
+    };
+
     return (
-        // <DatePicker selected={startDate} onChange={(date) => setStartDate(date)} />
-        <button className='reserve-button'>hi</button>
+        <div>
+            <button className='reserve-button' onClick={handleReserveClick}>
+                Reserve
+            </button>
+
+            {showBooking && (
+                <div>
+                    <div>
+                        Start
+                        <input
+                            type="date"
+                            value={startDate}
+                            onChange={handleStartChange}
+                        />
+                    </div>
+
+                    <div>
+                        End
+                        <input
+                            type='date'
+                            value={endDate}
+                            onChange={handleEndChange}
+                        />
+                    </div>
+
+                    <button className='confirm-button' onClick={handleConfirmClick}>
+                        Confirm
+                    </button>
+                </div>
+            )}
+        </div>
     );
 }
