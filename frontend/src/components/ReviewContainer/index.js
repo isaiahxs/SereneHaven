@@ -191,6 +191,7 @@ export default function ReviewContainer() {
                             modalComponent={<ReviewModal spotId={spotId} />}
                             buttonText={currentSpotReviewsArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
                             onButtonClick={addingReview}
+                        // className='post-review-button'
                         />
                     )
                 }
@@ -198,7 +199,7 @@ export default function ReviewContainer() {
                 {currentSpotReviewsArray.map((review) => {
                     // console.log('Review:', review)
                     return (
-                        <div key={review.id}>
+                        <div key={review.id} className='individual-review'>
                             <div className='reviewer-name'>{review.User?.firstName}</div>
                             <div>
                                 {new Date(review.createdAt).toLocaleString('en-US', { month: 'long', year: 'numeric' })}

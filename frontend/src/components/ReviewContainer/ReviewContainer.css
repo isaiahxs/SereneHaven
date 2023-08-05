@@ -7,6 +7,18 @@
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
+.review-summary {
+    /* margin-bottom: 10px; */
+}
+
+.individual-review {
+    margin: 10px;
+}
+
+/* .post-review-button {
+    margin: 20px;
+} */
+
 /* .review-container .stars {
     margin-top: -15px;
 } */

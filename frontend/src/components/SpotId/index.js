@@ -6,6 +6,7 @@ import { reviewThunk } from '../../store/reviews';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as Star } from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
+import BookingContainer from '../../components/BookingContainer/index'
 import ReviewContainer from '../ReviewContainer';
 import AddBooking from '../Bookings/AddBooking';
 import SpotImages from '../SpotImages';
@@ -99,6 +100,7 @@ export default function SpotId() {
                             {/* <button className='reserve-button' onClick={() => window.alert('Feature coming soon!')}>Reserve</button> */}
                         </div>
                     </div>
+                    <BookingContainer spotId={spotId} />
                     <ReviewContainer />
                 </div>
             </div>

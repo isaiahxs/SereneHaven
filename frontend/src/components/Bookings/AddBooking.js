@@ -1,9 +1,14 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { userBookingsThunk, addBookingThunk } from '../../store/bookings';
 
 export default function AddBooking({ spotId }) {
     const dispatch = useDispatch();
+    const userBookings = useSelector((state) => state.booking.Bookings);
+    // console.log('THESE ARE OUR USER BOOKINGS', userBookings);
+
+    // console.log('THIS IS THE SPOTID BEING PASSED FROM SPOTID COMPONENT', spotId)
+
     const [showBooking, setShowBooking] = useState(false);
 
     const [startDate, setStartDate] = useState('');
@@ -32,7 +37,7 @@ export default function AddBooking({ spotId }) {
     };
 
     return (
-        <div>
+        <div className='calendar-section'>
             <button className='reserve-button' onClick={handleReserveClick}>
                 Reserve
             </button>

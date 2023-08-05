@@ -4,7 +4,7 @@ import { csrfFetch } from "./csrf"
 const ADD_BOOKING = `bookings/ADD_BOOKING`
 const GET_USER_BOOKINGS = `bookings/GET_USER_BOOKINGS`
 const DELETE_BOOKING = `bookings/DELETE_BOOKING`
-// const UPDATE_BOOKING = `bookings/UPDATE_BOOKING`
+const UPDATE_BOOKING = `bookings/UPDATE_BOOKING`
 
 //action creators
 const getUserBookings = (bookings) => ({
@@ -17,10 +17,10 @@ const addBooking = (newBooking) => ({
     newBooking
 })
 
-// const updateBooking = (updatedBooking) => ({
-//     type: UPDATE_BOOKING,
-//     booking: updateBooking
-// })
+const updateBooking = (updatedBooking) => ({
+    type: UPDATE_BOOKING,
+    updatedBooking
+})
 
 export const deleteBooking = (bookingId) => ({
     type: DELETE_BOOKING,
@@ -53,7 +53,20 @@ export const addBookingThunk = (spotId, startDate, endDate) => async (dispatch) 
     }
 }
 
-// export const updateBookingThunk = ()
+export const updateBookingThunk = (bookingId, startDate, endDate) => async (dispatch) => {
+    const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ startDate, endDate }),
+    });
+
+    if (response.ok) {
+        const updatedBooking = await response.json();
+        dispatch(updateBooking(updatedBooking));
+    }
+}
 
 export const deleteBookingThunk = (bookingId) => async (dispatch) => {
     const response = await csrfFetch(`/api/bookings/${bookingId}`, {
@@ -81,6 +94,14 @@ const bookingReducer = (state = initialState, action) => {
 
         case ADD_BOOKING:
             newState.Bookings = [...newState.Bookings, action.newBooking];
+            return newState;
+
+        //map over the current bookings in the state and replace the updated booking with the new data
+        case UPDATE_BOOKING:
+            const updatedBookingId = action.updatedBooking.id;
+            newState.Bookings = newState.Bookings.map(booking =>
+                booking.id === updatedBookingId ? action.updatedBooking : booking
+            );
             return newState;
 
         case DELETE_BOOKING:
