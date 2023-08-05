@@ -5,7 +5,7 @@ import { spotDetails, userSpotsThunk } from "../../store/spots";
 import { ReactComponent as Star } from '../../assets/star.svg'
 import OpenModalButton from "../OpenModalButton";
 import DeleteBooking from "./DeleteBooking";
-import { userBookingsThunk } from "../../store/bookings";
+import { deleteBookingThunk, userBookingsThunk } from "../../store/bookings";
 import "./ManageBookings.css";
 import "./ManageSpots.css";
 
@@ -17,8 +17,8 @@ export default function ManageBookings() {
     const userBookings = useSelector((state) => state.booking.Bookings);
     // console.log(userBookings);
 
-    const handleBookingDeleted = () => {
-        // thunk for deleting booking here
+    const handleBookingDeleted = (bookingId) => {
+        dispatch(deleteBookingThunk(bookingId));
     }
 
     useEffect(() => {
@@ -33,11 +33,11 @@ export default function ManageBookings() {
     return (
         <>
             <h1>Manage Bookings</h1>
-            {!userBookings &&
+            {userBookings?.length === 0 &&
                 <h2>Looks like you don't have any bookings yet! Once you have some, you can edit or delete them from here.</h2>
             }
 
-            {userBookings?.length &&
+            {userBookings?.length > 0 &&
                 <>
                     <h2>These are your upcoming bookings.</h2>
                     <ul>

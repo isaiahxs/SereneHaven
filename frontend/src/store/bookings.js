@@ -10,9 +10,9 @@ const getUserBookings = (bookings) => ({
     bookings
 })
 
-export const deleteBooking = (deletedBooking) => ({
+export const deleteBooking = (bookingId) => ({
     type: DELETE_BOOKING,
-    deletedBooking
+    bookingId
 })
 
 //booking thunk action creators
@@ -52,8 +52,8 @@ const bookingReducer = (state = initialState, action) => {
             return newState;
 
         case DELETE_BOOKING:
-            const deleted = action.bookingId;
-            delete newState.booking[deleted]
+            const deletedBookingId = action.bookingId;
+            newState.Bookings = newState.Bookings.filter(booking => booking.id !== deletedBookingId);
             return newState;
 
         default:

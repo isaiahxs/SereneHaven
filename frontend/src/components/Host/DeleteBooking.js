@@ -11,7 +11,6 @@ export default function DeleteBooking({ booking, onBookingDeleted }) {
 
     const handleSubmit = async () => {
         try {
-            await dispatch(deleteBookingThunk(booking.id));
             closeModal();
             onBookingDeleted(booking.id);
         } catch (e) {
