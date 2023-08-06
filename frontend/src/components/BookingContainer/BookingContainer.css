@@ -4,3 +4,9 @@
     font-size: 1.4rem;
     font-weight: bolder;
 }
+
+.bookings-signed-out {
+    display: flex;
+    text-align: center;
+    align-items: center;
+}

@@ -15,9 +15,9 @@ export default function BookingContainer({ spotId }) {
     const bookingsForThisSpot = userBookings?.filter(booking => Number(booking.spotId) === Number(spotId));
     // console.log('BOOKINGS FOR THIS SPOT', bookingsForThisSpot)
 
-    useEffect(() => {
-        dispatch(userBookingsThunk())
-    }, [dispatch])
+    // useEffect(() => {
+    //     dispatch(userBookingsThunk())
+    // }, [dispatch])
 
     function formatDate(inputDate) {
         const parts = inputDate.split('-');
@@ -27,15 +27,17 @@ export default function BookingContainer({ spotId }) {
     return (
         <div className="review-container">
             {!sessionUser &&
-                <h3 className='bookings-message'>Please sign in to place a reservation.</h3>
+                <div className='bookings-signed-out'>
+                    <h3 className='bookings-message'>Please sign in to place a reservation or leave a review.</h3>
+                </div>
             }
 
             {bookingsForThisSpot?.length > 0 && sessionUser &&
-                <div className='individual-bookings'>
+                <div>
                     <h3 className='bookings-message'>Upcoming Bookings:</h3>
                     {bookingsForThisSpot.map((booking) => (
                         <div key={booking.id}>
-                            <p>From {formatDate(booking.startDate)} to {formatDate(booking.endDate)}</p>
+                            <p className='individual-bookings'>From {formatDate(booking.startDate)} to {formatDate(booking.endDate)}</p>
                         </div>
                     ))}
                 </div>

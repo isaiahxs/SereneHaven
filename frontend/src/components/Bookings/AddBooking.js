@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { userBookingsThunk, addBookingThunk } from '../../store/bookings';
+import './AddBooking.css'
 
 export default function AddBooking({ spotId }) {
     const dispatch = useDispatch();
+
+    const sessionUser = useSelector((state) => state.session.user)
     const userBookings = useSelector((state) => state.booking.Bookings);
     // console.log('THESE ARE OUR USER BOOKINGS', userBookings);
 
@@ -22,11 +25,18 @@ export default function AddBooking({ spotId }) {
         setEndDate(event.target.value);
     }
 
+    const handleCancelReserve = () => {
+        setShowBooking(false);
+    }
+
     const handleReserveClick = () => {
         setShowBooking(true);
     }
 
     const handleConfirmClick = () => {
+        if (startDate > endDate) {
+            alert('Please select an end date that comes after the start date.')
+        }
         if (startDate && endDate) {
             dispatch(addBookingThunk(spotId, startDate, endDate));
             dispatch(userBookingsThunk())
@@ -38,9 +48,11 @@ export default function AddBooking({ spotId }) {
 
     return (
         <div className='calendar-section'>
-            <button className='reserve-button' onClick={handleReserveClick}>
-                Reserve
-            </button>
+            {sessionUser &&
+                <button className='reserve-button' onClick={handleReserveClick}>
+                    Reserve
+                </button>
+            }
 
             {showBooking && (
                 <div>
@@ -62,9 +74,21 @@ export default function AddBooking({ spotId }) {
                         />
                     </div>
 
-                    <button className='confirm-button' onClick={handleConfirmClick}>
-                        Confirm
-                    </button>
+                    <div className='booking-buttons'>
+                        <button
+                            className='cancel-reserve-button'
+                            onClick={handleCancelReserve}
+                        >Cancel</button>
+
+                        <button
+                            type='submit'
+                            className='confirm-button'
+                            onClick={handleConfirmClick}
+                            disabled={!startDate || !endDate}
+                        >
+                            Confirm
+                        </button>
+                    </div>
                 </div>
             )}
         </div>

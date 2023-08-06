@@ -11,6 +11,7 @@ import ReviewContainer from '../ReviewContainer';
 import AddBooking from '../Bookings/AddBooking';
 import SpotImages from '../SpotImages';
 import './SpotId.css'
+import { userBookingsThunk } from '../../store/bookings';
 
 export default function SpotId() {
     const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
@@ -38,6 +39,7 @@ export default function SpotId() {
     useEffect(() => {
         dispatch(spotDetails(spotId));
         dispatch(reviewThunk(spotId));
+        dispatch(userBookingsThunk());
 
         // clear the spot details when the component unmounts
         return () => {
