@@ -2,6 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
+import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 // import logo from '../../assets/house-logo.png';
 import logo from '../../assets/home-icon.jpg';
 // import { ReactComponent as Logo } from '../../assets/ser.svg';
@@ -10,6 +11,7 @@ import './Navigation.css';
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector(state => state.session.user);
+  const history = useHistory();
 
   return (
     <div id='nav-container' className='nav-container'>
@@ -21,11 +23,7 @@ function Navigation({ isLoaded }) {
       </div>
       <div className='create-spot-section'>
         {sessionUser && (
-          <div className='create-spot-container'>
-            <NavLink to="/host" className='create-spot'>
-              Create a Spot
-            </NavLink>
-          </div>
+          <button className='manage-create-spot' onClick={() => history.push('/host')}>Create Spot</button>
         )}
       </div>
       <div className='menu-section'>

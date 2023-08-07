@@ -48,9 +48,11 @@ export default function AddBooking({ spotId }) {
 
     const today = new Date().toISOString().split('T')[0];
 
-    const nextStartDate = new Date(startDate);
-    nextStartDate.setDate(nextStartDate.getDate() + 1);
-    const minEndDate = nextStartDate.toISOString().split('T')[0];
+    const nextStartDate = startDate ? new Date(startDate) : null;
+    if (nextStartDate) {
+        nextStartDate.setDate(nextStartDate.getDate() + 1);
+    }
+    const minEndDate = nextStartDate ? nextStartDate.toISOString().split('T')[0] : today;
 
     return (
         <div className='calendar-section'>

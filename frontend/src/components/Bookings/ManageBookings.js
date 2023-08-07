@@ -47,6 +47,8 @@ export default function ManageBookings() {
         return `${month}-${day}-${year}`;
     }
 
+    const today = new Date().toISOString().split('T')[0];
+
     if (userBookings) {
         return (
             <>
@@ -70,50 +72,49 @@ export default function ManageBookings() {
                                             <div className="spot-card-img">
                                                 <img className="spot-image" src={booking.Spot?.previewImage} alt={booking.Spot?.name} />
                                             </div>
-                                            <div className="spot-info">
-                                                <div className="location-stars">
-                                                    <p className="loc">
-                                                        {booking.Spot?.city}, {booking.Spot?.state}
-                                                    </p>
-                                                    {/* <div className="stars"> */}
-                                                    {/* <Star alt='little-star' /> */}
-                                                    {/* avg rating and New */}
-                                                    {/* </div> */}
-
+                                            <div className="manage-card-container">
+                                                <div className="manage-spot-info">
+                                                    {booking.Spot?.city}, {booking.Spot?.state}
                                                 </div>
-                                            </div>
-                                            <div className="booking-duration">
-                                                <div className="start-date">Start: {formatDate(booking.startDate)}</div>
-                                                <div className="end-date">End: {formatDate(booking.endDate)}</div>
-                                            </div>
-                                            <div className="price">
-                                                <span className="location-price">${booking.Spot?.price} </span>night
+                                                <div className="manage-price">
+                                                    <span className="location-price">${booking.Spot?.price} </span>night
+                                                </div>
+                                                <div className="booking-duration">
+                                                    <div className="start-date">Start: {formatDate(booking.startDate)}</div>
+                                                    <div className="end-date">End: {formatDate(booking.endDate)}</div>
+                                                </div>
                                             </div>
                                         </div>
                                     </>
 
-                                    <div className="manage-buttons">
-                                        {/* <UpdateBooking booking={booking} /> */}
+                                    {booking.startDate <= today &&
+                                        <div className="cannot-modify">Sorry, you cannot update or delete bookings once they've started</div>
+                                    }
 
-                                        <OpenModalButton
-                                            className='modal-button'
-                                            buttonText='Update'
-                                            modalComponent={<UpdateBooking
-                                                booking={booking}
-                                            />
-                                            }
-                                        />
+                                    {booking.startDate > today &&
+                                        <div className="manage-buttons">
+                                            {/* <UpdateBooking booking={booking} /> */}
 
-                                        <OpenModalButton
-                                            className='modal-button'
-                                            buttonText='Delete'
-                                            modalComponent={<DeleteBooking
-                                                booking={booking}
-                                                onBookingDeleted={handleBookingDeleted}
+                                            <OpenModalButton
+                                                className='modal-button'
+                                                buttonText='Update'
+                                                modalComponent={<UpdateBooking
+                                                    booking={booking}
+                                                />
+                                                }
                                             />
-                                            }
-                                        />
-                                    </div>
+
+                                            <OpenModalButton
+                                                className='modal-button'
+                                                buttonText='Delete'
+                                                modalComponent={<DeleteBooking
+                                                    booking={booking}
+                                                    onBookingDeleted={handleBookingDeleted}
+                                                />
+                                                }
+                                            />
+                                        </div>
+                                    }
                                 </div>
                             ))}
                         </>

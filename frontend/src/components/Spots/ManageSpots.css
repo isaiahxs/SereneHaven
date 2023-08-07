@@ -58,3 +58,12 @@
     text-decoration: none;
     color: black;
 }
+
+.no-current-spots {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
+}

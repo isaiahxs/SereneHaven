@@ -73,10 +73,10 @@ export default function ManageSpots() {
                 {usersSpots.length === 0 ? (
                     <>
                         <p>Looks like you don't have any spots yet! Would you like to create one?</p>
-                        <button className='manage-create-spot'>
-                            <NavLink to='/host'>
-                                Create a New Spot
-                            </NavLink>
+                        <button className='manage-create-spot' onClick={() => history.push('/host')}>
+                            {/* <NavLink to='/host'> */}
+                            Create a New Spot
+                            {/* </NavLink> */}
                         </button>
                     </>
                 ) : null}
