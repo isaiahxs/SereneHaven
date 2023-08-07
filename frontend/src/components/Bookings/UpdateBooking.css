@@ -1,0 +1,34 @@
+.updating-modal {
+    /* display: flex; */
+    /* flex-direction: column; */
+    /* justify-self: center; */
+    height: 285px;
+    width: 300px;
+    /* overflow-x: hidden; */
+}
+
+.updating-modal-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* margin-bottom: 20px; */
+}
+
+.update-message {
+    margin-bottom: 10px;
+}
+
+.updating-start-input {
+    margin-top: 10px;
+}
+
+.booking-buttons {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.modal-reserve-input-field {
+    width: 200px;
+}

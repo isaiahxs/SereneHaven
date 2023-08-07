@@ -46,6 +46,12 @@ export default function AddBooking({ spotId }) {
         }
     };
 
+    const today = new Date().toISOString().split('T')[0];
+
+    const nextStartDate = new Date(startDate);
+    nextStartDate.setDate(nextStartDate.getDate() + 1);
+    const minEndDate = nextStartDate.toISOString().split('T')[0];
+
     return (
         <div className='calendar-section'>
             {sessionUser &&
@@ -68,6 +74,7 @@ export default function AddBooking({ spotId }) {
                             value={startDate}
                             onChange={handleStartChange}
                             className='reserve-input-field'
+                            min={today}
                         />
                     </div>
                     {/* </div> */}
@@ -80,6 +87,7 @@ export default function AddBooking({ spotId }) {
                             value={endDate}
                             onChange={handleEndChange}
                             className='reserve-input-field'
+                            min={minEndDate}
                         />
                     </div>
 

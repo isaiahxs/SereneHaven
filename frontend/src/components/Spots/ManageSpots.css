@@ -42,6 +42,7 @@
     justify-content: space-around;
     align-items: center;
     margin: 1.2rem;
+    cursor: default;
 }
 
 #manage-header .manage-create {

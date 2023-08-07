@@ -72,7 +72,7 @@ export default function ManageBookings() {
                                             </div>
                                             <div className="spot-info">
                                                 <div className="location-stars">
-                                                    <p className="location">
+                                                    <p className="loc">
                                                         {booking.Spot?.city}, {booking.Spot?.state}
                                                     </p>
                                                     {/* <div className="stars"> */}
@@ -93,8 +93,16 @@ export default function ManageBookings() {
                                     </>
 
                                     <div className="manage-buttons">
-                                        {/* edit booking feature component here just like in SpotId page */}
-                                        <UpdateBooking booking={booking} />
+                                        {/* <UpdateBooking booking={booking} /> */}
+
+                                        <OpenModalButton
+                                            className='modal-button'
+                                            buttonText='Update'
+                                            modalComponent={<UpdateBooking
+                                                booking={booking}
+                                            />
+                                            }
+                                        />
 
                                         <OpenModalButton
                                             className='modal-button'
