@@ -46,9 +46,15 @@
 }
 
 .error-message {
-    color: #FF385C;
+    color: #ec002b;
     font-size: 1.0rem;
     margin-top: 0px;
+    font-weight: bold;
+}
+
+.review-error-message {
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .error-description {

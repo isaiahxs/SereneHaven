@@ -14,6 +14,12 @@
   margin-top: 10px;
 }
 
+.comment-textarea {
+  resize: none;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
 .rating-container input[type='radio'] {
   display: none;
 }
@@ -28,6 +34,12 @@
   color: gold;
 }
 
+.submit-review-button-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+}
+
 /* .rating-container input[type='radio']:checked~.star {
   color: gold;
 } */
@@ -35,9 +47,3 @@
 /* .rating-container input[type='radio']:hover~.star {
   color: gold;
 } */
-
-.comment-textarea {
-  resize: none;
-  margin-top: 10px;
-  margin-bottom: 10px;
-}

@@ -86,7 +86,7 @@ function ReviewModal({ spotId }) {
         closeModal();
       })
       .catch(() => {
-        setUploadError('Sorry, seems we were unable to upload your review. Please try again.')
+        setUploadError('Please type at least 10 characters and select a star rating.')
       });
   }
 
@@ -100,12 +100,12 @@ function ReviewModal({ spotId }) {
             How was your stay?
           </h2>
           {uploadError && (
-            <div className='error-message'>{uploadError}</div>
+            <div className='error-message review-error-message'>{uploadError}</div>
           )}
           <textarea
             value={review}
             onChange={(e) => setReview(e.target.value)}
-            placeholder='Leave your review here...'
+            placeholder='Please type at least 10 characters.'
             required
             maxLength={200}
           />
@@ -132,7 +132,10 @@ function ReviewModal({ spotId }) {
             })}
             <label htmlFor="rating">Stars</label>
           </div>
-          <button disabled={isSubmitDisabled} type='submit'>Submit Your Review</button>
+          <div className='submit-review-button-container'>
+            <button className='cancel-review' onClick={() => closeModal()}>Cancel</button>
+            <button disabled={isSubmitDisabled} type='submit'>Submit Your Review</button>
+          </div>
         </form>
       </div>
     );

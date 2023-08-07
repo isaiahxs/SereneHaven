@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import { ReactComponent as Star } from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
 import ReviewModal from '../Review/ReviewModal';
+import EditReviewModal from '../Review/EditReviewModal';
 import DeleteReviewModal from '../Review/DeleteReviewModal';
 import OpenModalButton from '../../components/OpenModalButton';
 import { useModal } from '../../context/Modal';
@@ -224,13 +225,15 @@ export default function ReviewContainer() {
 
                                 </div>
                             )}
+
+                            {/* EDIT REVIEW SECTION */}
                             {sessionUser && sessionUser.id === review.userId && showEdit && (
                                 <div className='review-form'>
                                     <form onSubmit={(e) => editSubmitHandler(e, review.id)}>
                                         <textarea
                                             value={reviewEdit}
                                             onChange={(e) => setReviewEdit(e.target.value)}
-                                            placeholder='Leave your review here...'
+                                            placeholder='Please type at least 10 characters.'
                                             required
                                             maxLength={200}
                                         />
@@ -243,7 +246,7 @@ export default function ReviewContainer() {
                                             required
                                             placeholder='Rating'
                                         />
-                                        <button type='submit'>Submit</button>
+                                        <button type='submit'>Confirm Edit</button>
                                     </form>
                                 </div>
                             )}
