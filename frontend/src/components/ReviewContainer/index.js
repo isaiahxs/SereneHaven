@@ -16,15 +16,10 @@ import './ReviewContainer.css';
 
 export default function ReviewContainer() {
     const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
-    // console.log('currentSpotReviews', currentSpotReviews)
     const currentSpotReviewsArray = Object.values(currentSpotReviews);
-    // console.log('currentSpotReviewsArray', currentSpotReviewsArray)
-    // console.log(currentSpotReviewsArray.length)
 
     const totalStars = currentSpotReviewsArray.reduce((total, review) => total + review.stars, 0);
-    // console.log('totalStars', totalStars)
     const averageStars = totalStars / currentSpotReviewsArray.length;
-    // console.log('averageStars', averageStars)
 
     const [review, setReview] = useState('');
     const [stars, setStars] = useState(1);
@@ -157,6 +152,8 @@ export default function ReviewContainer() {
         setShowDeleteModal(false);
         closeModal();
     };
+    // const [hoveredStars, setHoveredStars] = useState(0);
+    const [hoveredStarsEdit, setHoveredStarsEdit] = useState(null);
 
     if (detailState && currentSpotReviews) {
         const isOwner = sessionUser?.id === detailState.Owner.id;
@@ -168,6 +165,8 @@ export default function ReviewContainer() {
             if (hasPostedReview) return false; //current user has already posted a review
             return true; //show the "Post Your Review" button
         }
+
+
 
         return (
             <div className='review-container'>
@@ -192,13 +191,10 @@ export default function ReviewContainer() {
                             modalComponent={<ReviewModal spotId={spotId} />}
                             buttonText={currentSpotReviewsArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
                             onButtonClick={addingReview}
-                        // className='post-review-button'
                         />
                     )
                 }
-                {/* need to put a check here to render only after the data is available to avoid the firstName and lastName bug */}
                 {currentSpotReviewsArray.map((review) => {
-                    // console.log('Review:', review)
                     return (
                         <div key={review.id} className='individual-review'>
                             <div className='reviewer-name'>{review.User?.firstName}</div>
@@ -219,7 +215,6 @@ export default function ReviewContainer() {
                                             />
                                         }
                                         buttonText='Delete'
-                                        // onButtonClick={() => setReviewToDelete(review.id)}
                                         onButtonClick={() => setShowDeleteModal(true)}
                                     />
 
@@ -237,15 +232,28 @@ export default function ReviewContainer() {
                                             required
                                             maxLength={200}
                                         />
-                                        <input
-                                            type='number'
-                                            value={ratingEdit}
-                                            onChange={(e) => setRatingEdit(e.target.value)}
-                                            min={1}
-                                            max={5}
-                                            required
-                                            placeholder='Rating'
-                                        />
+                                        <div className='rating-container'>
+                                            {[...Array(5)].map((_, index) => {
+                                                const starValue = index + 1;
+                                                return (
+                                                    <label key={starValue}>
+                                                        <input
+                                                            type="radio"
+                                                            name="rating"
+                                                            value={starValue}
+                                                            onClick={() => setRatingEdit(starValue)}
+                                                            onMouseOver={() => setHoveredStarsEdit(starValue)}
+                                                            onMouseOut={() => setHoveredStarsEdit(ratingEdit)}
+                                                        />
+                                                        <span
+                                                            className={`star ${hoveredStarsEdit >= starValue || ratingEdit >= starValue ? 'active' : ''}`}>
+                                                            &#9733;
+                                                        </span>
+                                                    </label>
+                                                );
+                                            })}
+                                            <label htmlFor="rating">Stars</label>
+                                        </div>
                                         <button type='submit'>Confirm Edit</button>
                                     </form>
                                 </div>
