@@ -81,7 +81,7 @@ export default function SpotId() {
                                 <div className='total-reviews-container'>
                                     {Number(averageStars) ? (
                                         <div className='reviews'>
-                                            <div className='stars'>
+                                            <div className='review-stars'>
                                                 <Star className='star-icon' alt='little-star' />
                                                 {Number(averageStars).toFixed(1)}
                                                 <span className='dot'>•</span>
@@ -91,7 +91,7 @@ export default function SpotId() {
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className='stars'>
+                                        <div className='review-stars'>
                                             <Star alt='little-star' className='star-icon' />
                                             New
                                         </div>

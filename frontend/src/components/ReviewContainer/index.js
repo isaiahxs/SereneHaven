@@ -172,7 +172,7 @@ export default function ReviewContainer() {
             <div className='review-container'>
                 <div className='review-summary'>
                     {Number(averageStars) ? (
-                        <div className='stars'>
+                        <div className='review-stars'>
                             <Star className='star-icon' alt='little-star' />
                             {Number(averageStars).toFixed(1)}
                             <span className='dot'>•</span>

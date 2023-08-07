@@ -100,7 +100,7 @@ export default function ManageSpots() {
                                         </div>
                                     </div>
                                     <div className="price">
-                                        <span className="location-price">${spot.price}</span>night
+                                        <span className="location-price">${spot.price}</span> night
                                     </div>
                                 </div>
                             </div>
