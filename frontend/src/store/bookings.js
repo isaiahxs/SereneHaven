@@ -54,6 +54,12 @@ export const addBookingThunk = (spotId, startDate, endDate) => async (dispatch) 
 }
 
 export const updateBookingThunk = (bookingId, startDate, endDate) => async (dispatch) => {
+    // console.log('bookingId from update thunk', bookingId)
+    console.log('start date from update thunk', startDate)
+    console.log('end date from update thunk', endDate)
+    // const newStart = startDate + 1;
+    // const newEnd = endDate + 1;
+
     const response = await csrfFetch(`/api/bookings/${bookingId}`, {
         method: 'PUT',
         headers: {
@@ -96,12 +102,18 @@ const bookingReducer = (state = initialState, action) => {
             newState.Bookings = [...newState.Bookings, action.newBooking];
             return newState;
 
-        //map over the current bookings in the state and replace the updated booking with the new data
         case UPDATE_BOOKING:
             const updatedBookingId = action.updatedBooking.id;
-            newState.Bookings = newState.Bookings.map(booking =>
-                booking.id === updatedBookingId ? action.updatedBooking : booking
-            );
+            newState.Bookings = newState.Bookings.map(booking => {
+                if (booking.id === updatedBookingId) {
+                    return {
+                        ...booking, // Keep all existing properties of the booking
+                        ...action.updatedBooking, // Overwrite only the updated fields
+                        Spot: booking.Spot // Explicitly keep the existing Spot information
+                    };
+                }
+                return booking;
+            });
             return newState;
 
         case DELETE_BOOKING:

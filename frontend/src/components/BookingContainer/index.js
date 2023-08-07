@@ -44,7 +44,7 @@ export default function BookingContainer({ spotId }) {
             }
 
             {bookingsForThisSpot?.length === 0 && sessionUser &&
-                <h3 className='bookings-message no-bookings'>You have no upcoming bookings for this location.</h3>
+                <h3 className='bookings-message no-bookings'>You have no upcoming reservations for this location.</h3>
             }
         </div>
     )
