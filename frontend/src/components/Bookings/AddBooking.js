@@ -49,28 +49,37 @@ export default function AddBooking({ spotId }) {
     return (
         <div className='calendar-section'>
             {sessionUser &&
-                <button className='reserve-button' onClick={handleReserveClick}>
-                    Reserve
-                </button>
+                <div className='reserve-button-container'>
+                    <button className='reserve-button' onClick={handleReserveClick}>
+                        Reserve
+                    </button>
+                </div>
             }
 
             {showBooking && (
-                <div>
-                    <div>
-                        Start
+                <div className='booking-section'>
+
+                    {/* <div className='reserve-text'> */}
+                    {/* Start */}
+                    <div className='reserve-inputs'>
+                        <div className='reserve-text'>Start</div>
                         <input
                             type="date"
                             value={startDate}
                             onChange={handleStartChange}
+                            className='reserve-input-field'
                         />
                     </div>
+                    {/* </div> */}
 
-                    <div>
-                        End
+                    {/* <div className='reserve-text'>End</div> */}
+                    <div className='reserve-inputs'>
+                        <div className='reserve-text'>End</div>
                         <input
                             type='date'
                             value={endDate}
                             onChange={handleEndChange}
+                            className='reserve-input-field'
                         />
                     </div>
 
