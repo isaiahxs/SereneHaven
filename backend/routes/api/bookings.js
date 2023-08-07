@@ -46,6 +46,7 @@ router.get('/current', requireAuth, async (req, res, next) => {
         include: [
           {
             model: SpotImage,
+            as: 'spotImages',
             attributes: ['url'],
             limit: 1,
           },
@@ -62,8 +63,8 @@ router.get('/current', requireAuth, async (req, res, next) => {
       const { id, spotId, userId, startDate, endDate, createdAt, updatedAt, Spot } = booking.toJSON();
 
       let previewImage = null;
-      if (Spot.SpotImages.length > 0) {
-        previewImage = Spot.SpotImages[0].url;
+      if (Spot.spotImages.length > 0) {
+        previewImage = Spot.spotImages[0].url;
       } else {
         previewImage = null;
       }

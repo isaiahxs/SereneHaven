@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { spotDetails } from '../../store/spots';
+import { reviewThunk } from '../../store/reviews';
+// import { getBookingThunk } from '../../store/bookings';
 import { useParams } from 'react-router-dom';
 import { ReactComponent as Star } from '../../assets/star.svg'
 import { clearDetails } from '../../store/spots';
+import BookingContainer from '../../components/BookingContainer/index'
 import ReviewContainer from '../ReviewContainer';
+import AddBooking from '../Bookings/AddBooking';
 import SpotImages from '../SpotImages';
-import { reviewThunk } from '../../store/reviews';
 import './SpotId.css'
+import { userBookingsThunk } from '../../store/bookings';
 
 export default function SpotId() {
     const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
@@ -35,6 +39,7 @@ export default function SpotId() {
     useEffect(() => {
         dispatch(spotDetails(spotId));
         dispatch(reviewThunk(spotId));
+        dispatch(userBookingsThunk());
 
         // clear the spot details when the component unmounts
         return () => {
@@ -76,7 +81,7 @@ export default function SpotId() {
                                 <div className='total-reviews-container'>
                                     {Number(averageStars) ? (
                                         <div className='reviews'>
-                                            <div className='stars'>
+                                            <div className='review-stars'>
                                                 <Star className='star-icon' alt='little-star' />
                                                 {Number(averageStars).toFixed(1)}
                                                 <span className='dot'>•</span>
@@ -86,16 +91,18 @@ export default function SpotId() {
                                             </div>
                                         </div>
                                     ) : (
-                                        <div className='stars'>
+                                        <div className='review-stars'>
                                             <Star alt='little-star' className='star-icon' />
                                             New
                                         </div>
                                     )}
                                 </div>
                             </div>
-                            <button className='reserve-button' onClick={() => window.alert('Feature coming soon!')}>Reserve</button>
+                            <AddBooking spotId={spotId} />
+                            {/* <button className='reserve-button' onClick={() => window.alert('Feature coming soon!')}>Reserve</button> */}
                         </div>
                     </div>
+                    <BookingContainer spotId={spotId} />
                     <ReviewContainer />
                 </div>
             </div>

@@ -24,11 +24,15 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 0.5rem;
+    align-items: center;
+    margin-top: 10px;
 }
 
 .location {
     font-weight: bold;
     font-size: 1.1rem;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 
 .star {
@@ -42,6 +46,8 @@
     justify-content: space-around;
     align-items: center;
     margin: 1.2rem;
+    cursor: default;
+    margin-top: 0px;
 }
 
 #manage-header .manage-create {
@@ -56,4 +62,13 @@
 .manage-create-spot a {
     text-decoration: none;
     color: black;
+}
+
+.no-current-spots {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 500px;
+    margin: auto;
+    text-align: center;
 }

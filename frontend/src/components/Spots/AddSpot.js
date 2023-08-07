@@ -216,7 +216,7 @@ export default function AddSpot() {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               required
-              placeholder="Please write at least 30 characters"
+              placeholder="Please type at least 30 characters."
               className="description-input"
             ></textarea>
             {errors.includes('Please enter a description with at least 30 characters.') && (

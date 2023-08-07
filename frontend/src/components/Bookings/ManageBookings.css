@@ -1,0 +1,39 @@
+.booking-container {
+    height: 250px;
+    width: 250px;
+}
+
+.cannot-modify {
+    text-align: center;
+    font-weight: bolder;
+}
+
+/* .booking-duration {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin: auto;
+} */
+
+.manage-card-container {
+    display: flex;
+    justify-self: center;
+    flex-direction: column;
+    margin: auto;
+    text-align: center;
+}
+
+.manage-spot-info {
+    font-size: 1.1rem;
+    margin-top: 10px;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.manage-price {
+    margin-bottom: 10px;
+}
+
+.booking-duration {
+    margin-bottom: 10px;
+}

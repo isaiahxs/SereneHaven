@@ -114,11 +114,19 @@
   align-items: center;
 }
 
+.reserve-button-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .reserve-button {
   width: 100%;
   padding: 5px;
   margin: 5px;
-  margin-left: -1px;
+  /* display: flex;
+  justify-content: center; */
+  /* margin-left: -1px; */
   background-color: #FF385C;
   border: 2px solid black;
 }

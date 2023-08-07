@@ -1,12 +1,13 @@
 {
   "dependencies": {
+    "@emotion/react": "^11.11.1",
+    "@emotion/styled": "^11.11.0",
     "bcryptjs": "^2.4.3"
   },
   "name": "serene-haven-project",
   "description": "## Database Schema Design",
   "version": "1.0.0",
   "main": "index.js",
-  "devDependencies": {},
   "scripts": {
     "render-postbuild": "npm run build --prefix frontend",
     "install": "npm --prefix backend install backend && npm --prefix frontend install frontend",
