@@ -179,7 +179,7 @@ export default function ReviewContainer() {
                             <div className='review-count'>{currentSpotReviewsArray.length === 1 ? '1 Review' : `${currentSpotReviewsArray.length} Reviews`}</div>
                         </div>
                     ) : (
-                        <div className='stars'>
+                        <div className='review-stars'>
                             <Star alt='little-star' className='star-icon' />
                             New
                         </div>

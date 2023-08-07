@@ -240,7 +240,7 @@ export default function EditSpot() {
               placeholder={detailState?.description}
             ></textarea>
             {errors.includes('Please enter a description with at least 30 characters.') && (
-              <span className="error-description">Please enter a description with at least 30 characters.</span>
+              <span className="error-message error-description">Please enter a description with at least 30 characters.</span>
             )}
           </div>
           {/* <hr /> */}
@@ -261,7 +261,7 @@ export default function EditSpot() {
           {/* <hr /> */}
           <h2>Set a base price for your spot</h2>
           <h3>Competitive pricing can help your listing stand out and rank higher in search results.</h3>
-          <div className="host-input price-section">
+          {/* <div className="host-input price-section">
             <span className="dollar-sign">$</span>
             <input
               type="number"
@@ -274,6 +274,24 @@ export default function EditSpot() {
             {errors.includes('Please enter a valid price for your spot.') && (
               <span className="error-message">Please enter a valid price.</span>
             )}
+          </div> */}
+          <div className="host-input price-section">
+            <div className="dollar-price-input">
+              <span className="dollar-sign">$</span>
+              <input
+                type="number"
+                value={price}
+                onChange={(e) => setPrice(e.target.value)}
+                required
+                placeholder={detailState?.price}
+                className="price-input"
+              />
+            </div>
+            <div className="price-error-msg">
+              {errors.includes('Please enter a valid price for your spot.') && (
+                <span className="error-message">Please enter a valid price.</span>
+              )}
+            </div>
           </div>
           {/* <hr /> */}
           <h2>Liven up your spot with photos</h2>
