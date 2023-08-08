@@ -1,82 +1,75 @@
 .images-container {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     max-width: 1000px;
-    height: 500px;
-    margin-inline: auto;
-    gap: 10px;
+    height: 550px;
     align-items: center;
 }
 
-.preview-image {
-    width: 100%;
-    height: 100%;
-    max-height: 496px;
-    border: 2px solid black;
-    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
-}
-
-.large-image-container {
-    width: 60%;
-    height: 100%;
-}
-
 .small-image-container {
-    width: 40%;
-    height: 100%;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    box-sizing: border-box;
+    margin-top: 20px;
+    max-width: 740px;
 }
 
-.large-image-container img,
-.small-image-container img {
-    object-fit: cover;
-}
-
-.small-image-container .small-images {
-    width: calc(50% - 5px);
-    height: calc(50% - 5px);
-    box-sizing: border-box;
-    object-fit: cover;
+.small-images {
+    max-width: 600px;
     border: 2px solid black;
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
-@media (max-width: 750px) {
-    .images-container {
-        flex-direction: column;
-        height: auto;
-    }
+.slick-prev,
+.slick-next {
+    box-shadow: 0px 0px 0px 0px;
+}
 
-    .large-image-container {
-        width: 100%;
-        height: auto;
+.slick-arrow {
+    margin-left: -10px;
+    margin-right: -10px;
+    /* margin: auto; */
+    z-index: 1;
+}
+
+.slick-prev:before,
+.slick-next:before {
+    color: black;
+    background-color: white !important;
+    border-radius: 50%;
+    opacity: 1;
+}
+
+.slick-slide {
+    display: flex !important;
+    justify-content: center;
+}
+
+@media screen and (min-width: 1070px) {
+    .slick-arrow {
+        /* margin-left: 90px;
+        margin-right: 90px; */
     }
 
     .small-image-container {
-        width: 100%;
-        height: auto;
-        flex-wrap: nowrap;
-        overflow: auto;
+        max-width: 850px;
     }
 
     .small-images {
-        width: 100%;
-        height: 100%;
-        margin-bottom: 5px;
+        max-width: 690px;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .slick-arrow {
+        margin-left: 90px;
+        margin-right: 90px;
     }
 
-    .single-small-image-container {
-        display: flex;
-        justify-content: center;
-        align-items: center;
+    .small-images {
+        max-width: 500px;
     }
+}
 
-    .single-small-image {
-        width: 90%;
-        height: auto;
-        margin-bottom: 5px;
+@media screen and (max-width: 540px) {
+    .small-images {
+        max-width: 400px;
     }
 }
