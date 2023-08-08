@@ -4,16 +4,18 @@
     max-width: 1000px;
     height: 550px;
     align-items: center;
+    /* margin-top: 200px; */
+    /* margin: auto; */
 }
 
 .small-image-container {
-    margin-top: 20px;
+    /* margin-top: 20px; */
     max-width: 740px;
-    /* overflow-x: hidden; */
 }
 
 .small-images {
     max-width: 600px;
+    max-height: 460px;
     border: 2px solid black;
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
@@ -30,7 +32,6 @@
 .slick-arrow {
     margin-left: -10px;
     margin-right: -10px;
-    /* margin: auto; */
     /* z-index: 1; */
 }
 
@@ -48,11 +49,6 @@
 }
 
 @media screen and (min-width: 1070px) {
-    .slick-arrow {
-        /* margin-left: 90px;
-        margin-right: 90px; */
-    }
-
     .small-image-container {
         max-width: 850px;
     }
@@ -66,7 +62,7 @@
     .slick-arrow {
         margin-left: 280px;
         margin-right: 280px;
-        margin-top: 200px;
+        margin-top: 210px;
     }
 
     .images-container {
@@ -75,23 +71,13 @@
 
     .small-image-container {
         max-width: 650px;
-        /* overflow-x: hidden; */
     }
 
     .small-images {
         max-width: 500px;
+        max-height: 380px;
     }
 }
-
-/* @media screen and (min-width: 540px) and (max-width: 670px) {
-    .images-container {
-        max-width: 350px;
-    }
-
-    .small-images {
-        max-width: 350px;
-    }
-} */
 
 @media screen and (max-width: 670px) {
     .slick-arrow {
@@ -101,16 +87,18 @@
     }
 
     .images-container {
-        height: 270px;
+        height: 320px;
         margin-bottom: 40px;
+        overflow-x: hidden;
     }
 
     .small-image-container {
-        max-width: 430px;
-        /* overflow-x: hidden; */
+        max-width: 420px;
+        /* overflow: hidden; */
     }
 
     .small-images {
         max-width: 300px;
+        max-height: 230px;
     }
 }

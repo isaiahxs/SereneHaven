@@ -50,10 +50,6 @@ export default function SpotImages() {
             <div className='small-image-container'>
                 <Slider {...settings}>
                     {allImages.map((image, i) => (
-                        // <div key={i}>
-                        //     <img src={image.url} alt={detailState.name} className='small-images' />
-                        // </div>
-
                         <div key={i}>
                             <OpenModalButton
                                 modalComponent={<ImageModal className='img-modal' src={image.url} alt={detailState.name} />}
