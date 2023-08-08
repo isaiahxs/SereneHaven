@@ -2,9 +2,9 @@
     display: flex;
     justify-content: center;
     max-width: 1000px;
-    height: 550px;
+    height: 470px;
     align-items: center;
-    /* margin-top: 200px; */
+    /* margin-top: 30px; */
     /* margin: auto; */
 }
 
@@ -49,12 +49,17 @@
 }
 
 @media screen and (min-width: 1070px) {
+    .images-container {
+        margin-top: 30px;
+    }
+
     .small-image-container {
         max-width: 850px;
     }
 
     .small-images {
         max-width: 690px;
+        /* max-height: 455px; */
     }
 }
 
@@ -66,7 +71,7 @@
     }
 
     .images-container {
-        height: 450px;
+        height: 420px;
     }
 
     .small-image-container {
@@ -87,8 +92,7 @@
     }
 
     .images-container {
-        height: 320px;
-        margin-bottom: 40px;
+        height: 300px;
         overflow-x: hidden;
     }
 

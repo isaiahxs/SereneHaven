@@ -18,6 +18,7 @@ function OpenModalButton({
         if (typeof onButtonClick === 'function') onButtonClick();
         if (typeof onModalClose === 'function') setOnModalClose(onModalClose);
         setModalContent(modalComponent);
+        document.body.classList.add('no-scroll');
     };
 
     const combinedClassName = className ? `modal-button ${className}` : 'modal-button';

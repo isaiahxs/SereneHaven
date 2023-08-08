@@ -28,6 +28,7 @@ export function ModalProvider({ children }) {
             setOnModalClose(null);
             onModalClose();
         }
+        document.body.classList.remove('no-scroll');
     }
 
     const contextValue = {
