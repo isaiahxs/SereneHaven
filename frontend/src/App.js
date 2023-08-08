@@ -5,11 +5,12 @@ import * as sessionActions from './store/session';
 import Navigation from "./components/Navigation";
 import HomePage from "./components/HomePage";
 import SpotId from "./components/SpotId";
+import ManageSpots from "./components/Spots/ManageSpots";
 import ManageBookings from "./components/Bookings/ManageBookings";
+import ManageFavorites from "./components/ManageFavorites";
 import Error404 from "./components/Error404";
 import AddSpot from "./components/Spots/AddSpot";
 import EditSpot from "./components/Spots/EditSpot";
-import ManageSpots from "./components/Spots/ManageSpots";
 
 function App() {
   const dispatch = useDispatch();
@@ -40,6 +41,10 @@ function App() {
 
           <Route path={'/manage-bookings'}>
             <ManageBookings />
+          </Route>
+
+          <Route path={'/manage-favorites'}>
+            <ManageFavorites />
           </Route>
 
           <Route path={'/host'}>
