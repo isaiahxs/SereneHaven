@@ -9,8 +9,8 @@ module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     //Define an instance method toSafeObject in the user.js model file. This method will return an object with only the User instance information that is safe to save to a JWT, like id, username, and email.
     toSafeObject() {
-      const {id, username, email, firstName, lastName} = this; //context will be the User instance
-      return {id, username, email, firstName, lastName};
+      const { id, username, email, firstName, lastName } = this; //context will be the User instance
+      return { id, username, email, firstName, lastName };
     }
 
     //Define an instance method validatePassword in the user.js model file. It should accept a password string and return true if there is a match with the User instance's hashedPassword. If there is no match, it should return false.
@@ -75,6 +75,10 @@ module.exports = (sequelize, DataTypes) => {
         //could this have been the error?
         // onDelete: 'cascade'
       })
+
+      User.hasMany(models.Favorite, {
+        foreignKey: 'userId',
+      });
     }
   }
   User.init({
@@ -127,7 +131,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     scopes: {
       currentUser: {
-        attributes: {exclude: ['hashedPassword']}
+        attributes: { exclude: ['hashedPassword'] }
       },
       loginUser: {
         //will i have to exclude createdAt and updatedAt?
