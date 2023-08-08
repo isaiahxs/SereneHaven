@@ -23,7 +23,13 @@
     background-color: white;
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
     border: 2px solid black;
-    max-width: 325px;
-    max-height: 85vh;
+    /* max-width: 325px; */
+    /* max-height: 85vh; */
     overflow: auto;
+}
+
+.modal-button {
+    background: none;
+    border: none;
+    box-shadow: 0px 0px 0px 0px;
 }

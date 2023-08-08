@@ -1,6 +1,15 @@
 .image-modal img {
-    max-width: 90%;
-    max-height: 90%;
-    display: block;
-    margin: auto;
+    display: flex;
+    height: auto;
+    width: 700px;
+    overflow-x: hidden;
+    /* margin: auto; */
 }
+
+/* .image-modal {
+    width: 900px !important;
+} */
+
+/* .img-in-modal { */
+/* width: 500px !important; */
+/* } */

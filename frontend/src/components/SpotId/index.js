@@ -9,7 +9,7 @@ import { clearDetails } from '../../store/spots';
 import BookingContainer from '../../components/BookingContainer/index'
 import ReviewContainer from '../ReviewContainer';
 import AddBooking from '../Bookings/AddBooking';
-import SpotImages from '../SpotImages';
+import SpotImages from '../SpotImages/SpotImages.js';
 import './SpotId.css'
 import { userBookingsThunk } from '../../store/bookings';
 

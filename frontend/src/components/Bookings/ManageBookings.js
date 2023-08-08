@@ -96,7 +96,7 @@ export default function ManageBookings() {
                                             {/* <UpdateBooking booking={booking} /> */}
 
                                             <OpenModalButton
-                                                className='modal-button'
+                                                className='modal-button special-modal-buttons'
                                                 buttonText='Update'
                                                 modalComponent={<UpdateBooking
                                                     booking={booking}
@@ -105,7 +105,7 @@ export default function ManageBookings() {
                                             />
 
                                             <OpenModalButton
-                                                className='modal-button'
+                                                className='modal-button special-modal-buttons'
                                                 buttonText='Delete'
                                                 modalComponent={<DeleteBooking
                                                     booking={booking}

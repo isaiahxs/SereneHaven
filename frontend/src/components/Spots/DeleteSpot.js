@@ -20,7 +20,7 @@ export default function DeleteSpot({ spot, onSpotDeleted }) {
     }
 
     return (
-        <div className='delete-spot-container'>
+        <div className='delete-confirmation-modal'>
             <h1 className='delete-header'>Confirm Delete</h1>
             <p className='delete-text'>Are you sure you want to remove this spot from the listings?</p>
             <div className='delete-buttons-container'>

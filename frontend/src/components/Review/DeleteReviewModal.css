@@ -1,8 +1,7 @@
 .delete-confirmation-modal {
     display: flex;
-    /* justify-content: center; */
     flex-direction: column;
-    /* align-items: center; */
-    /* margin: auto; */
     height: 200px;
+    max-width: 325px;
+    padding: 10px;
 }

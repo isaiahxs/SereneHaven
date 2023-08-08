@@ -18,6 +18,10 @@
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
+.img-carousel:hover {
+    background: none;
+}
+
 .slick-prev,
 .slick-next {
     box-shadow: 0px 0px 0px 0px;
@@ -27,7 +31,7 @@
     margin-left: -10px;
     margin-right: -10px;
     /* margin: auto; */
-    z-index: 1;
+    /* z-index: 1; */
 }
 
 .slick-prev:before,
@@ -62,7 +66,7 @@
     .slick-arrow {
         margin-left: 280px;
         margin-right: 280px;
-        margin-top: 220px;
+        margin-top: 200px;
     }
 
     .images-container {
