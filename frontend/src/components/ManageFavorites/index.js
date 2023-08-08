@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom';
 import './ManageFavorites.css';
@@ -15,7 +14,7 @@ function ManageFavorites() {
 
     useEffect(() => {
         dispatch(getFavorites())
-    }, []);
+    }, [dispatch]);
 
     const spotDetails = (e, id) => {
         e.preventDefault();
