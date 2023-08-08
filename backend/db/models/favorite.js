@@ -3,7 +3,7 @@ const {
     Model, Sequelize
 } = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
-    class Favorite extends sequelize.Model {
+    class Favorite extends Model {
         /**
          * Helper method for defining associations.
          * This method is not a part of Sequelize lifecycle.
