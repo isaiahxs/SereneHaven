@@ -9,6 +9,7 @@
 .small-image-container {
     margin-top: 20px;
     max-width: 740px;
+    /* overflow-x: hidden; */
 }
 
 .small-images {
@@ -57,10 +58,20 @@
     }
 }
 
-@media screen and (max-width: 750px) {
+@media screen and (max-width: 840px) {
     .slick-arrow {
-        margin-left: 90px;
-        margin-right: 90px;
+        margin-left: 280px;
+        margin-right: 280px;
+        margin-top: 220px;
+    }
+
+    .images-container {
+        height: 450px;
+    }
+
+    .small-image-container {
+        max-width: 650px;
+        /* overflow-x: hidden; */
     }
 
     .small-images {
@@ -68,8 +79,34 @@
     }
 }
 
-@media screen and (max-width: 540px) {
+/* @media screen and (min-width: 540px) and (max-width: 670px) {
+    .images-container {
+        max-width: 350px;
+    }
+
     .small-images {
-        max-width: 400px;
+        max-width: 350px;
+    }
+} */
+
+@media screen and (max-width: 670px) {
+    .slick-arrow {
+        margin-left: 200px;
+        margin-right: 200px;
+        margin-top: 140px;
+    }
+
+    .images-container {
+        height: 270px;
+        margin-bottom: 40px;
+    }
+
+    .small-image-container {
+        max-width: 430px;
+        /* overflow-x: hidden; */
+    }
+
+    .small-images {
+        max-width: 300px;
     }
 }
