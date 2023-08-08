@@ -72,7 +72,7 @@ export default function ManageSpots() {
             <div className='no-current-spots'>
                 {usersSpots.length === 0 ? (
                     <>
-                        <p>Looks like you don't have any spots yet! Would you like to create one?</p>
+                        <h2>Looks like you don't have any spots yet! Would you like to create one?</h2>
                         <button className='manage-create-spot' onClick={() => history.push('/host')}>
                             {/* <NavLink to='/host'> */}
                             Create a New Spot
@@ -95,7 +95,7 @@ export default function ManageSpots() {
                                             {spot.city}, {spot.state}
                                         </p>
                                         <div className='stars'>
-                                            <Star alt='little-star' />
+                                            <Star alt='little-star' className='star-icon' />
                                             {spot.avgRating > 0 ? Number(spot.avgRating).toFixed(1) : "New"}
                                         </div>
                                     </div>
@@ -109,7 +109,7 @@ export default function ManageSpots() {
                                     <button type='button'>Update</button>
                                 </Link>
                                 <OpenModalButton
-                                    className='modal-button'
+                                    className='modal-button special-modal-buttons'
                                     buttonText='Delete'
                                     modalComponent={<DeleteSpot
                                         spot={spot}

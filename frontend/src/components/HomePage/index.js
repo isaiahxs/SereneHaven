@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { ReactComponent as Star } from '../../assets/star.svg'
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { spots } from '../../store/spots';
@@ -38,11 +39,16 @@ export default function Spots() {
                         <div className='spots-container'>
                             <p className='loc'>
                                 {landingSpot.city}, {landingSpot.state}
-                                <span className='rating'>
-                                    ★ {Number(landingSpot.avgRating)
+                                {/* <span className='rating'>
+                                    <Star alt='little-star' className='star-icon' />
+                                    {Number(landingSpot.avgRating)
                                         ? Number(landingSpot.avgRating).toFixed(1)
                                         : 'New'}
-                                </span>
+                                </span> */}
+                                <div className='stars'>
+                                    <Star alt='little-star' className='star-icon' />
+                                    {landingSpot.avgRating > 0 ? Number(landingSpot.avgRating).toFixed(1) : "New"}
+                                </div>
                             </p>
 
                             <p className='price'>

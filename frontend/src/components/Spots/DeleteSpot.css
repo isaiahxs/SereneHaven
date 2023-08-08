@@ -5,6 +5,7 @@
 
 .delete-header {
     margin-top: 0px;
+    margin-bottom: 0px;
     text-align: center;
 }
 
@@ -26,6 +27,6 @@
     }
 
     .delete-buttons-container {
-        flex-direction: column;
+        /* flex-direction: column; */
     }
 }

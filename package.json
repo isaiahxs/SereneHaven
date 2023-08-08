@@ -2,7 +2,9 @@
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
-    "bcryptjs": "^2.4.3"
+    "bcryptjs": "^2.4.3",
+    "react-slick": "^0.29.0",
+    "slick-carousel": "^1.8.1"
   },
   "name": "serene-haven-project",
   "description": "## Database Schema Design",

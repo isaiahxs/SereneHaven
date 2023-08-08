@@ -25,9 +25,18 @@
     margin-bottom: 0.5em;
 }
 
-.price-section {
-    flex-direction: row;
+.dollar-price-input {
+    display: flex;
     align-items: center;
+}
+
+.price-error-msg {
+    margin-top: 10px;
+}
+
+.price-section {
+    /* flex-direction: row; */
+    /* align-items: center; */
 }
 
 .description-input {
@@ -58,8 +67,6 @@
 }
 
 .error-description {
-    color: #FF385C;
-    font-size: 1.0rem;
     margin-top: 10px;
 }
 

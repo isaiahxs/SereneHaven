@@ -65,10 +65,20 @@ button {
     padding: 5px 10px;
 }
 
-
 button:hover {
     background: #FFE5B4;
     border-radius: 15px;
+}
+
+.special-modal-buttons {
+    background: #FF385C !important;
+    margin: 5px;
+    border: 2px solid black !important;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1) !important;
+}
+
+.special-modal-buttons:hover {
+    background: #FFE5B4 !important;
 }
 
 button[disabled] {
@@ -104,4 +114,8 @@ textarea {
     text-align: center;
     padding: 10px;
     margin: 0 auto;
+}
+
+.no-scroll {
+    overflow: hidden;
 }

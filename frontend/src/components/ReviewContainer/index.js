@@ -179,7 +179,7 @@ export default function ReviewContainer() {
                             <div className='review-count'>{currentSpotReviewsArray.length === 1 ? '1 Review' : `${currentSpotReviewsArray.length} Reviews`}</div>
                         </div>
                     ) : (
-                        <div className='stars'>
+                        <div className='review-stars'>
                             <Star alt='little-star' className='star-icon' />
                             New
                         </div>
@@ -191,6 +191,7 @@ export default function ReviewContainer() {
                             modalComponent={<ReviewModal spotId={spotId} />}
                             buttonText={currentSpotReviewsArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
                             onButtonClick={addingReview}
+                            className='special-modal-buttons'
                         />
                     )
                 }
@@ -212,10 +213,12 @@ export default function ReviewContainer() {
                                                 reviewId={review.id}
                                                 onDelete={confirmDeleteHandler}
                                                 onCancel={() => setShowDeleteModal(false)}
+
                                             />
                                         }
                                         buttonText='Delete'
                                         onButtonClick={() => setShowDeleteModal(true)}
+                                        className='special-modal-buttons'
                                     />
 
                                 </div>
