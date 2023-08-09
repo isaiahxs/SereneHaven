@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { userBookingsThunk, addBookingThunk } from '../../store/bookings';
+import { userBookingsThunk, addBookingThunk, spotBookingsThunk } from '../../store/bookings';
 import './AddBooking.css'
 
 export default function AddBooking({ spotId }) {
@@ -39,7 +39,8 @@ export default function AddBooking({ spotId }) {
         }
         if (startDate && endDate) {
             dispatch(addBookingThunk(spotId, startDate, endDate));
-            dispatch(userBookingsThunk())
+            // dispatch(userBookingsThunk())
+            dispatch(spotBookingsThunk(spotId));
             setShowBooking(false);
         } else {
             alert('Please select both start and end dates.');

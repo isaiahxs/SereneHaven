@@ -16,13 +16,13 @@ function Favorites({ spotId }) {
         dispatch(getFavorites());
     }, [dispatch])
 
-    const handleAddFavorite = () => {
-        dispatch(createFavorite(spotId))
+    const handleAddFavorite = async () => {
+        await dispatch(createFavorite(spotId))
         dispatch(getFavorites());
     }
 
-    const handleRemoveFavorite = () => {
-        dispatch(deleteFavorite(spotId))
+    const handleRemoveFavorite = async () => {
+        await dispatch(deleteFavorite(spotId))
         dispatch(getFavorites());
     }
 

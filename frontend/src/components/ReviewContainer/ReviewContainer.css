@@ -12,17 +12,8 @@
 }
 
 .individual-review {
-    /* margin: 10px; */
     margin-top: 5px;
 }
-
-/* .post-review-button {
-    margin: 20px;
-} */
-
-/* .review-container .stars {
-    margin-top: -15px;
-} */
 
 .stars {
     align-items: center;
@@ -33,12 +24,11 @@
 }
 
 .review-stars {
-    align-items: center;
     display: flex;
+    align-items: center;
     flex-direction: row;
     font-size: 1.4rem;
     font-weight: bold;
-    /* margin-bottom: 10px; */
 }
 
 .star-icon {
@@ -71,5 +61,4 @@
 
 .post-your-review-button {
     margin-left: 0px;
-    /* margin-bottom: 10px; */
 }

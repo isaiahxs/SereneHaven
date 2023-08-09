@@ -10,6 +10,7 @@ import './SpotImages.css'
 export default function SpotImages() {
     const detailState = useSelector(state => state.spot.spotDetails);
     const allImages = detailState?.spotImages
+    // console.log(allImages);
 
     // const prevImg = detailState?.spotImages?.find(img => img.preview);
     // const smallImages = detailState?.spotImages?.filter(img => !img.preview);
@@ -48,17 +49,27 @@ export default function SpotImages() {
     return (
         <div className='images-container'>
             <div className='small-image-container'>
-                <Slider {...settings}>
-                    {allImages.map((image, i) => (
-                        <div key={i}>
-                            <OpenModalButton
-                                modalComponent={<ImageModal className='img-modal' src={image.url} alt={detailState.name} />}
-                                buttonText={<img key={image.id} src={image.url} alt={detailState.name} className='small-images' />}
-                                className='img-carousel'
-                            />
-                        </div>
-                    ))}
-                </Slider>
+                {allImages.length === 1 &&
+                    <OpenModalButton
+                        modalComponent={<ImageModal className='img-modal' src={allImages[0].url} alt={detailState.name} />}
+                        buttonText={<img key={allImages.id} src={allImages[0].url} alt={detailState.name} className='small-images' />}
+                        className='img-carousel'
+                    />
+                }
+
+                {allImages.length > 1 &&
+                    <Slider {...settings}>
+                        {allImages.map((image, i) => (
+                            <div key={i}>
+                                <OpenModalButton
+                                    modalComponent={<ImageModal className='img-modal' src={image.url} alt={detailState.name} />}
+                                    buttonText={<img key={image.id} src={image.url} alt={detailState.name} className='small-images' />}
+                                    className='img-carousel'
+                                />
+                            </div>
+                        ))}
+                    </Slider>
+                }
             </div>
         </div>
     )

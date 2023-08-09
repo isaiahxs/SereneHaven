@@ -12,7 +12,7 @@ import AddBooking from '../Bookings/AddBooking';
 import SpotImages from '../SpotImages/SpotImages.js';
 import Favorites from '../Favorites';
 import './SpotId.css'
-import { userBookingsThunk } from '../../store/bookings';
+import { userBookingsThunk, spotBookingsThunk } from '../../store/bookings';
 import { getFavorites } from '../../store/favorites';
 
 export default function SpotId() {
@@ -35,20 +35,47 @@ export default function SpotId() {
     const { spotId } = useParams();
 
     const detailState = useSelector(state => state.spot.spotDetails);
+    const sessionUser = useSelector(state => state.session.user)
+    // const userBookings = useSelector((state) => state.booking.Bookings);
 
     //dispatch two thunks to fetch the spot details and reviews using dispatch and the thunks for getting the location's details as well as the thunk for getting the reviews
     //use useEffect which run on mount and update whenever the dispatch or spotId dependencies change
-    useEffect(() => {
-        dispatch(spotDetails(spotId));
-        dispatch(reviewThunk(spotId));
-        dispatch(userBookingsThunk());
-        // dispatch(getFavorites());
+    // useEffect(() => {
+    //     dispatch(spotBookingsThunk(spotId));
+    //     dispatch(spotDetails(spotId));
+    //     dispatch(reviewThunk(spotId));
+    //     dispatch(userBookingsThunk());
+    //     // dispatch(getFavorites());
 
-        // clear the spot details when the component unmounts
-        return () => {
-            dispatch(clearDetails())
+    //     // clear the spot details when the component unmounts
+    //     return () => {
+    //         dispatch(clearDetails())
+    //     }
+    // }, [dispatch, spotId])
+
+    useEffect(() => {
+        if (sessionUser) {
+            let fetchData = async () => {
+                // Wait for spotBookingsThunk to resolve before proceeding
+                await dispatch(spotBookingsThunk(spotId));
+                dispatch(spotDetails(spotId));
+                dispatch(reviewThunk(spotId));
+                // dispatch(userBookingsThunk());
+            };
+            fetchData();
+        } else {
+            let fetchData = async () => {
+                dispatch(spotDetails(spotId));
+                dispatch(reviewThunk(spotId));
+            };
+            fetchData();
         }
-    }, [dispatch, spotId])
+
+        // Clear the spot details when the component unmounts
+        return () => {
+            dispatch(clearDetails());
+        }
+    }, [dispatch, sessionUser, spotId]);
 
     useEffect(() => {
         if (reviewToDelete !== null) {
@@ -68,12 +95,24 @@ export default function SpotId() {
                         </h2>
                     </div>
 
-                    <Favorites spotId={spotId} />
+                    {sessionUser && detailState.Owner.id !== sessionUser.id &&
+                        <Favorites spotId={spotId} />
+                    }
 
                     <SpotImages />
                     <div className='details-bottom-container'>
                         <div className='owner-info'>
-                            <h2 className='host-name'>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
+                            {!sessionUser &&
+                                <h2 className='host-name'>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
+                            }
+
+                            {sessionUser && detailState.Owner.id !== sessionUser.id &&
+                                <h2 className='host-name'>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
+                            }
+
+                            {sessionUser && detailState.Owner.id === sessionUser.id &&
+                                <h2 className='host-name'>Hosted by you</h2>
+                            }
                             <h3 className='detail-description'>{detailState.description}</h3>
                         </div>
                         <div className='reservation-container'>
@@ -104,11 +143,17 @@ export default function SpotId() {
                                     )}
                                 </div>
                             </div>
-                            <AddBooking spotId={spotId} />
+                            {sessionUser && detailState.Owner.id !== sessionUser.id &&
+                                <AddBooking spotId={spotId} />
+                            }
                         </div>
                     </div>
-                    <BookingContainer spotId={spotId} />
-                    <ReviewContainer />
+                    <div>
+                        <BookingContainer spotId={spotId} />
+                    </div>
+                    <div>
+                        <ReviewContainer />
+                    </div>
                 </div>
             </div>
         )
