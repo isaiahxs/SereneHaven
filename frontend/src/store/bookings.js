@@ -2,11 +2,17 @@ import { csrfFetch } from "./csrf"
 
 //action type strings
 const ADD_BOOKING = `bookings/ADD_BOOKING`
+const GET_ALL_BOOKINGS = `bookings/GET_ALL_BOOKINGS`
 const GET_USER_BOOKINGS = `bookings/GET_USER_BOOKINGS`
 const DELETE_BOOKING = `bookings/DELETE_BOOKING`
 const UPDATE_BOOKING = `bookings/UPDATE_BOOKING`
 
 //action creators
+const getAllBookings = (allBookings) => ({
+    type: GET_ALL_BOOKINGS,
+    allBookings
+})
+
 const getUserBookings = (bookings) => ({
     type: GET_USER_BOOKINGS,
     bookings
@@ -28,6 +34,17 @@ export const deleteBooking = (bookingId) => ({
 })
 
 //booking thunk action creators
+export const spotBookingsThunk = (spotId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/spots/${spotId}/bookings`);
+
+    if (response.ok) {
+        const data = await response.json();
+        dispatch(getAllBookings(data));
+        // return data;
+        return Promise.resolve(data);
+    }
+}
+
 export const userBookingsThunk = () => async (dispatch) => {
     const response = await csrfFetch(`/api/bookings/current`);
 
@@ -54,12 +71,6 @@ export const addBookingThunk = (spotId, startDate, endDate) => async (dispatch) 
 }
 
 export const updateBookingThunk = (bookingId, startDate, endDate) => async (dispatch) => {
-    // console.log('bookingId from update thunk', bookingId)
-    console.log('start date from update thunk', startDate)
-    console.log('end date from update thunk', endDate)
-    // const newStart = startDate + 1;
-    // const newEnd = endDate + 1;
-
     const response = await csrfFetch(`/api/bookings/${bookingId}`, {
         method: 'PUT',
         headers: {
@@ -94,6 +105,10 @@ const bookingReducer = (state = initialState, action) => {
     let newState = { ...state };
 
     switch (action.type) {
+        case GET_ALL_BOOKINGS:
+            newState = action.allBookings
+            return newState;
+
         case GET_USER_BOOKINGS:
             newState = action.bookings
             return newState;

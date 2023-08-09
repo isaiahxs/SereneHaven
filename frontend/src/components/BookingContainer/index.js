@@ -13,12 +13,9 @@ export default function BookingContainer({ spotId }) {
 
     // console.log('THIS IS THE SPOTID PASSED FROM THE SPOTID COMPONENT', spotId)
 
+    //this applies for current signed in user
     const bookingsForThisSpot = userBookings?.filter(booking => Number(booking.spotId) === Number(spotId));
     console.log('BOOKINGS FOR THIS SPOT', bookingsForThisSpot)
-
-    // useEffect(() => {
-    //     dispatch(userBookingsThunk())
-    // }, [dispatch])
 
     function formatDate(inputDate) {
         const parts = inputDate.split('-');
@@ -35,9 +32,12 @@ export default function BookingContainer({ spotId }) {
 
             {bookingsForThisSpot?.length > 0 && sessionUser && sessionUser.id !== detailState.Owner.id &&
                 <div>
-                    <h3 className='bookings-message'>Upcoming Bookings:</h3>
+                    <h3 className='bookings-message'>Reserved Dates:</h3>
                     {bookingsForThisSpot.map((booking) => (
                         <div key={booking.id}>
+                            {/* {booking.userId !== sessionUser.id &&
+                                <p>Your Reservation</p>
+                            } */}
                             <p className='individual-bookings'>From {formatDate(booking.startDate)} to {formatDate(booking.endDate)}</p>
                         </div>
                     ))}
@@ -50,10 +50,13 @@ export default function BookingContainer({ spotId }) {
 
             {bookingsForThisSpot?.length > 0 && sessionUser && sessionUser.id === detailState.Owner.id &&
                 <div>
-                    <h3 className='bookings-message'>Upcongs:</h3>
+                    <h3 className='bookings-message'>Guest Reservations:</h3>
                     {bookingsForThisSpot.map((booking) => (
                         <div key={booking.id}>
-                            <p className='individual-bookings'>From {formatDate(booking.startDate)} to {formatDate(booking.endDate)}</p>
+                            <div className='individual-bookings-container'>
+                                <p className='booking-guest'>{booking.User.firstName}</p>
+                                <p className='individual-bookings host-bookings'>From {formatDate(booking.startDate)} to {formatDate(booking.endDate)}</p>
+                            </div>
                         </div>
                     ))}
                 </div>

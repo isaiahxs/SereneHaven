@@ -7,10 +7,20 @@
 
 .bookings-signed-out {
     display: flex;
+    justify-content: center;
     text-align: center;
     align-items: center;
 }
 
 .no-bookings {
     text-align: center;
+}
+
+.booking-guest {
+    font-weight: bolder;
+    margin-bottom: 0px;
+}
+
+.host-bookings {
+    margin-top: 0px;
 }
