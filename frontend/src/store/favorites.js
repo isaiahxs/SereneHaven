@@ -79,7 +79,8 @@ export default function reducer(state = initialState, action) {
             return [...state, action.payload];
 
         case REMOVE_FAVORITE:
-            return state.filter(favorite => favorite.id !== action.payload);
+            // return state.filter(favorite => favorite.id !== action.payload);
+            return state.filter(favorite => Number(favorite.id) !== Number(action.payload));
 
         default:
             return state;
