@@ -52,6 +52,7 @@ export const createFavorite = (spotId) => async (dispatch) => {
     if (response.ok) {
         const favorite = await response.json();
         dispatch(addFavorite(favorite));
+        return Promise.resolve();
     }
 }
 
@@ -65,6 +66,7 @@ export const deleteFavorite = (spotId) => async (dispatch) => {
 
     if (response.ok) {
         dispatch(removeFavorite(spotId));
+        return Promise.resolve();
     }
 }
 
