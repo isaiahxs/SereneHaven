@@ -26,8 +26,9 @@
   display: flex;
   justify-content: space-between;
   height: auto;
-  margin-top: 18px;
+  /* margin-top: 18px; */
   padding: 20px 0px;
+  padding-bottom: 0px;
   width: 100%;
   max-width: 1000px;
 }
@@ -136,6 +137,7 @@
 @media (max-width: 750px) {
   .details-bottom-container {
     flex-direction: column;
+    padding-bottom: 0px;
   }
 
   .owner-info {

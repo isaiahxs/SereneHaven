@@ -122,6 +122,11 @@ export default function ReviewContainer() {
         setReviewChanged(true);
     }
 
+    const editCancelHandler = () => {
+        // e.preventDefault();
+        setShowEdit(false);
+    }
+
     const addingReview = () => {
         //loop through the currentSpotReviewsArray and check if the userId of the current review matches the userId of the current sessionUser
         //if it does, then alert the user that they have already reviewed this location
@@ -191,17 +196,17 @@ export default function ReviewContainer() {
                             modalComponent={<ReviewModal spotId={spotId} />}
                             buttonText={currentSpotReviewsArray.length === 0 && !isOwner ? "Be the first to post a review!" : "Post Your Review"}
                             onButtonClick={addingReview}
-                            className='special-modal-buttons'
+                            className='special-modal-buttons post-your-review-button'
                         />
                     )
                 }
                 {currentSpotReviewsArray.map((review) => {
                     return (
                         <div key={review.id} className='individual-review'>
-                            <div className='reviewer-name'>{review.User?.firstName}</div>
-                            <div>
+                            <div className='reviewer-name'>{review.User?.firstName} - {new Date(review.createdAt).toLocaleString('en-US', { month: 'long', year: 'numeric' })}</div>
+                            {/* <div>
                                 {new Date(review.createdAt).toLocaleString('en-US', { month: 'long', year: 'numeric' })}
-                            </div>
+                            </div> */}
                             <div className='new-rev'>{review.review}</div>
                             {sessionUser && sessionUser.id === review.userId && (
                                 <div>
@@ -257,7 +262,10 @@ export default function ReviewContainer() {
                                             })}
                                             <label htmlFor="rating">Stars</label>
                                         </div>
-                                        <button type='submit'>Confirm Edit</button>
+                                        <div className='edit-modal-buttons-container'>
+                                            <button onClick={() => editCancelHandler()} className='cancel-edit-button'>Cancel</button>
+                                            <button type='submit'>Confirm Edit</button>
+                                        </div>
                                     </form>
                                 </div>
                             )}

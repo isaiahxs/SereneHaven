@@ -78,4 +78,31 @@ router.get('/', requireAuth, async (req, res, next) => {
     res.status(404).json({ 'message': 'This user did not have any favorite spots' });
 });
 
+//POST route to favorite a spot based on its id
+router.post('/:spotId', requireAuth, async (req, res, next) => {
+    //get the spot ID from the request parameters
+    const spotId = parseInt(req.params.spotId, 10);
+
+    //get the user ID from the authenticated user
+    const userId = req.user.id;
+
+    //check if the favorite already exists for this user and spot
+    const existingFavorite = await Favorite.findOne({
+        where: { userId, spotId }
+    });
+
+    if (existingFavorite) {
+        return res.status(400).json({ message: 'This spot is already in your favorites' });
+    }
+
+    //create the new favorite
+    const newFavorite = await Favorite.create({
+        userId,
+        spotId
+    });
+
+    //return the new favorite
+    return res.status(201).json({ newFavorite });
+});
+
 module.exports = router;
