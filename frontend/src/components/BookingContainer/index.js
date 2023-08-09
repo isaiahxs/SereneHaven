@@ -15,7 +15,7 @@ export default function BookingContainer({ spotId }) {
 
     //this applies for current signed in user
     const bookingsForThisSpot = userBookings?.filter(booking => Number(booking.spotId) === Number(spotId));
-    console.log('BOOKINGS FOR THIS SPOT', bookingsForThisSpot)
+    // console.log('BOOKINGS FOR THIS SPOT', bookingsForThisSpot)
 
     function formatDate(inputDate) {
         const parts = inputDate.split('-');
@@ -35,9 +35,6 @@ export default function BookingContainer({ spotId }) {
                     <h3 className='bookings-message'>Reserved Dates:</h3>
                     {bookingsForThisSpot.map((booking) => (
                         <div key={booking.id}>
-                            {/* {booking.userId !== sessionUser.id &&
-                                <p>Your Reservation</p>
-                            } */}
                             <p className='individual-bookings'>From {formatDate(booking.startDate)} to {formatDate(booking.endDate)}</p>
                         </div>
                     ))}

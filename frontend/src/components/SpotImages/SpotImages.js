@@ -10,7 +10,7 @@ import './SpotImages.css'
 export default function SpotImages() {
     const detailState = useSelector(state => state.spot.spotDetails);
     const allImages = detailState?.spotImages
-    console.log(allImages);
+    // console.log(allImages);
 
     // const prevImg = detailState?.spotImages?.find(img => img.preview);
     // const smallImages = detailState?.spotImages?.filter(img => !img.preview);

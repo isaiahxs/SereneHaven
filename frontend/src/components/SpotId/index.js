@@ -148,8 +148,12 @@ export default function SpotId() {
                             }
                         </div>
                     </div>
-                    <BookingContainer spotId={spotId} />
-                    <ReviewContainer />
+                    <div>
+                        <BookingContainer spotId={spotId} />
+                    </div>
+                    <div>
+                        <ReviewContainer />
+                    </div>
                 </div>
             </div>
         )

@@ -67,7 +67,7 @@ export default function ManageBookings() {
                         <>
                             {userBookings.map((booking) => (
                                 <div key={booking.id} className="spot-card">
-                                    <>
+                                    <div>
                                         <div onClick={(e) => { spotDetails(e, booking.Spot.id) }}>
                                             <div className="spot-card-img">
                                                 <img className="spot-image" src={booking.Spot?.previewImage} alt={booking.Spot?.name} />
@@ -85,7 +85,7 @@ export default function ManageBookings() {
                                                 </div>
                                             </div>
                                         </div>
-                                    </>
+                                    </div>
 
                                     {booking.startDate <= today &&
                                         <div className="cannot-modify">Sorry, you cannot update or delete bookings once they've started</div>

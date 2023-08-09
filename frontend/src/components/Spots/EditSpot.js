@@ -18,7 +18,7 @@ export default function EditSpot() {
   // console.log('DETAIL STATE IN EDIT PAGE', detailState);
 
   const { spotId } = useParams();
-  console.log('SPOT ID FROM EDIT PAGE', spotId);
+  // console.log('SPOT ID FROM EDIT PAGE', spotId);
 
   const preview = detailState?.spotImages?.find(image => image.preview);
   const previewURL = preview?.url;
