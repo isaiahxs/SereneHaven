@@ -8,7 +8,7 @@
 }
 
 .review-summary {
-    margin-bottom: 5px;
+    margin-bottom: 10px;
 }
 
 .individual-review {
@@ -38,6 +38,7 @@
     flex-direction: row;
     font-size: 1.4rem;
     font-weight: bold;
+    /* margin-bottom: 10px; */
 }
 
 .star-icon {
@@ -59,8 +60,16 @@
     margin-bottom: 8px;
 }
 
+.edit-modal-buttons-container {
+    display: flex;
+    justify-content: center;
+}
+
 .detail-edit-button {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    margin-right: 8px;
+    margin-left: 0px;
+}
+
+.post-your-review-button {
+    margin-left: 0px;
+    /* margin-bottom: 10px; */
 }

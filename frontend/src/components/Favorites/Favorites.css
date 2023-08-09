@@ -1,0 +1,7 @@
+.favorite-container {
+    display: flex;
+}
+
+.add-favorite-button {
+    margin-left: 0px;
+}

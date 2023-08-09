@@ -10,8 +10,10 @@ import BookingContainer from '../../components/BookingContainer/index'
 import ReviewContainer from '../ReviewContainer';
 import AddBooking from '../Bookings/AddBooking';
 import SpotImages from '../SpotImages/SpotImages.js';
+import Favorites from '../Favorites';
 import './SpotId.css'
 import { userBookingsThunk } from '../../store/bookings';
+import { getFavorites } from '../../store/favorites';
 
 export default function SpotId() {
     const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
@@ -40,6 +42,7 @@ export default function SpotId() {
         dispatch(spotDetails(spotId));
         dispatch(reviewThunk(spotId));
         dispatch(userBookingsThunk());
+        // dispatch(getFavorites());
 
         // clear the spot details when the component unmounts
         return () => {
@@ -59,12 +62,15 @@ export default function SpotId() {
                 <div className='inner-container'>
 
                     <h1 className='name'>{detailState.name}</h1>
+                    <div className='spot-detail-header'>
+                        <h2 className='heading'>
+                            <div>{detailState.city}, {detailState.state}, {detailState.country}</div>
+                        </h2>
+                    </div>
 
-                    <h2 className='heading'>
-                        <div>{detailState.city}, {detailState.state}, {detailState.country}</div>
-                    </h2>
+                    <Favorites spotId={spotId} />
+
                     <SpotImages />
-
                     <div className='details-bottom-container'>
                         <div className='owner-info'>
                             <h2 className='host-name'>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
@@ -99,7 +105,6 @@ export default function SpotId() {
                                 </div>
                             </div>
                             <AddBooking spotId={spotId} />
-                            {/* <button className='reserve-button' onClick={() => window.alert('Feature coming soon!')}>Reserve</button> */}
                         </div>
                     </div>
                     <BookingContainer spotId={spotId} />

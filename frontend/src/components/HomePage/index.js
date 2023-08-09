@@ -37,7 +37,7 @@ export default function Spots() {
                         </div>
 
                         <div className='spots-container'>
-                            <p className='loc'>
+                            <div className='loc'>
                                 {landingSpot.city}, {landingSpot.state}
                                 {/* <span className='rating'>
                                     <Star alt='little-star' className='star-icon' />
@@ -49,7 +49,7 @@ export default function Spots() {
                                     <Star alt='little-star' className='star-icon' />
                                     {landingSpot.avgRating > 0 ? Number(landingSpot.avgRating).toFixed(1) : "New"}
                                 </div>
-                            </p>
+                            </div>
 
                             <p className='price'>
                                 <span className='location-price'>${landingSpot.price}</span> night
