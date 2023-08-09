@@ -105,4 +105,28 @@ router.post('/:spotId', requireAuth, async (req, res, next) => {
     return res.status(201).json({ newFavorite });
 });
 
+//DELETE route to unfavorite a spot based on its id
+router.delete('/:spotId', requireAuth, async (req, res, next) => {
+    //get the spot ID from the request parameters
+    const spotId = parseInt(req.params.spotId, 10);
+
+    //get the user ID from the authenticated user
+    const userId = req.user.id;
+
+    //find the favorite that matches this user and spot
+    const favorite = await Favorite.findOne({
+        where: { userId, spotId }
+    });
+
+    if (!favorite) {
+        return res.status(404).json({ message: 'Favorite not found' });
+    }
+
+    //delete the favorite
+    await favorite.destroy();
+
+    //return a success response
+    return res.status(200).json({ message: 'Successfully removed favorite.' });
+});
+
 module.exports = router;
