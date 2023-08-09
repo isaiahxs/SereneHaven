@@ -9,11 +9,12 @@ export default function BookingContainer({ spotId }) {
     const userBookings = useSelector((state) => state.booking.Bookings);
     // console.log('THESE ARE OUR USERBOOKINGS', userBookings)
     // console.log('first spot id', userBookings[1].spotId)
+    const detailState = useSelector((state) => state.spot.spotDetails)
 
     // console.log('THIS IS THE SPOTID PASSED FROM THE SPOTID COMPONENT', spotId)
 
     const bookingsForThisSpot = userBookings?.filter(booking => Number(booking.spotId) === Number(spotId));
-    // console.log('BOOKINGS FOR THIS SPOT', bookingsForThisSpot)
+    console.log('BOOKINGS FOR THIS SPOT', bookingsForThisSpot)
 
     // useEffect(() => {
     //     dispatch(userBookingsThunk())
@@ -32,7 +33,7 @@ export default function BookingContainer({ spotId }) {
                 </div>
             }
 
-            {bookingsForThisSpot?.length > 0 && sessionUser &&
+            {bookingsForThisSpot?.length > 0 && sessionUser && sessionUser.id !== detailState.Owner.id &&
                 <div>
                     <h3 className='bookings-message'>Upcoming Bookings:</h3>
                     {bookingsForThisSpot.map((booking) => (
@@ -43,8 +44,23 @@ export default function BookingContainer({ spotId }) {
                 </div>
             }
 
-            {bookingsForThisSpot?.length === 0 && sessionUser &&
+            {bookingsForThisSpot?.length === 0 && sessionUser && sessionUser.id !== detailState.Owner.id &&
                 <h3 className='bookings-message no-bookings'>You have no upcoming reservations for this location.</h3>
+            }
+
+            {bookingsForThisSpot?.length > 0 && sessionUser && sessionUser.id === detailState.Owner.id &&
+                <div>
+                    <h3 className='bookings-message'>Upcongs:</h3>
+                    {bookingsForThisSpot.map((booking) => (
+                        <div key={booking.id}>
+                            <p className='individual-bookings'>From {formatDate(booking.startDate)} to {formatDate(booking.endDate)}</p>
+                        </div>
+                    ))}
+                </div>
+            }
+
+            {bookingsForThisSpot?.length === 0 && sessionUser && sessionUser.id === detailState.Owner.id &&
+                <h3 className='bookings-message no-bookings'>No one has reserved your spot yet.</h3>
             }
         </div>
     )
