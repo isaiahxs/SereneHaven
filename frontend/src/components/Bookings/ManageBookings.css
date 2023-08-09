@@ -6,6 +6,7 @@
 .cannot-modify {
     text-align: center;
     font-weight: bolder;
+    cursor: default;
 }
 
 /* .booking-duration {
