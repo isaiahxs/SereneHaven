@@ -12,12 +12,10 @@ export default function UpdateBooking({ booking }) {
     const [endDate, setEndDate] = useState(booking.endDate);
 
     const handleStartChange = (event) => {
-        // console.log(event.target.value);
         setStartDate(event.target.value);
     };
 
     const handleEndChange = (event) => {
-        // console.log(event.target.value);
         setEndDate(event.target.value);
     }
 

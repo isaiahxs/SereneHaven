@@ -12,17 +12,13 @@ export default function EditSpot() {
   const { closeModal } = useModal();
 
   const sessionUser = useSelector(state => state.session.user);
-  // console.log('SESSION USER FROM EDIT PAGE', sessionUser)
 
   const detailState = useSelector(state => state.spot.spotDetails);
-  // console.log('DETAIL STATE IN EDIT PAGE', detailState);
 
   const { spotId } = useParams();
-  // console.log('SPOT ID FROM EDIT PAGE', spotId);
 
   const preview = detailState?.spotImages?.find(image => image.preview);
   const previewURL = preview?.url;
-  // console.log('PREVIEW IMAGE URL', preview);
 
   const [name, setName] = useState(detailState?.name);
   const [description, setDescription] = useState(detailState?.description);
@@ -118,12 +114,10 @@ export default function EditSpot() {
           images
         )
       ).then((spot) => {
-        // console.log('SPOT after the .then', spot);
         closeModal();
         history.push(`/spots/${spot.id}`);
       })
         .catch(async (res) => {
-          // console.log('RESSSSSS', res);
           const data = await res.json();
           if (data && data.errors) setErrors(data.errors);
         });
@@ -135,7 +129,6 @@ export default function EditSpot() {
   }, [dispatch, spotId])
 
   if (!detailState) {
-    // console.log("we're loading here :c")
     return (
       <div className="loading">Loading...</div>
     )

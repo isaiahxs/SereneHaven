@@ -50,7 +50,6 @@ export default function ReviewContainer() {
     //return null if spotDetails is falsy and render nothing
     const detailState = useSelector(state => state.spot.spotDetails);
     let detailArray = [];
-    // console.log('detailStateeeeeeeeee', detailState)
     if (detailState) detailArray = Object.values(detailState);
 
     const sessionUser = useSelector(state => state.session.user);

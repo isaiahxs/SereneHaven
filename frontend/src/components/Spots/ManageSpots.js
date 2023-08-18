@@ -15,12 +15,10 @@ export default function ManageSpots() {
     const [isLoaded, setIsLoaded] = useState(false);
     const [currUserSpots, setCurrUserSpots] = useState({});
     const spotsState = useSelector((state) => state.spot);
-    // console.log('MANAGE SPOTS STATE', spotsState)
 
     useEffect(() => {
         if (spotsState.userSpots) {
             const userSpots = spotsState.userSpots.Spots
-            // console.log('USER SPOTS', userSpots)
             if (userSpots) {
                 setCurrUserSpots(userSpots)
             }
@@ -45,10 +43,7 @@ export default function ManageSpots() {
 
     //upon clicking the update button, redirect to the edit spot page
     const editSpot = async (e, id) => {
-        // console.log(e);
         e.preventDefault();
-        // e.stopImmediatePropagation();
-        // e.stopPropagation();
         await dispatch(spotDetails(id)).then(() => history.push(`/spots/${id}/edit`))
     }
 

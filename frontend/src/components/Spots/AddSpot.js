@@ -13,7 +13,6 @@ export default function AddSpot() {
   const { closeModal } = useModal();
 
   const sessionUser = useSelector(state => state.session.user);
-  // console.log('sessionUser', sessionUser)
 
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');

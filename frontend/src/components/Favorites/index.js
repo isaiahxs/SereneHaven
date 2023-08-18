@@ -7,8 +7,6 @@ import './Favorites.css'
 function Favorites({ spotId }) {
     const dispatch = useDispatch();
     const userFavorites = useSelector((state) => state.favorites);
-    // console.log('spotid from spotid comp', spotId);
-    // console.log('these are the user favorites', userFavorites);
 
     const isFavorite = userFavorites.some((favorite) => Number(favorite.id) === Number(spotId));
 

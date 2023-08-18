@@ -10,7 +10,6 @@ function ManageFavorites() {
     const history = useHistory();
 
     const userFavorites = useSelector((state) => state.favorites);
-    // console.log(userFavorites);
 
     useEffect(() => {
         dispatch(getFavorites())
