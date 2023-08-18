@@ -23,6 +23,10 @@ Independently created a responsive web application that allows users to post, vi
 - Redux
 - PostgreSQL
 
+## Documents
+- [Database Schema](https://github.com/isaiahxs/SereneHaven/wiki/Database)
+- [API Documentation](https://github.com/isaiahxs/SereneHaven/wiki/API-Documentation)
+
 ## Features
 
 - CRUD (create, read, update, and delete) spots
