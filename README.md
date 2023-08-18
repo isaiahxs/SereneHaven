@@ -25,10 +25,10 @@ Independently created a responsive web application that allows users to post, vi
 
 ## Features
 
-- Create, read, update, and delete spots
-- Post and manage user reviews
-- Booking functionality for locations
-- Favoriting and unfavorite locations
+- CRUD (create, read, update, and delete) spots
+- CRUD user reviews
+- CRUD bookings for locations
+- Favoriting and unfavoriting locations
 
 ![image](https://github.com/isaiahxs/SereneHaven/assets/107521578/9adc4b80-1c10-4e18-9049-0f75af6588cc)
 ![image](https://github.com/isaiahxs/SereneHaven/assets/107521578/f77443db-f074-4496-af72-866581ce13a3)
