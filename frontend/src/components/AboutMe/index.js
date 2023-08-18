@@ -15,16 +15,18 @@ export default function AboutMe() {
             </div>
 
             <div className='about-me-details'>
-                <h1>Isaiah Sinnathamby</h1>
-                <div>Full-stack developer with a passion for building dynamic web applications.</div>
-                <a href='https://www.isaiahxs.com/'>Portfolio Website</a>
+                <h1 className='my-name'>Isaiah Sinnathamby</h1>
+                <h2 className='my-description'>Full-stack developer with a passion for building dynamic web applications.</h2>
+                <button>
+                    <a href='https://www.isaiahxs.com/' target='_blank' rel='noopener noreferrer'>Visit my Portfolio</a>
+                </button>
             </div>
 
             <div className='about-me-body-container'>
                 <div className='about-me-body'>
-
                     <h2 className='body-headers'>Check out my socials!</h2>
                     <div className='socials'>
+
                         <div className='linked-in'>
                             <div className='about-img-container'>
                                 <a href='https://www.linkedin.com/in/isaiahxs/' target='_blank' rel='noopener noreferrer'>
@@ -32,9 +34,12 @@ export default function AboutMe() {
                                 </a>
                             </div>
                             <div className='social-links'>
-                                <a href='https://www.linkedin.com/in/isaiahxs/' target='_blank' rel='noopener noreferrer'>LinkedIn</a>
+                                <button>
+                                    <a href='https://www.linkedin.com/in/isaiahxs/' target='_blank' rel='noopener noreferrer'>LinkedIn</a>
+                                </button>
                             </div>
                         </div>
+
                         <div className='github'>
                             <div className='about-img-container'>
                                 <a href='https://github.com/isaiahxs' target='_blank' rel='noopener noreferrer'>
@@ -42,12 +47,15 @@ export default function AboutMe() {
                                 </a>
                             </div>
                             <div className='social-links'>
-                                <a href='https://github.com/isaiahxs' target='_blank' rel='noopener noreferrer'>GitHub</a>
+                                <button>
+                                    <a href='https://github.com/isaiahxs' target='_blank' rel='noopener noreferrer'>GitHub</a>
+                                </button>
                             </div>
                         </div>
                     </div>
 
                     <div className='other-projects'>
+                        <h2 className='body-headers'>Visit my other projects!</h2>
                         <div className='epic-e-shop'>
                             <a className='project-name' href='https://epic-e-shop.onrender.com/' target='_blank' rel='noopener noreferrer'>Epic-E-Shop</a>
                             <div className='about-img-container'>
@@ -56,9 +64,12 @@ export default function AboutMe() {
                                 </a>
                             </div>
                             <div className='project-links'>
-                                <a href='https://epic-e-shop.onrender.com/' target='_blank' rel='noopener noreferrer'>Live Site</a>
-                                <div className='separator'>|</div>
-                                <a href='https://github.com/isaiahxs/Epic-E-Shop' target='_blank' rel='noopener noreferrer'>GitHub Repo</a>
+                                <button>
+                                    <a href='https://epic-e-shop.onrender.com/' target='_blank' rel='noopener noreferrer'>Live Site</a>
+                                </button>
+                                <button>
+                                    <a href='https://github.com/isaiahxs/Epic-E-Shop' target='_blank' rel='noopener noreferrer'>GitHub Repo</a>
+                                </button>
                             </div>
                         </div>
 
@@ -70,11 +81,15 @@ export default function AboutMe() {
                                 </a>
                             </div>
                             <div className='project-links'>
-                                <a href='https://well-done.onrender.com/' target='_blank' rel='noopener noreferrer'>Live Site</a>
-                                <div className='separator'>|</div>
-                                <a href='https://github.com/isaiahxs/well-done-group-project' target='_blank' rel='noopener noreferrer'>GitHub Repo</a>
+                                <button>
+                                    <a href='https://well-done.onrender.com/' target='_blank' rel='noopener noreferrer'>Live Site</a>
+                                </button>
+                                <button>
+                                    <a href='https://github.com/isaiahxs/well-done-group-project' target='_blank' rel='noopener noreferrer'>GitHub Repo</a>
+                                </button>
                             </div>
                         </div>
+
                     </div>
 
                 </div>

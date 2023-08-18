@@ -1,3 +1,7 @@
+.about-me-container {
+    /* padding: 10px; */
+}
+
 .about-me-image-container {
     display: flex;
     height: 100%;
@@ -12,6 +16,16 @@
     box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
 }
 
+.my-name {
+    font-size: 2.2rem;
+    margin-bottom: 10px;
+}
+
+.my-description {
+    margin-top: 0px;
+    margin-bottom: 10px;
+}
+
 .about-me-heading {
     display: flex;
     justify-content: space-between;
@@ -23,6 +37,12 @@
     margin-bottom: 50px;
 }
 
+.about-me-details a,
+.about-me-body-container a {
+    text-decoration: none;
+    color: black;
+}
+
 .about-me-body {
     display: flex;
     justify-content: center;
@@ -32,8 +52,11 @@
 }
 
 .body-headers {
-    font-size: 1.7rem;
-    margin: 0;
+    display: flex;
+    justify-content: center;
+    font-size: 1.9rem;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .about-body-subheading {
@@ -45,7 +68,7 @@
     display: flex;
     justify-content: space-between;
     max-width: 450px;
-    margin-bottom: 50px;
+    margin-bottom: 35px;
 }
 
 .social-logo {
@@ -79,10 +102,14 @@
 }
 
 .project-name {
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     margin-top: 0;
     font-weight: bold;
     margin-bottom: 15px;
+}
+
+.project-name:hover {
+    text-decoration: underline;
 }
 
 .project-image {
@@ -107,12 +134,22 @@
     font-size: 1.2rem;
 }
 
+.social-links {
+    margin-top: 12px;
+}
+
+.project-links {
+    flex-direction: column;
+    text-align: center;
+}
+
 .separator {
     margin: 0 5px;
 }
 
 .about-me-details {
     margin: 20px auto;
+    margin-bottom: 25px;
     max-width: 400px;
     text-align: center;
 }
@@ -120,16 +157,6 @@
 @media screen and (max-width: 900px) {
     .about-me-body {
         max-width: 500px;
-    }
-
-    .about-me-image {
-        height: 300px;
-        width: 300px;
-    }
-
-    .body-headers {
-        display: flex;
-        font-size: 1.5rem;
     }
 
     .about-body-subheading {
@@ -160,16 +187,8 @@
 }
 
 @media screen and (max-width: 630px) {
-    .about-me-details {
-        margin-top: 70px;
-    }
-
     .about-me-body-container {
         margin-top: 0px;
-    }
-
-    .about-me-body {
-        margin-top: 20px;
     }
 }
 
@@ -182,9 +201,5 @@
     .about-me-image {
         height: 250px;
         width: 250px;
-    }
-
-    .body-headers {
-        text-align: center;
     }
 }
