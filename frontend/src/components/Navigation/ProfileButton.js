@@ -42,6 +42,11 @@ function ProfileButton({ user }) {
     history.push('/');
   };
 
+  const handleAbout = () => {
+    history.push('/about');
+    closeMenu();
+  }
+
   const ulClassName = "profile-dropdown" + (showMenu ? "" : " hidden");
 
   return (
@@ -59,6 +64,9 @@ function ProfileButton({ user }) {
             <Link to='/manage-favorites' className="manage-favorites" onClick={closeMenu}>Favorites</Link>
             <div>
               <button onClick={logout} className="log-out">Log Out</button>
+            </div>
+            <div>
+              <button onClick={handleAbout}>About Me</button>
             </div>
           </>
         ) : (
@@ -78,6 +86,9 @@ function ProfileButton({ user }) {
                 modalComponent={<SignupFormModal />}
                 className='special-modal-buttons'
               />
+            </div>
+            <div>
+              <button onClick={handleAbout}>About Me</button>
             </div>
           </>
         )}

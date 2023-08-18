@@ -8,6 +8,7 @@ import SpotId from "./components/SpotId";
 import ManageSpots from "./components/Spots/ManageSpots";
 import ManageBookings from "./components/Bookings/ManageBookings";
 import ManageFavorites from "./components/ManageFavorites";
+import AboutMe from "./components/AboutMe";
 import Error404 from "./components/Error404";
 import AddSpot from "./components/Spots/AddSpot";
 import EditSpot from "./components/Spots/EditSpot";
@@ -29,6 +30,10 @@ function App() {
         <Switch>
           <Route exact path={'/'}>
             <HomePage />
+          </Route>
+
+          <Route path={'/about'}>
+            <AboutMe />
           </Route>
 
           <Route path={'/spots/:spotId/edit'}>

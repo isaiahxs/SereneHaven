@@ -1,0 +1,190 @@
+.about-me-image-container {
+    display: flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+}
+
+.about-me-image {
+    height: 275px;
+    width: 275px;
+    border: 3px solid black;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+}
+
+.about-me-heading {
+    display: flex;
+    justify-content: space-between;
+}
+
+.about-me-body-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 50px;
+}
+
+.about-me-body {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    font-family: 'Poppins', calibri, helvetica, arial, sans-serif;
+}
+
+.body-headers {
+    font-size: 1.7rem;
+    margin: 0;
+}
+
+.about-body-subheading {
+    margin: 0;
+    color: #cfb56d;
+}
+
+.socials {
+    display: flex;
+    justify-content: space-between;
+    max-width: 450px;
+    margin-bottom: 50px;
+}
+
+.social-logo {
+    height: 70px;
+    transition: transform 0.75s ease;
+}
+
+.other-projects {
+    display: flex;
+    justify-content: space-between;
+}
+
+.linked-in,
+.github,
+.epic-e-shop,
+.well-done {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 20px;
+}
+
+.github-logo {
+    background-color: black;
+    border-radius: 50%;
+    border: 3px solid black;
+}
+
+.linked-in-logo {
+    height: 74.8px;
+}
+
+.project-name {
+    font-size: 1.5rem;
+    margin-top: 0;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+.project-image {
+    height: 275px;
+    width: auto;
+    border: 3px solid black;
+    box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+    transition: transform 0.75s ease;
+}
+
+.social-logo:hover,
+.project-image:hover {
+    transform: scale(1.05);
+}
+
+.social-links,
+.project-links {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+    font-weight: bolder;
+    font-size: 1.2rem;
+}
+
+.separator {
+    margin: 0 5px;
+}
+
+.about-me-details {
+    margin: 20px auto;
+    max-width: 400px;
+    text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+    .about-me-body {
+        max-width: 500px;
+    }
+
+    .about-me-image {
+        height: 300px;
+        width: 300px;
+    }
+
+    .body-headers {
+        display: flex;
+        font-size: 1.5rem;
+    }
+
+    .about-body-subheading {
+        display: flex;
+        justify-content: center;
+        max-width: 300px;
+        text-align: center;
+    }
+
+    .other-projects {
+        flex-direction: column;
+    }
+
+    .well-done {
+        margin-top: 30px;
+    }
+
+    .epic-e-shop,
+    .well-done {
+        margin-right: 0px;
+        margin-left: 0px;
+    }
+
+    .project-image {
+        height: 250px;
+        width: auto;
+    }
+}
+
+@media screen and (max-width: 630px) {
+    .about-me-details {
+        margin-top: 70px;
+    }
+
+    .about-me-body-container {
+        margin-top: 0px;
+    }
+
+    .about-me-body {
+        margin-top: 20px;
+    }
+}
+
+@media screen and (max-width: 550px) {
+    .about-me-body {
+        margin-top: 0px;
+        max-width: 500px;
+    }
+
+    .about-me-image {
+        height: 250px;
+        width: 250px;
+    }
+
+    .body-headers {
+        text-align: center;
+    }
+}
