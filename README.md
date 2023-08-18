@@ -16,11 +16,13 @@ Independently created a responsive web application that allows users to post, vi
 
 ## Technologies Used
 
-- JavaScript
-- Node.js
-- Express
 - React
 - Redux
+- JavaScript
+- HTML
+- CSS
+- Node.js
+- Express
 - PostgreSQL
 
 ## Documents
