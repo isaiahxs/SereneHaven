@@ -8,9 +8,6 @@ export default function AddBooking({ spotId }) {
 
     const sessionUser = useSelector((state) => state.session.user)
     const userBookings = useSelector((state) => state.booking.Bookings);
-    // console.log('THESE ARE OUR USER BOOKINGS', userBookings);
-
-    // console.log('THIS IS THE SPOTID BEING PASSED FROM SPOTID COMPONENT', spotId)
 
     const [showBooking, setShowBooking] = useState(false);
 

@@ -36,22 +36,6 @@ export default function SpotId() {
 
     const detailState = useSelector(state => state.spot.spotDetails);
     const sessionUser = useSelector(state => state.session.user)
-    // const userBookings = useSelector((state) => state.booking.Bookings);
-
-    //dispatch two thunks to fetch the spot details and reviews using dispatch and the thunks for getting the location's details as well as the thunk for getting the reviews
-    //use useEffect which run on mount and update whenever the dispatch or spotId dependencies change
-    // useEffect(() => {
-    //     dispatch(spotBookingsThunk(spotId));
-    //     dispatch(spotDetails(spotId));
-    //     dispatch(reviewThunk(spotId));
-    //     dispatch(userBookingsThunk());
-    //     // dispatch(getFavorites());
-
-    //     // clear the spot details when the component unmounts
-    //     return () => {
-    //         dispatch(clearDetails())
-    //     }
-    // }, [dispatch, spotId])
 
     useEffect(() => {
         if (sessionUser) {
@@ -60,7 +44,6 @@ export default function SpotId() {
                 await dispatch(spotBookingsThunk(spotId));
                 dispatch(spotDetails(spotId));
                 dispatch(reviewThunk(spotId));
-                // dispatch(userBookingsThunk());
             };
             fetchData();
         } else {

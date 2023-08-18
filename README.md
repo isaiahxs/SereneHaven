@@ -1,1483 +1,208 @@
-# SereneHaven Diagram
+# <a href="https://serene-haven.onrender.com/" target="_blank">SereneHaven</a>
 
-## Database Schema Design
+SereneHaven is a dynamic web application that empowers users to seamlessly manage rental listings, comments, bookings, and favorites. Offering a comprehensive range of functionalities - creation, viewing, updating, and deletion - SereneHaven was developed using React.js, Redux, JavaScript, HTML, and CSS for the frontend, and Express, Node.js, and PostgreSQL for the backend. This project aims to provide an intuitive and feature-rich platform for an enhanced location-rental experience.
 
-https://dbdiagram.io/d/63db0521296d97641d7dd0ec
+The live site can be found [here](https://serene-haven.onrender.com/).
 
-![image](https://user-images.githubusercontent.com/107521578/216721149-6152ed27-ff8e-43e4-8081-d5061ef993ae.png)
+## Project Overview
 
-## API Documentation
+Independently created a responsive web application that allows users to post, view, book, review, and rate locations, using JavaScript, Node.js, Express, React, Redux, and PostgreSQL.
 
-## USER AUTHENTICATION/AUTHORIZATION
+- Engineered the backend with Node.js & Express, designing RESTful APIs for CRUD operations on 'Spots' (places available for booking) & user reviews, while managing data with PostgreSQL.
+- Implemented user authentication & authorization checks using Express middleware to secure data access, & created form validations for error-free user input.
+- Constructed the frontend using React & Redux, integrating responsive design practices for optimal user experience on desktop & mobile platforms.
 
-### All endpoints that require authentication
+## Technologies Used
 
-All endpoints that require a current user to be logged in.
+- JavaScript
+- Node.js
+- Express
+- React
+- Redux
+- PostgreSQL
 
-* Request: endpoints that require authentication
-* Error Response: Require authentication
-  * Status Code: 401
-  * Headers:
-    * Content-Type: application/json
-  * Body:
+## Features
 
-    ```json
-    {
-      "message": "Authentication required",
-      "statusCode": 401
+- Create, read, update, and delete spots
+- Post and manage user reviews
+- Booking functionality for locations
+- Favoriting and unfavorite locations
+
+## Challenges and Solutions
+
+During the development of SereneHaven, I encountered several challenges that led to valuable learning experiences:
+
+### Handling Data Management
+
+Creating a seamless data flow for spots, reviews, and bookings was crucial. I utilized Express to design API endpoints that allowed for easy CRUD operations, maintaining data integrity in PostgreSQL.
+
+### User Authentication and Data Security
+
+Ensuring user authentication and data security were paramount. I implemented user authentication and authorization checks using Express middleware, safeguarding sensitive data and enhancing user privacy.
+
+### Responsive User Interface
+
+To offer an optimal user experience across devices, I employed responsive design principles in React. The interface adapts to various screen sizes, providing a consistent and intuitive experience.
+
+### Form Validations and User Input
+
+
+### State Management and Redux
+
+Managing the application's state efficiently was essential. I integrated Redux to manage state changes across components, enabling seamless data updates and interactions.
+
+### Testing and Debugging
+
+Thorough testing and debugging were crucial to identify and rectify issues. I employed tools like Redux DevTools and debugging tools in the browser to ensure a stable and reliable application.
+
+
+## Code Snippets
+
+### Breakdown of SpotId Component
+
+#### State and Variables:
+Declaring and initializing `currentSpotReviews` using the `useSelector` hook to fetch reviews related to the current spot.
+Creating an empty array `currentSpotReviewsArray` to hold transformed review objects.
+
+```
+    const currentSpotReviews = useSelector(state => state.review.currSpotReviews);
+
+    let currentSpotReviewsArray = [];
+    if (currentSpotReviews) {
+        currentSpotReviewsArray = Object.values(currentSpotReviews);
+        const totalStars = currentSpotReviewsArray.reduce((total, review) => total + review.stars, 0);
+        const averageStars = currentSpotReviewsArray.length > 0 ? totalStars / currentSpotReviewsArray.length : 0;
     }
-    ```
+```
 
-### All endpoints that require proper authorization
+#### Data Transformation:
+If `currentSpotReviews` has data, transform it into an array `currentSpotReviewsArray`.
 
-All endpoints that require authentication and the current user does not have the
-correct role(s) or permission(s).
+Calculate the `totalStars` by adding up all the review stars.
 
-* Request: endpoints that require proper authorization
-* Error Response: Require proper authorization
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
+Calculate the `averageStars` by dividing the total stars by the number of reviews.
 
-    ```json
-    {
-      "message": "Forbidden",
-      "statusCode": 403
-    }
-    ```
+```
+    const totalStars = currentSpotReviewsArray.reduce((total, review) => total + review.stars, 0);
+    const averageStars = totalStars / currentSpotReviewsArray.length;
+```
 
-### Get the Current User
+#### State and Dispatch:
+Use the `useState` hook to manage the `showDeleteModal` state and `reviewToDelete`.
 
-Returns the information about the current user that is logged in.
+Create a `dispatch` variable using the `useDispatch` hook.
 
-* Require Authentication: true
-* Request
-  * Method: GET
-  * URL: /api/session
-  * Body: none
+Get the `spotId` from the URL using the `useParams` hook.
 
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
+```
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [reviewToDelete, setReviewToDelete] = useState(null);
 
-    ```json
-    {
-      "user": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith",
-        "email": "john.smith@gmail.com",
-        "username": "JohnSmith"
-      } 
-    }
-    
-    ```
+    const dispatch = useDispatch();
+    const { spotId } = useParams();
+```
 
-### Log In a User
+#### Fetching Data and Component Lifecycle:
 
-Logs in a current user with valid credentials and returns the current user's
-information.
+Use the `useEffect` hook to fetch data based on user authentication.
 
-* Require Authentication: false
-* Request
-  * Method: POST
-  * URL: /api/session
-  * Headers:
-    * Content-Type: application/json
-  * Body:
+Dispatch actions for fetching spot bookings, spot details, and reviews.
 
-    ```json
-    {
-      "credential": "john.smith@gmail.com",
-      "password": "secret password"
-    }
-    ```
+Clear spot details when the component unmounts.
 
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "user": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith",
-        "email": "john.smith@gmail.com",
-        "username": "JohnSmith"
-      } 
-    }
-    ```
-
-* Error Response: Invalid credentials
-  * Status Code: 401
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Invalid credentials",
-      "statusCode": 401
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "credential": "Email or username is required",
-        "password": "Password is required"
-      }
-    }
-    ```
-
-### Sign Up a User
-
-Creates a new user, logs them in as the current user, and returns the current
-user's information.
-
-* Require Authentication: false
-* Request
-  * Method: POST
-  * URL: /api/users
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "firstName": "John",
-      "lastName": "Smith",
-      "email": "john.smith@gmail.com",
-      "username": "JohnSmith",
-      "password": "secret password"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "firstName": "John",
-      "lastName": "Smith",
-      "email": "john.smith@gmail.com",
-      "username": "JohnSmith",
-      "token": ""
-    }
-    ```
-
-* Error response: User already exists with the specified email
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "User already exists",
-      "statusCode": 403,
-      "errors": {
-        "email": "User with that email already exists"
-      }
-    }
-    ```
-
-* Error response: User already exists with the specified username
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "User already exists",
-      "statusCode": 403,
-      "errors": {
-        "username": "User with that username already exists"
-      }
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "email": "Invalid email",
-        "username": "Username is required",
-        "firstName": "First Name is required",
-        "lastName": "Last Name is required"
-      }
-    }
-    ```
-
-## SPOTS
-
-### Get all Spots
-
-Returns all the spots.
-
-* Require Authentication: false
-* Request
-  * Method: GET
-  * URL: /api/spots
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Spots": [
-        {
-          "id": 1,
-          "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
+```
+    useEffect(() => {
+        if (sessionUser) {
+            let fetchData = async () => {
+                // Wait for spotBookingsThunk to resolve before proceeding
+                await dispatch(spotBookingsThunk(spotId));
+                dispatch(spotDetails(spotId));
+                dispatch(reviewThunk(spotId));
+            };
+            fetchData();
+        } else {
+            let fetchData = async () => {
+                dispatch(spotDetails(spotId));
+                dispatch(reviewThunk(spotId));
+            };
+            fetchData();
         }
-      ]
-    }
-    ```
 
-### Get all Spots owned by the Current User
-
-Returns all the spots owned (created) by the current user.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * URL: /api/spots/current
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Spots": [
-        {
-          "id": 1,
-          "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
+        // Clear the spot details when the component unmounts
+        return () => {
+            dispatch(clearDetails());
         }
-      ]
-    }
-    ```
+    }, [dispatch, sessionUser, spotId]);
+```
 
-### Get details of a Spot from an id
+#### Handling Review Deletion:
 
-Returns the details of a spot specified by its id.
+Use another `useEffect` to handle showing the delete modal when `reviewToDelete` changes
 
-* Require Authentication: false
-* Request
-  * Method: GET
-  * URL: /api/spots/:spotId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36" ,
-      "numReviews": 5,
-      "avgStarRating": 4.5,
-      "SpotImages": [
-        {
-          "id": 1,
-          "url": "image url",
-          "preview": true
-        },
-        {
-          "id": 2,
-          "url": "image url",
-          "preview": false
+```
+    useEffect(() => {
+        if (reviewToDelete !== null) {
+            setShowDeleteModal(true);
         }
-      ],
-      "Owner": {
-        "id": 1,
-        "firstName": "John",
-        "lastName": "Smith"
-      }
+    }, [reviewToDelete])
+```
+
+#### Conditional Rendering:
+
+If `detailState` and `currentSpotReviews` are available, render the spot details
+
+```
+    if (detailState && currentSpotReviews) {
+        return (
+          ...
+        )
     }
-    ```
+```
 
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
+#### Spot Details Rendering:
 
-    ```json
-    {
-      "message": "Spot couldn't be found",
-      "statusCode": 404
+Render spot details, such as name, city, state, and country.
+
+If a user is authenticated and not the owner, show the "Favorites" component.
+
+```
+<h1 className='name'>{detailState.name}</h1>
+  <div className='spot-detail-header'>
+    <h2 className='heading'>
+      <div>
+        {detailState.city}, {detailState.state}, {detailState.country}
+      </div>
+    </h2>
+  </div>
+
+  {sessionUser && detailState.Owner.id !== sessionUser.id &&
+    <Favorites spotId={spotId} />
+  }
+```
+
+#### Spot Images + Owner Information:
+
+Render spot images using the `SpotImages` component.
+
+```
+<SpotImagse />
+```
+
+Render owner information and description.
+
+```
+  <div className='owner-info'>
+    {!sessionUser &&
+      <h2 className='host-name'>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
     }
-    ```
 
-### Create a Spot
-
-Creates and returns a new spot.
-
-* Require Authentication: true
-* Request
-  * Method: POST
-  * URL: /api/spots
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123
+    {sessionUser && detailState.Owner.id !== sessionUser.id &&
+      <h2 className='host-name'>Hosted by {detailState.Owner.firstName} {detailState.Owner.lastName}</h2>
     }
-    ```
 
-* Successful Response
-  * Status Code: 201
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
+    {sessionUser && detailState.Owner.id === sessionUser.id &&
+      <h2 className='host-name'>Hosted by you</h2>
     }
-    ```
-
-* Error Response: Body validation error
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Validation Error",
-      "statusCode": 400,
-      "errors": {
-        "address": "Street address is required",
-        "city": "City is required",
-        "state": "State is required",
-        "country": "Country is required",
-        "lat": "Latitude is not valid",
-        "lng": "Longitude is not valid",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required",
-        "price": "Price per day is required"
-      }
-    }
-    ```
-
-### Add an Image to a Spot based on the Spot's id
-
-Create and return a new image for a spot specified by id.
-
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
-* Request
-  * Method: POST
-  * URL: /api/spots/:spotId/images
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "url": "image url",
-      "preview": true
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "url": "image url",
-      "preview": true
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-### Edit a Spot
-
-Updates and returns an existing spot.
-
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
-* Request
-  * Method: PUT
-  * URL: /api/spots/:spotId
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "ownerId": 1,
-      "address": "123 Disney Lane",
-      "city": "San Francisco",
-      "state": "California",
-      "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
-      "name": "App Academy",
-      "description": "Place where web developers are created",
-      "price": 123,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-* Error Response: Body validation error
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Validation Error",
-      "statusCode": 400,
-      "errors": {
-        "address": "Street address is required",
-        "city": "City is required",
-        "state": "State is required",
-        "country": "Country is required",
-        "lat": "Latitude is not valid",
-        "lng": "Longitude is not valid",
-        "name": "Name must be less than 50 characters",
-        "description": "Description is required",
-        "price": "Price per day is required"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-### Delete a Spot
-
-Deletes an existing spot.
-
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
-* Request
-  * Method: DELETE
-  * URL: /api/spots/:spotId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted",
-      "statusCode": 200
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-## REVIEWS
-
-### Get all Reviews of the Current User
-
-Returns all the reviews written by the current user.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * URL: /api/reviews/current
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Reviews": [
-        {
-          "id": 1,
-          "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
-          "stars": 5,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36" ,
-          "User": {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "Spot": {
-            "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123,
-            "previewImage": "image url"
-          },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ]
-        }
-      ]
-    }
-    ```
-
-### Get all Reviews by a Spot's id
-
-Returns all the reviews that belong to a spot specified by id.
-
-* Require Authentication: false
-* Request
-  * Method: GET
-  * URL: /api/spots/:spotId/reviews
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Reviews": [
-        {
-          "id": 1,
-          "userId": 1,
-          "spotId": 1,
-          "review": "This was an awesome spot!",
-          "stars": 5,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36" ,
-          "User": {
-            "id": 1,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "ReviewImages": [
-            {
-              "id": 1,
-              "url": "image url"
-            }
-          ],
-        }
-      ]
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-### Create a Review for a Spot based on the Spot's id
-
-Create and return a new review for a spot specified by id.
-
-* Require Authentication: true
-* Request
-  * Method: POST
-  * URL: /api/spots/:spotId/reviews
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "review": "This was an awesome spot!",
-      "stars": 5,
-    }
-    ```
-
-* Successful Response
-  * Status Code: 201
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "spotId": 1,
-      "review": "This was an awesome spot!",
-      "stars": 5,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-* Error Response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "review": "Review text is required",
-        "stars": "Stars must be an integer from 1 to 5",
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-* Error response: Review from the current user already exists for the Spot
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "User already has a review for this spot",
-      "statusCode": 403
-    }
-    ```
-
-### Add an Image to a Review based on the Review's id
-
-Create and return a new image for a review specified by id.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  * Method: POST
-  * URL: /api/reviews/:reviewId/images
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "url": "image url"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "url": "image url"
-    }
-    ```
-
-* Error response: Couldn't find a Review with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-* Error response: Cannot add any more images because there is a maximum of 10
-  images per resource
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Maximum number of images for this resource was reached",
-      "statusCode": 403
-    }
-    ```
-
-### Edit a Review
-
-Update and return an existing review.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  * Method: PUT
-  * URL: /api/reviews/:reviewId
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "review": "This was an awesome spot!",
-      "stars": 5,
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "userId": 1,
-      "spotId": 1,
-      "review": "This was an awesome spot!",
-      "stars": 5,
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-* Error Response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "review": "Review text is required",
-        "stars": "Stars must be an integer from 1 to 5",
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Review with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-### Delete a Review
-
-Delete an existing review.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  * Method: DELETE
-  * URL: /api/reviews/:reviewId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted",
-      "statusCode": 200
-    }
-    ```
-
-* Error response: Couldn't find a Review with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-## BOOKINGS
-
-### Get all of the Current User's Bookings
-
-Return all the bookings that the current user has made.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * URL: /api/bookings/current
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "id": 1,
-          "spotId": 1,
-          "Spot": {
-            "id": 1,
-            "ownerId": 1,
-            "address": "123 Disney Lane",
-            "city": "San Francisco",
-            "state": "California",
-            "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
-            "name": "App Academy",
-            "price": 123,
-            "previewImage": "image url"
-          },
-          "userId": 2,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        }
-      ]
-    }
-    ```
-
-### Get all Bookings for a Spot based on the Spot's id
-
-Return all the bookings for a spot specified by id.
-
-* Require Authentication: true
-* Request
-  * Method: GET
-  * URL: /api/spots/:spotId/bookings
-  * Body: none
-
-* Successful Response: If you ARE NOT the owner of the spot.
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "spotId": 1,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20"
-        }
-      ]
-    }
-    ```
-
-* Successful Response: If you ARE the owner of the spot.
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Bookings": [
-        {
-          "User": {
-            "id": 2,
-            "firstName": "John",
-            "lastName": "Smith"
-          },
-          "id": 1,
-          "spotId": 1,
-          "userId": 2,
-          "startDate": "2021-11-19",
-          "endDate": "2021-11-20",
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36"
-        }
-      ]
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-### Create a Booking from a Spot based on the Spot's id
-
-Create and return a new booking from a spot specified by id.
-
-* Require Authentication: true
-* Require proper authorization: Spot must NOT belong to the current user
-* Request
-  * Method: POST
-  * URL: /api/spots/:spotId/bookings
-  * Body:
-
-    ```json
-    {
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "spotId": 1,
-      "userId": 2,
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-19 20:39:36"
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "endDate": "endDate cannot be on or before startDate"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Spot with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-* Error response: Booking conflict
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "statusCode": 403,
-      "errors": {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
-      }
-    }
-    ```
-
-### Edit a Booking
-
-Update and return an existing booking.
-
-* Require Authentication: true
-* Require proper authorization: Booking must belong to the current user
-* Request
-  * Method: PUT
-  * URL: /api/bookings/:bookingId
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20"
-    }
-    ```
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "id": 1,
-      "spotId": 1,
-      "userId": 2,
-      "startDate": "2021-11-19",
-      "endDate": "2021-11-20",
-      "createdAt": "2021-11-19 20:39:36",
-      "updatedAt": "2021-11-20 10:06:40"
-    }
-    ```
-
-* Error response: Body validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Validation error",
-      "statusCode": 400,
-      "errors": {
-        "endDate": "endDate cannot come before startDate"
-      }
-    }
-    ```
-
-* Error response: Couldn't find a Booking with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Booking couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-* Error response: Can't edit a booking that's past the end date
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Past bookings can't be modified",
-      "statusCode": 403
-    }
-    ```
-
-* Error response: Booking conflict
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "statusCode": 403,
-      "errors": {
-        "startDate": "Start date conflicts with an existing booking",
-        "endDate": "End date conflicts with an existing booking"
-      }
-    }
-    ```
-
-### Delete a Booking
-
-Delete an existing booking.
-
-* Require Authentication: true
-* Require proper authorization: Booking must belong to the current user or the
-  Spot must belong to the current user
-* Request
-  * Method: DELETE
-  * URL: /api/bookings/:bookingId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted",
-      "statusCode": 200
-    }
-    ```
-
-* Error response: Couldn't find a Booking with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Booking couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-* Error response: Bookings that have been started can't be deleted
-  * Status Code: 403
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Bookings that have been started can't be deleted",
-      "statusCode": 403
-    }
-    ```
-
-## IMAGES
-
-### Delete a Spot Image
-
-Delete an existing image for a Spot.
-
-* Require Authentication: true
-* Require proper authorization: Spot must belong to the current user
-* Request
-  * Method: DELETE
-  * URL: /api/spot-images/:imageId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted",
-      "statusCode": 200
-    }
-    ```
-
-* Error response: Couldn't find a Spot Image with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Spot Image couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-### Delete a Review Image
-
-Delete an existing image for a Review.
-
-* Require Authentication: true
-* Require proper authorization: Review must belong to the current user
-* Request
-  * Method: DELETE
-  * URL: /api/review-images/:imageId
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Successfully deleted",
-      "statusCode": 200
-    }
-    ```
-
-* Error response: Couldn't find a Review Image with the specified id
-  * Status Code: 404
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Review Image couldn't be found",
-      "statusCode": 404
-    }
-    ```
-
-## Add Query Filters to Get All Spots
-
-Return spots filtered by query parameters.
-
-* Require Authentication: false
-* Request
-  * Method: GET
-  * URL: /api/spots
-  * Query Parameters
-    * page: integer, minimum: 1, maximum: 10, default: 1
-    * size: integer, minimum: 1, maximum: 20, default: 20
-    * minLat: decimal, optional
-    * maxLat: decimal, optional
-    * minLng: decimal, optional
-    * maxLng: decimal, optional
-    * minPrice: decimal, optional, minimum: 0
-    * maxPrice: decimal, optional, minimum: 0
-  * Body: none
-
-* Successful Response
-  * Status Code: 200
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "Spots":[
-        {
-          "id": 1,
-          "ownerId": 1,
-          "address": "123 Disney Lane",
-          "city": "San Francisco",
-          "state": "California",
-          "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
-          "name": "App Academy",
-          "description": "Place where web developers are created",
-          "price": 123,
-          "createdAt": "2021-11-19 20:39:36",
-          "updatedAt": "2021-11-19 20:39:36",
-          "avgRating": 4.5,
-          "previewImage": "image url"
-        }
-      ],
-      "page": 2,
-      "size": 25
-    }
-    ```
-
-* Error Response: Query parameter validation errors
-  * Status Code: 400
-  * Headers:
-    * Content-Type: application/json
-  * Body:
-
-    ```json
-    {
-      "message": "Validation Error",
-      "statusCode": 400,
-      "errors": {
-        "page": "Page must be greater than or equal to 1",
-        "size": "Size must be greater than or equal to 1",
-        "maxLat": "Maximum latitude is invalid",
-        "minLat": "Minimum latitude is invalid",
-        "minLng": "Maximum longitude is invalid",
-        "maxLng": "Minimum longitude is invalid",
-        "minPrice": "Maximum price must be greater than or equal to 0",
-        "maxPrice": "Minimum price must be greater than or equal to 0"
-      }
-    }
-    ```
+      <h3 className='detail-description'>{detailState.description}</h3>
+  </div>
+```

@@ -7,15 +7,10 @@ export default function BookingContainer({ spotId }) {
     const dispatch = useDispatch();
     const sessionUser = useSelector((state) => state.session.user)
     const userBookings = useSelector((state) => state.booking.Bookings);
-    // console.log('THESE ARE OUR USERBOOKINGS', userBookings)
-    // console.log('first spot id', userBookings[1].spotId)
     const detailState = useSelector((state) => state.spot.spotDetails)
-
-    // console.log('THIS IS THE SPOTID PASSED FROM THE SPOTID COMPONENT', spotId)
 
     //this applies for current signed in user
     const bookingsForThisSpot = userBookings?.filter(booking => Number(booking.spotId) === Number(spotId));
-    // console.log('BOOKINGS FOR THIS SPOT', bookingsForThisSpot)
 
     function formatDate(inputDate) {
         const parts = inputDate.split('-');

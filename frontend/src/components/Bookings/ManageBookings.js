@@ -14,7 +14,6 @@ export default function ManageBookings() {
     const dispatch = useDispatch();
 
     const userBookings = useSelector((state) => state.booking.Bookings);
-    // console.log(userBookings);
 
     const handleBookingDeleted = (bookingId) => {
         dispatch(deleteBookingThunk(bookingId));

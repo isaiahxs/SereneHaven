@@ -61,7 +61,6 @@ function ReviewModal({ spotId }) {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // console.log('SUBMIT HANDLER CALLED')
     const payload = {
       //userId: sessionUser.id instead of just userId
       //because the userId is a foreign key in the Review table
