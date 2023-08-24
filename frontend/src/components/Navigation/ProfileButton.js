@@ -35,6 +35,11 @@ function ProfileButton({ user }) {
 
   const closeMenu = () => setShowMenu(false);
 
+  const handleCreate = () => {
+    history.push('/host');
+    closeMenu();
+  }
+
   const logout = (e) => {
     e.preventDefault();
     dispatch(sessionActions.logout());
@@ -59,14 +64,15 @@ function ProfileButton({ user }) {
           <>
             <div>Hello, {user.firstName}</div>
             <div>{user.email}</div>
+            <Link to='/host' className="create-spot-dropdown" onClick={handleCreate}>Create Spot</Link>
             <Link to='/manage' className="manage-spots" onClick={closeMenu}>Manage Spots</Link>
             <Link to='/manage-bookings' className="manage-bookings" onClick={closeMenu}>Manage Bookings</Link>
             <Link to='/manage-favorites' className="manage-favorites" onClick={closeMenu}>Favorites</Link>
             <div>
-              <button onClick={logout} className="log-out">Log Out</button>
+              <button onClick={handleAbout}>About Me</button>
             </div>
             <div>
-              <button onClick={handleAbout}>About Me</button>
+              <button onClick={logout} className="log-out">Log Out</button>
             </div>
           </>
         ) : (
