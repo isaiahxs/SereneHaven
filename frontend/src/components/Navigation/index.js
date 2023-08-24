@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
@@ -32,6 +32,29 @@ function Navigation({ isLoaded }) {
     setSearchResults([]);
   };
 
+  const searchSectionRef = useRef(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchSectionRef.current && !searchSectionRef.current.contains(event.target)) {
+        setSearchResults([]);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    //listen for route changes and reset the search bar value
+    return history.listen(() => {
+      setSearchQuery('');
+    });
+  }, [history]);
+
   return (
     <div id='nav-container' className='nav-container'>
       <div className='logo-div'>
@@ -40,7 +63,7 @@ function Navigation({ isLoaded }) {
         </NavLink>
       </div>
 
-      <div className='search-section'>
+      <div className='search-section' ref={searchSectionRef}>
         <input
           className='search-bar'
           type="text"
@@ -49,7 +72,8 @@ function Navigation({ isLoaded }) {
           onChange={(e) => handleSearch(e.target.value)}
         />
 
-        <div className="search-suggestions">
+        {/* <div className="search-suggestions"> */}
+        <div className={`search-suggestions ${searchResults.length > 0 ? 'has-results' : ''}`}>
           {searchResults.map((spot) => (
             <div
               key={spot.id}
