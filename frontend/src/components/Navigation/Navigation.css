@@ -65,3 +65,48 @@ NavLink {
     display: none;
   }
 } */
+
+.search-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.search-bar {
+  margin: 0px;
+  position: sticky;
+  top: 0;
+  /* z-index: 2; */
+}
+
+.search-bar:focus {
+  /* border-radius: 0px; */
+}
+
+.search-suggestions {
+  z-index: 1;
+  border: 1px solid black;
+  box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1);
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 100%;
+  background-color: white;
+  display: none;
+}
+
+.search-bar:focus+.search-suggestions {
+  display: block;
+}
+
+.search-suggestion {
+  padding: 8px;
+  background-color: white;
+  border-top: 1px solid black;
+}
+
+.search-suggestion {
+  cursor: pointer;
+}
