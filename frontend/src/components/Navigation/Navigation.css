@@ -76,6 +76,8 @@ NavLink {
 
 .search-bar {
   margin: 0px;
+  /* margin-left: 10px; */
+  /* margin-right: 10px; */
   position: sticky;
   top: 0;
   font-size: 16px;
@@ -85,6 +87,7 @@ NavLink {
   box-shadow: none;
   /* box-shadow: 4px 4px 0px 0px rgba(0, 0, 0, 1); */
   transition: 0.3s all;
+  max-width: 205px;
 }
 
 .search-bar:focus {
@@ -93,7 +96,9 @@ NavLink {
 }
 
 .search-suggestions.has-results {
-  border: 2px solid black;
+  border-left: 2px solid black;
+  border-right: 2px solid black;
+  border-bottom: 2px solid black;
   /* Add any other styling you want */
 }
 

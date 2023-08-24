@@ -27,17 +27,12 @@
 }
 
 .pfp {
-    /* margin: 0px; */
     background-color: #ff8488;
 }
 
 .pfp:hover {
     border-radius: 0px;
 }
-
-/* .manage-favorites {
-    margin-bottom: 10px;
-} */
 
 .hidden {
     display: none;
