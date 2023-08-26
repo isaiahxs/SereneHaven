@@ -133,3 +133,14 @@ NavLink {
 .search-suggestion:hover {
   text-decoration: underline;
 }
+
+@media screen and (max-width: 440px) {
+  .search-section {
+    max-width: 150px;
+  }
+
+  /* .search-bar {
+    margin-left: 5px;
+    margin-right: 5px;
+  } */
+}

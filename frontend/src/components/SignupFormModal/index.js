@@ -33,6 +33,10 @@ function SignupFormModal() {
       errorsArr.push('Confirm Password field must be the same as the Password field.');
     }
 
+    if (!/@/.test(email)) {
+      errorsArr.push('The provided email is invalid.');
+    }
+
     setErrors(errorsArr);
     if (errorsArr.length === 0) {
       try {
